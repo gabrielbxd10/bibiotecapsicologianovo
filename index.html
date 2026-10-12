@@ -251,8 +251,9 @@ p{margin:0}
 .bonus-sec .lead{color:#AFC0BD}
 .bonus-sec .eyebrow{color:#9FB89A}
 .bonuses{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-.bonus{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:14px;display:grid;gap:10px;align-content:start}
-.bonus img{border-radius:10px;aspect-ratio:1;object-fit:cover}
+.bonus{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:0 0 14px;display:grid;gap:10px;align-content:start;overflow:hidden}
+.bonus img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:0;display:block}
+.bonus>:not(img){margin-inline:14px}
 .bonus small{font-size:.72rem;font-weight:800;letter-spacing:.12em;color:var(--amber)}
 .bonus h3{color:#fff;font-size:1.18rem}
 .bonus p{font-size:.88rem;color:#AFC0BD}
@@ -263,7 +264,7 @@ p{margin:0}
 .bonus-total s{color:#8FA3A0}
 .bonus-total b{color:var(--amber);font-size:1.1rem}
 @media (max-width:1000px){.bonuses{grid-template-columns:repeat(3,1fr)}}
-@media (max-width:640px){.bonuses{grid-template-columns:1fr}.bonus{grid-template-columns:96px 1fr;column-gap:14px}.bonus img{grid-row:span 4}.bonus .val{grid-column:1/-1}}
+@media (max-width:640px){.bonuses{grid-template-columns:1fr;max-width:440px;margin-inline:auto}}
 
 /* Testimonios */
 .testi{background:var(--paper-2)}
@@ -665,7 +666,8 @@ var shortNames=["Fundamentos","Neuropsicología","Cognición","Desarrollo","Pers
 $('#modules').innerHTML=modules.map(function(m,i){return '<div class="module"><span class="mnum">'+pad(i+1)+'</span><span class="mtitle">'+esc(m[0])+'</span><p>'+esc(m[2])+'</p></div>'}).join('');
 
 /* Bonos */
-$('#bonus-list').innerHTML=bonuses.map(function(b,i){return '<article class="bonus"><img src="'+A+'bonus-'+(i+1)+'.webp" width="1024" height="1024" loading="lazy" alt="Portada: '+esc(b[0])+'"><small>BONO '+pad(i+1)+'</small><h3>'+esc(b[0])+'</h3><p>'+esc(b[1])+'</p><div class="val"><s>US$ '+b[2]+'</s><b>GRATIS</b></div></article>'}).join('');
+var bonusImgs=["https://i.ibb.co/VK056rB/af0b199d-c289-4391-ae32-38bcc5ace266.png", "https://i.ibb.co/VYQWNTcq/4f2f220b-929d-433c-8c23-c3a3f0d4711e.png", "https://i.ibb.co/DfjB8t0G/bfa2e8f9-1a9c-4908-a160-fd3cd26b8c8e.png", "https://i.ibb.co/MkJHznML/371201bc-4f49-4dc6-9dd9-4aeddcdb743f.png", "https://i.ibb.co/SXzrbrKY/a4db67ea-e959-4486-bb78-daa878262133.png"];
+$('#bonus-list').innerHTML=bonuses.map(function(b,i){return '<article class="bonus"><img src="'+bonusImgs[i]+'" width="1254" height="1254" loading="lazy" alt="Portada: '+esc(b[0])+'"><small>BONO '+pad(i+1)+'</small><h3>'+esc(b[0])+'</h3><p>'+esc(b[1])+'</p><div class="val"><s>US$ '+b[2]+'</s><b>GRATIS</b></div></article>'}).join('');
 
 /* FAQ */
 $('#faqs').innerHTML=faqs.map(function(f){return '<details><summary>'+esc(f[0])+'</summary><p>'+esc(f[1])+'</p></details>'}).join('');
