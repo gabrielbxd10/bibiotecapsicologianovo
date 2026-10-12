@@ -170,23 +170,15 @@ p{margin:0}
 .round{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--card);font-size:1.3rem;color:var(--ink)}
 .round:hover{background:var(--ink);color:#fff}
 .hint{font-size:.9rem;color:var(--muted)}
-.filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:14px;margin-bottom:6px;scrollbar-width:none}
-.filters::-webkit-scrollbar{display:none}
-.chip{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font-weight:600;font-size:.86rem;white-space:nowrap}
-.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.rails{display:grid;gap:34px}
+.rail-row{display:grid;gap:4px;min-width:0}
+.rail.drag,.shots.drag{cursor:grabbing}
 
 /* Módulos */
 .modules{display:grid;gap:10px}
-.modules details{background:var(--card);border:1px solid var(--line);border-radius:12px}
-.modules summary{list-style:none;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 20px;cursor:pointer}
-.modules summary::-webkit-details-marker{display:none}
-.mnum{font:700 1.35rem/1 var(--display);color:var(--clay);font-variant-numeric:tabular-nums;min-width:2ch}
-.mtitle{font-weight:700;min-width:0}
-.mpages{font-size:.82rem;font-weight:700;color:var(--sage);background:rgba(95,122,91,.12);padding:5px 10px;border-radius:999px;white-space:nowrap;font-variant-numeric:tabular-nums}
-.modules details p{padding:0 20px 18px 62px;color:var(--muted)}
-.modules details[open]{border-color:rgba(24,54,64,.35)}
-.total-row{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;font-weight:800;color:var(--ink);border-top:2px solid var(--ink);margin-top:6px;font-variant-numeric:tabular-nums}
-@media (max-width:560px){.modules summary{grid-template-columns:auto 1fr}.mpages{grid-column:2;justify-self:start}.modules details p{padding-left:20px}}
+.module{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:grid;grid-template-columns:auto 1fr;column-gap:16px;row-gap:4px;align-items:baseline}
+.module .mtitle{color:var(--ink)}
+.module p{grid-column:2;color:var(--muted);font-size:.97rem}
 
 /* Antes / Después */
 .compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}
@@ -231,21 +223,21 @@ p{margin:0}
 
 /* Testimonios */
 .testi{background:var(--paper-2)}
-.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:960px;margin:0 auto}
-.shot{border:0;padding:8px;background:var(--ink-deep);border-radius:28px;box-shadow:0 24px 50px -22px rgba(14,36,43,.6);transition:transform .2s}
+.shots{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(220px,28%,290px);gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 20px 22px;margin-inline:-20px;cursor:grab;scrollbar-width:thin;overscroll-behavior-x:contain;-webkit-user-select:none;user-select:none}
+.shots::-webkit-scrollbar{height:8px}.shots::-webkit-scrollbar-thumb{background:rgba(24,54,64,.25);border-radius:9px}
+.shot{scroll-snap-align:start;border:0;padding:8px;background:var(--ink-deep);border-radius:28px;box-shadow:0 24px 50px -22px rgba(14,36,43,.6);transition:transform .2s}
 .shot:hover{transform:translateY(-4px) rotate(-.4deg)}
 .shot img{border-radius:21px;width:100%;aspect-ratio:941/1672;object-fit:cover;background:#fff}
 .stars{display:flex;justify-content:center;gap:3px;color:var(--amber);font-size:1.25rem;letter-spacing:2px}
-@media (max-width:760px){
-  .shots{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:72%;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 18px;margin-inline:-20px;padding-inline:20px}
-  .shot{scroll-snap-align:center}
-}
+@media (max-width:760px){.shots{grid-auto-columns:72%}.shot{scroll-snap-align:center}}
+.shot img{pointer-events:none}
+.testi-ctrl{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:6px;flex-wrap:wrap}
 
 /* Oferta */
 .offer{background:radial-gradient(900px 420px at 50% 0%,rgba(242,178,58,.18),transparent 70%),var(--paper)}
-.offer-card{max-width:560px;margin:0 auto;background:var(--card);border:2px solid var(--ink);border-radius:24px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(14,36,43,.5)}
-.offer-top{background:var(--ink);color:#fff;text-align:center;padding:14px;font:800 .8rem/1.3 var(--body);letter-spacing:.14em}
-.offer-top b{color:var(--amber)}
+.offer-card{max-width:560px;margin:0 auto;background:var(--card);border:3px solid var(--amber);border-radius:24px;overflow:hidden;box-shadow:0 0 0 6px rgba(242,178,58,.18),0 40px 80px -30px rgba(14,36,43,.5)}
+.offer-top{background:var(--amber);color:var(--ink-deep)!important;color:#fff;text-align:center;padding:14px;font:800 .8rem/1.3 var(--body);letter-spacing:.14em}
+.offer-top b{color:var(--ink-deep)}
 .offer-body{padding:28px;display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
 @media (max-width:420px){.offer-body{padding:20px}}
 .offer-body img{border-radius:14px}
@@ -260,7 +252,8 @@ p{margin:0}
 .price-box .from{color:var(--muted);font-weight:600}
 .price-box .from s{font-weight:700}
 .price-box .now{font:700 clamp(3.4rem,11vw,4.6rem)/1 var(--display);color:var(--ink);letter-spacing:-.02em}
-.price-box .now sup{font-size:.4em;vertical-align:.95em;margin-right:4px}
+.price-box .now{display:inline-flex;align-items:flex-start;justify-content:center;gap:.12em;justify-self:center;white-space:nowrap}
+.price-box .now .cur{font-size:.36em;line-height:1;margin-top:.32em;font-weight:700}
 .price-box .once{font-weight:700;color:var(--ok)}
 .price-box .perpage{font-size:.88rem;color:var(--muted)}
 .save{justify-self:center;background:rgba(46,125,79,.12);color:var(--ok);font-weight:800;font-size:.82rem;letter-spacing:.06em;padding:6px 12px;border-radius:999px}
@@ -384,12 +377,9 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
     <div class="head">
       <span class="eyebrow">Mira por dentro</span>
       <h2>50 páginas reales para que veas <em>exactamente</em> lo que recibes.</h2>
-      <p class="lead">Filtra por módulo, desliza y toca cualquier página para ampliarla.</p>
+      <p class="lead">Desliza cada fila y toca cualquier página para ampliarla.</p>
     </div>
-    <div class="filters" id="filters" role="toolbar" aria-label="Filtrar muestras por módulo"></div>
-    <div class="rail-wrap">
-      <div class="rail" id="rail" tabindex="0" aria-label="Muestras de la biblioteca"></div>
-    </div>
+    <div class="rails" id="rails"></div>
     <div class="rail-ctrl">
       <span class="hint" id="rail-count">50 de las 353 páginas</span>
       <div class="btns"><button class="round" data-dir="-1" aria-label="Anteriores">‹</button><button class="round" data-dir="1" aria-label="Siguientes">›</button></div>
@@ -406,8 +396,7 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
       <p class="lead">Estudia en orden o abre directamente el tema que necesitas hoy. Toca cada módulo para ver qué incluye.</p>
     </div>
     <div class="modules" id="modules"></div>
-    <div class="total-row"><span>Total de la biblioteca</span><span>353 páginas</span></div>
-    <div style="margin-top:32px;text-align:center"><a class="cta" href="#oferta" data-buy>Quiero los 11 módulos</a></div>
+        <div style="margin-top:32px;text-align:center"><a class="cta" href="#oferta" data-buy>Quiero los 11 módulos</a></div>
   </div>
 </section>
 
@@ -487,6 +476,7 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
       <button class="shot" data-t="1" aria-label="Ampliar testimonio 2"><img src="https://psicologiabiblioteca.lovable.app/__l5e/assets-v1/2074c521-db2c-46d0-85d0-a7d73612c2de/testimonial-2.webp" width="941" height="1672" loading="lazy" alt="Testimonio de alumno 2"></button>
       <button class="shot" data-t="2" aria-label="Ampliar testimonio 3"><img src="https://psicologiabiblioteca.lovable.app/__l5e/assets-v1/4ffd3095-61fa-41c6-9e17-e4e0cb166590/testimonial-3.webp" width="941" height="1672" loading="lazy" alt="Testimonio de alumno 3"></button>
     </div>
+    <div class="testi-ctrl"><span class="hint">Arrastra para ver más opiniones →</span><div class="btns" style="display:flex;gap:8px"><button class="round" data-tdir="-1" aria-label="Anterior">‹</button><button class="round" data-tdir="1" aria-label="Siguiente">›</button></div></div>
   </div>
 </section>
 
@@ -513,7 +503,7 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
         </ul>
         <div class="price-box">
           <span class="from">De <s>US$ 79</s> por solo</span>
-          <span class="now"><sup>US$</sup>14,90</span>
+          <span class="now"><span class="cur">US$</span><span>14,90</span></span>
           <span class="once">Pago único · Sin mensualidades</span>
           <span class="perpage">Menos de US$ 0,05 por página</span>
         </div>
@@ -632,7 +622,7 @@ samples=samples.map(function(s){var f='m'+pad(s[0])+'-p'+pad(s[1]);return{m:s[0]
 var shortNames=["Fundamentos","Neuropsicología","Cognición","Desarrollo","Personalidad","Emoción","Social","Psicopatología","Evaluación","Psicoeducación","Investigación"];
 
 /* Módulos */
-$('#modules').innerHTML=modules.map(function(m,i){return '<details'+(i===0?' open':'')+'><summary><span class="mnum">'+pad(i+1)+'</span><span class="mtitle">'+esc(m[0])+'</span><span class="mpages">'+m[1]+' páginas</span></summary><p>'+esc(m[2])+'</p></details>'}).join('');
+$('#modules').innerHTML=modules.map(function(m,i){return '<div class="module"><span class="mnum">'+pad(i+1)+'</span><span class="mtitle">'+esc(m[0])+'</span><p>'+esc(m[2])+'</p></div>'}).join('');
 
 /* Bonos */
 $('#bonus-list').innerHTML=bonuses.map(function(b,i){return '<article class="bonus"><img src="'+A+'bonus-'+(i+1)+'.webp" width="1024" height="1024" loading="lazy" alt="Portada: '+esc(b[0])+'"><small>BONO '+pad(i+1)+'</small><h3>'+esc(b[0])+'</h3><p>'+esc(b[1])+'</p><div class="val"><s>US$ '+b[2]+'</s><b>GRATIS</b></div></article>'}).join('');
@@ -640,29 +630,24 @@ $('#bonus-list').innerHTML=bonuses.map(function(b,i){return '<article class="bon
 /* FAQ */
 $('#faqs').innerHTML=faqs.map(function(f){return '<details><summary>'+esc(f[0])+'</summary><p>'+esc(f[1])+'</p></details>'}).join('');
 
-/* Muestras + filtros */
-var current=samples;
-function renderRail(list){
-  current=list;
-  $('#rail').innerHTML=list.map(function(s,i){return '<button class="sample" data-i="'+i+'" aria-label="Ampliar: '+esc(s.t)+'"><div class="ph"><img src="'+s.thumb+'" width="1086" height="1448" loading="lazy" decoding="async" alt="'+esc(s.t)+'" draggable="false"></div><small>Módulo '+pad(s.m)+'</small><span>'+esc(s.t)+'</span></button>'}).join('');
-  $('#rail').scrollLeft=0;
-  $('#rail-count').textContent=list.length===samples.length?'50 de las 353 páginas · desliza para ver más':list.length+' muestras de este módulo';
+/* Arrastrar con mouse (carruseles) */
+function draggable(r,onTap){var down=false,sx=0,sl=0,moved=0;
+ r.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse'||e.button!==0)return;down=true;sx=e.clientX;sl=r.scrollLeft;moved=0});
+ r.addEventListener('pointermove',function(e){if(!down)return;var d=e.clientX-sx;moved=Math.abs(d);if(moved>6){r.classList.add('drag');r.style.scrollSnapType='none';r.scrollLeft=sl-d}});
+ ['pointerup','pointerleave','pointercancel'].forEach(function(t){r.addEventListener(t,function(){down=false;r.classList.remove('drag');r.style.scrollSnapType=''})});
+ r.addEventListener('dragstart',function(e){e.preventDefault()});
+ r.addEventListener('click',function(e){if(moved>6){e.preventDefault();e.stopPropagation();moved=0;return}onTap(e)},true);
 }
-var chips=['Todos'].concat(shortNames);
-$('#filters').innerHTML=chips.map(function(c,i){return '<button class="chip" data-m="'+i+'" aria-pressed="'+(i===0)+'">'+(i?pad(i)+' · ':'')+esc(c)+'</button>'}).join('');
-$('#filters').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;
-  document.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed',c===b)});
-  var m=Number(b.dataset.m);renderRail(m?samples.filter(function(s){return s.m===m}):samples)});
-renderRail(samples);
-document.querySelectorAll('[data-dir]').forEach(function(b){b.onclick=function(){$('#rail').scrollBy({left:Number(b.dataset.dir)*260*2,behavior:'smooth'})}});
 
-/* Arrastrar con mouse */
-(function(){var r=$('#rail'),down=false,sx=0,sl=0,moved=0;
- r.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;down=true;sx=e.clientX;sl=r.scrollLeft;moved=0});
- r.addEventListener('pointermove',function(e){if(!down)return;var d=e.clientX-sx;moved=Math.abs(d);if(moved>6){r.style.scrollSnapType='none';r.scrollLeft=sl-d}});
- ['pointerup','pointerleave'].forEach(function(t){r.addEventListener(t,function(){down=false;r.style.scrollSnapType=''})});
- r.addEventListener('click',function(e){if(moved>6){e.preventDefault();e.stopPropagation();moved=0;return}var b=e.target.closest('.sample');if(b)openLB('s',Number(b.dataset.i))},true);
-})();
+/* Muestras: 3 carruseles */
+var current=samples;
+var groups=[samples.slice(0,17),samples.slice(17,34),samples.slice(34)];
+$('#rails').innerHTML=groups.map(function(g,gi){var off=gi===0?0:(gi===1?17:34);
+  return '<div class="rail-row"><div class="rail" tabindex="0" aria-label="Carrusel de muestras '+(gi+1)+'">'+g.map(function(s,j){return '<button class="sample" data-i="'+(off+j)+'" aria-label="Ampliar: '+esc(s.t)+'"><div class="ph"><img src="'+s.thumb+'" width="1086" height="1448" loading="lazy" decoding="async" alt="'+esc(s.t)+'" draggable="false"></div><small>Módulo '+pad(s.m)+'</small><span>'+esc(s.t)+'</span></button>'}).join('')+'</div><div class="rail-ctrl"><span class="hint">Módulos '+pad(g[0].m)+' al '+pad(g[g.length-1].m)+' · desliza para ver más</span><div class="btns"><button class="round" data-dir="-1" aria-label="Anteriores">‹</button><button class="round" data-dir="1" aria-label="Siguientes">›</button></div></div></div>'}).join('');
+document.querySelectorAll('.rail-row').forEach(function(row){var r=row.querySelector('.rail');
+  row.querySelectorAll('[data-dir]').forEach(function(b){b.onclick=function(){r.scrollBy({left:Number(b.dataset.dir)*r.clientWidth*0.8,behavior:'smooth'})}});
+  draggable(r,function(e){var b=e.target.closest('.sample');if(b)openLB('s',Number(b.dataset.i))});
+});
 
 /* Lightbox (muestras y testimonios) */
 var lb=$('#lightbox'),mode='s',idx=0;
@@ -673,7 +658,9 @@ function openLB(m,i){mode=m;idx=i;renderLB();lb.showModal()}
 $('#lb-prev').onclick=function(){var n=list().length;idx=(idx-1+n)%n;renderLB()};
 $('#lb-next').onclick=function(){idx=(idx+1)%list().length;renderLB()};
 lb.addEventListener('keydown',function(e){if(e.key==='ArrowRight')$('#lb-next').click();if(e.key==='ArrowLeft')$('#lb-prev').click()});
-document.querySelectorAll('.shot').forEach(function(b){b.onclick=function(){openLB('t',Number(b.dataset.t))}});
+draggable($('#shots'),function(e){var b=e.target.closest('.shot');if(b)openLB('t',Number(b.dataset.t))});
+(function(){var s=$('#shots'),c=document.querySelector('.testi-ctrl');function f(){c.hidden=s.scrollWidth<=s.clientWidth+4}f();addEventListener('resize',f);addEventListener('load',f)})();
+document.querySelectorAll('[data-tdir]').forEach(function(b){b.onclick=function(){var s=$('#shots');s.scrollBy({left:Number(b.dataset.tdir)*(s.querySelector('.shot').offsetWidth+22),behavior:'smooth'})}});
 document.querySelectorAll('dialog').forEach(function(d){
   d.addEventListener('click',function(e){if(e.target===d||e.target.closest('[data-close]'))d.close()})});
 
