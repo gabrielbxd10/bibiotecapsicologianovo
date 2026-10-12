@@ -140,7 +140,7 @@ p{margin:0}
 .stats div:last-child{border-right:0}
 .stats b{display:block;font:700 2.2rem/1 var(--display);color:var(--ink)}
 .stats span{font-size:.82rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-@media (max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.stats div:nth-child(2){border-right:0}.stats div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+@media (max-width:640px){.rail{grid-auto-columns:78%}.stats{grid-template-columns:repeat(2,1fr)}.stats div:nth-child(2){border-right:0}.stats div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
 
 /* Dolor */
 .pains{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
@@ -157,7 +157,7 @@ p{margin:0}
 /* Muestras */
 .samples{background:var(--paper-2)}
 .rail-wrap{position:relative}
-.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(200px,240px);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 4px 18px;scrollbar-width:thin;overscroll-behavior-x:contain}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(260px,30%,340px);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 4px 18px;scrollbar-width:thin;overscroll-behavior-x:contain}
 .rail::-webkit-scrollbar{height:8px}.rail::-webkit-scrollbar-thumb{background:rgba(24,54,64,.25);border-radius:9px}
 .sample{scroll-snap-align:start;border:0;padding:0;background:none;text-align:left;display:grid;gap:8px}
 .sample .ph{aspect-ratio:1086/1448;border-radius:10px;overflow:hidden;background:var(--card);box-shadow:0 10px 24px -12px rgba(14,36,43,.45);transition:transform .2s}
@@ -505,13 +505,11 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
           <span class="from">De <s>US$ 79</s> por solo</span>
           <span class="now"><span class="cur">US$</span><span>14,90</span></span>
           <span class="once">Pago único · Sin mensualidades</span>
-          <span class="perpage">Menos de US$ 0,05 por página</span>
         </div>
         <span class="save">AHORRAS US$ 64,10 (81 %)</span>
         <a class="cta block pulse" href="https://pay.hotmart.com/Q107777532N?off=bx4hzpp7" data-buy>Sí, quiero mi biblioteca
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <div class="trust" style="justify-content:center"><span>Acceso inmediato</span><span>Compra segura</span><span>Garantía 7 días</span></div>
-        <div class="pay" aria-label="Medios de pago"><span>Tarjeta</span><span>PayPal</span><span>Pagos locales</span><span>🔒 Hotmart</span></div>
         <p class="fine">Conversión a tu moneda local según disponibilidad. Confirma el importe final en el checkout. Valores de referencia estimados, no precios anteriores.</p>
       </div>
     </div>
