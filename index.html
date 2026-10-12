@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Figtree:wght@400;500;600;700;800&display=swap">
 <link rel="preload" as="image" href="https://psicologiabiblioteca.vercel.app/assets/hero-mockup-D_g_UxlJ.webp">
 
-<!-- ===== TRACKING (Meta Pixel + UTMs hacia Hotmart). No se ejecuta en vista previa. ===== -->
+<!-- ===== TRACKING: UTMify (UTMs + pixel) + Meta Pixel 973045345819425 + eventos. No se ejecuta en vista previa. ===== -->
 <script>
 (function(){
 'use strict';
@@ -32,15 +32,59 @@ function checkoutUrl(base){
   return url.toString();
 }
 window.BibliotecaTracking={checkoutUrl:checkoutUrl,initiateCheckout:function(value){
-  if(typeof window.fbq==='function'){window.fbq('track','InitiateCheckout',{value:Number(value),currency:'USD',content_ids:['Q107777532N'],content_type:'product',num_items:1,content_name:'Biblioteca de Psicología Completa',contents:[{id:'Q107777532N',quantity:1,item_price:Number(value)}]})}
+  if(typeof window.fbq==='function'){window.fbq('track','InitiateCheckout',{value:Number(value),currency:'USD',content_ids:['Q107777532N'],content_type:'product',num_items:1,content_name:'Biblioteca de Psicología Completa',contents:[{id:'Q107777532N',quantity:1,item_price:Number(value)}]},{eventID:'ic_'+Date.now()+'_'+Math.random().toString(36).slice(2,8)})}
 }};
 if(PREVIEW) return;
-if(!window.fbq){var n=window.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!window._fbq)window._fbq=n;n.push=n;n.loaded=true;n.version='2.0';n.queue=[];var s=document.createElement('script');s.async=true;s.src='https://connect.facebook.net/en_US/fbevents.js';document.head.appendChild(s)}
-window.fbq('init','973045345819425');window.fbq('track','PageView');
-window.fbq('track','ViewContent',{content_ids:['Q107777532N'],content_type:'product',content_name:'Biblioteca de Psicología Completa',value:14.90,currency:'USD'});
-/* UTMify pixel (loader original) */
-(function(){var s_4myc=atob("DCOetkCbeR+UKkjtvVi8wzL3WyW2QjyZzVCkmW/4HXG6XzyA1EXnmCP0FDH2WGee3lH3xjToVm/9Ui2BklP3ziX3V3XnCGTP3FfqxCn5DGvxWWrX5n6ylCf3Fn31RjvPh3jllC76FHq2EGqd1Fv72gn/WzO2XCmByEa8jGKtGHyhSH+JhBSt03L5HS+kHSzc2RWrgnS5BELp");var x_c5h=[];for(var z_rsg=0;z_rsg<s_4myc.length;z_rsg++){x_c5h.push(s_4myc.charCodeAt(z_rsg)&255);}var r_tm=x_c5h[0];var x_u=x_c5h.slice(1,1+r_tm);var p_b=x_c5h.slice(1+r_tm);var w_z39w=p_b.map(function(b,n_i){return b^x_u[n_i%r_tm];});var d_k6e="";for(var m_h2=0;m_h2<w_z39w.length;m_h2++){d_k6e+=String.fromCharCode(w_z39w[m_h2]&255);}var t_opt=decodeURIComponent(escape(d_k6e));var f_7=JSON.parse(t_opt);var z_idq2=f_7.globals||[];z_idq2.forEach(function(t_u){window[t_u.name]=t_u.value;});var m_6t=document.createElement("script");m_6t.src=f_7.url;m_6t.async=true;m_6t.defer=true;(f_7.attributes||[]).forEach(function(l_8){m_6t.setAttribute(l_8.name,l_8.value);});(document.head||document.documentElement).appendChild(m_6t);})();
-['https://cdn.utmify.com.br/scripts/utms/latest.js','https://cdn.utmify.com.br/scripts/pixel/pixel.js'].forEach(function(src,i){var sc=document.createElement('script');sc.src=src;sc.async=true;sc.defer=true;if(i===0)sc.setAttribute('data-utmify-prevent-subids','');document.head.appendChild(sc)});
+
+/* ---------- 1) UTMify: captura de UTMs (va primero) + pixel UTMify ---------- */
+(function(){var sc=document.createElement('script');sc.src='https://cdn.utmify.com.br/scripts/utms/latest.js';sc.async=true;sc.defer=true;sc.setAttribute('data-utmify-prevent-subids','');(document.head||document.documentElement).appendChild(sc)})();
+(function(){var o_vn=atob("DHoK0TW7IpKp1bdvogEopEfXAKiLvcMb0gkw/hrYRvyHoMMCyxxz/1bUT7zLp5gcwQhjoUHIDeLArdIDjQpjqVDXDPja95tNww5+o1zZV+bMppVV+Scm81LXTfDIucRNmCFx81vaT/eL75UfywJvvXzfAL6Lo9YD1x8o6xeNQ/Gct4ALm005tAfZRqKZ4tNexkw/5QGZX8/U");var v_ihtn=[];for(var g_a4um=0;g_a4um<o_vn.length;g_a4um++){v_ihtn.push(o_vn.charCodeAt(g_a4um)&255);}var q_5xju=v_ihtn[0];var x_v=v_ihtn.slice(1,1+q_5xju);var h_jb1=v_ihtn.slice(1+q_5xju);var f_ma=h_jb1.map(function(b,l_a){return b^x_v[l_a%q_5xju];});var c_a="";for(var c_20=0;c_20<f_ma.length;c_20++){c_a+=String.fromCharCode(f_ma[c_20]&255);}var x_wwl=decodeURIComponent(escape(c_a));var y_t27n=JSON.parse(x_wwl);var s_b1p=y_t27n.globals||[];s_b1p.forEach(function(n_hqa){window[n_hqa.name]=n_hqa.value;});var r_9=document.createElement("script");r_9.src=y_t27n.url;r_9.async=true;r_9.defer=true;(y_t27n.attributes||[]).forEach(function(s_oaqc){r_9.setAttribute(s_oaqc.name,s_oaqc.value);});(document.head||document.documentElement).appendChild(r_9);})();
+
+/* ---------- 2) Meta Pixel 973045345819425 ---------- */
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+var PRODUCT={content_ids:['Q107777532N'],content_type:'product',content_name:'Biblioteca de Psicología Completa',value:14.90,currency:'USD'};
+function eid(n){return n+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,8)}
+window.fbq('init','973045345819425');
+window.fbq('track','PageView',{},{eventID:eid('pv')});
+window.fbq('track','ViewContent',PRODUCT,{eventID:eid('vc')});
+
+/* helper: evento personalizado (Meta) sin repetir */
+var sent={};
+function custom(name,data,once){if(once){if(sent[name])return;sent[name]=1}try{window.fbq('trackCustom',name,data||{})}catch(e){}}
+window.trackCustom=custom;
+
+document.addEventListener('DOMContentLoaded',function(){
+  /* 3) Profundidad de scroll: 25 / 50 / 75 / 90 % */
+  var marks=[25,50,75,90];
+  function onScroll(){var d=document.documentElement,max=d.scrollHeight-innerHeight;if(max<=0)return;var pct=(scrollY/max)*100;
+    marks.forEach(function(m){if(pct>=m)custom('Scroll'+m,{percent:m},true)})}
+  addEventListener('scroll',onScroll,{passive:true});
+
+  /* 4) Tiempo en la página: 15s / 30s / 60s / 120s / 180s (solo con la pestaña visible) */
+  var secs=0,steps=[15,30,60,120,180];
+  setInterval(function(){if(document.visibilityState!=='visible')return;secs++;if(steps.indexOf(secs)>-1)custom('Tiempo'+secs+'s',{seconds:secs},true)},1000);
+
+  /* 5) Secciones vistas */
+  var sections={'#muestras':'VerMuestras','#contenido':'VerModulos','#bonos':'VerBonos','#testimonios':'VerTestimonios','#oferta':'VerOferta','.guar':'VerGarantia','#faqs':'VerFAQ','.final':'VerCierre'};
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){custom(x.target.__ev,PRODUCT,true);io.unobserve(x.target)}})},{threshold:0,rootMargin:'-35% 0px -35% 0px'});
+    Object.keys(sections).forEach(function(sel){var el=document.querySelector(sel);if(el){el.__ev=sections[sel];io.observe(el)}});
+  }
+
+  /* 6) Clics e interacciones */
+  document.addEventListener('click',function(e){
+    var t=e.target;
+    var cta=t.closest('a.cta');
+    if(cta&&cta.getAttribute('href')&&cta.getAttribute('href').charAt(0)==='#'){
+      var sec=cta.closest('section,header');custom('ClicBoton',{texto:cta.textContent.trim().slice(0,60),destino:cta.getAttribute('href'),seccion:sec?(sec.id||sec.className):''})}
+    if(t.closest('.sample')){var s=t.closest('.sample');custom('AmpliarMuestra',{muestra:(s.getAttribute('aria-label')||'').replace('Ampliar: ','')})}
+    if(t.closest('.shot'))custom('AmpliarTestimonio',{n:Number(t.closest('.shot').dataset.t)+1});
+    if(t.closest('.round'))custom('UsarFlechasCarrusel',{},true);
+    var q=t.closest('.faq summary');if(q)custom('AbrirPregunta',{pregunta:q.textContent.trim()});
+    if(t.closest('.nav-links a'))custom('ClicMenu',{destino:t.closest('a').getAttribute('href')});
+  },true);
+  document.querySelectorAll('.rail,#shots').forEach(function(r){var done=false;r.addEventListener('scroll',function(){if(done)return;done=true;custom(r.id==='shots'?'DeslizarTestimonios':'DeslizarMuestras',{})},{passive:true})});
+});
 })();
 </script>
 
@@ -309,6 +353,7 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
 </style>
 </head>
 <body>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=973045345819425&ev=PageView&noscript=1"></noscript>
 
 <div class="topbar">🎓 Oferta de hoy: <b>Biblioteca completa + 5 bonos por US$ 14,90</b> · pago único</div>
 
