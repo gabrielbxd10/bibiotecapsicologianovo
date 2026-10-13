@@ -179,6 +179,7 @@ p{margin:0}
 .hero h1 .prod{display:block;color:var(--ink)}
 .hero .sub{font-size:clamp(1.05rem,2.2vw,1.22rem);color:var(--muted);max-width:62ch}
 .hero .sub b{color:var(--text)}
+.hero .for{font-size:.92rem;font-weight:600;color:var(--sage);margin-top:-8px}
 .hero-price{display:flex;align-items:baseline;justify-content:center;gap:14px;flex-wrap:wrap}
 .hero-price s{color:var(--muted);font-weight:600}
 .hero-price strong{font:700 2.4rem/1 var(--display);color:var(--ink)}
@@ -231,7 +232,9 @@ p{margin:0}
 .modules{display:grid;gap:10px}
 .module{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:grid;grid-template-columns:auto 1fr;column-gap:16px;row-gap:4px;align-items:baseline}
 .module .mtitle{color:var(--ink)}
-.module p{grid-column:2;color:var(--muted);font-size:.97rem}
+.module .topics{grid-column:2;display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.module .topics span{font-size:.76rem;font-weight:600;color:var(--ink);background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+.module{padding:14px 16px!important}
 
 /* Antes / Después */
 .compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}
@@ -308,6 +311,7 @@ p{margin:0}
 .price-box .now{font:700 clamp(3.4rem,11vw,4.6rem)/1 var(--display);color:var(--ink);letter-spacing:-.02em}
 .price-box .now{display:inline-flex;align-items:flex-start;justify-content:center;gap:.12em;justify-self:center;white-space:nowrap}
 .price-box .now .cur{font-size:.36em;line-height:1;margin-top:.32em;font-weight:700}
+.price-box .deliver{font-size:.84rem;color:var(--muted);margin-top:6px;line-height:1.45}
 .price-box .once{font-weight:700;color:var(--ok)}
 .price-box .perpage{font-size:.88rem;color:var(--muted)}
 .save{justify-self:center;background:rgba(46,125,79,.12);color:var(--ok);font-weight:800;font-size:.82rem;letter-spacing:.06em;padding:6px 12px;border-radius:999px}
@@ -388,7 +392,8 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
       <img src="https://psicologiabiblioteca.vercel.app/assets/hero-mockup-D_g_UxlJ.webp" alt="Biblioteca de Psicología Completa: 11 módulos digitales" width="1254" height="1254" loading="eager" fetchpriority="high">
     </div>
     <div class="hero-copy">
-      <p class="sub">Deja de perder horas con apuntes desordenados y capítulos que no se entienden. Tienes <b>lo esencial de toda la carrera</b>, de Freud a la neurociencia, <b>en guías visuales</b> para comprender cada tema a la primera y <b>repasar en minutos</b>. Además, <b>5 libros digitales de regalo</b>.</p>
+      <p class="sub">Deja de perder horas con apuntes desordenados y capítulos que no se entienden. Tienes <b>lo esencial de toda la carrera</b>, de Freud a la neurociencia, <b>en guías visuales</b> para comprender cada tema a la primera y <b>repasar en minutos antes de cada examen</b>. Además, <b>5 libros digitales de regalo</b>.</p>
+      <p class="for">Para estudiantes de Psicología, quienes empiezan la carrera o necesitan repasar.</p>
       <a class="cta pulse" href="#muestras">Quiero ver la biblioteca por dentro
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <div class="trust"><span>Acceso inmediato</span><span>100 % digital</span><span>Sin mensualidades</span><span>Garantía de 7 días</span></div>
@@ -403,22 +408,30 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
   <div><b>1</b><span>pago único</span></div>
 </div>
 
-<!-- DOLOR -->
+<!-- DOLOR + SOLUCIÓN -->
 <section>
-  <div class="wrap narrow">
-    <div class="head">
+  <div class="wrap">
+    <div class="head center">
       <span class="eyebrow">¿Te pasa esto?</span>
       <h2>Estudiar Psicología ya es exigente. <em>El desorden lo hace más difícil.</em></h2>
     </div>
-    <div class="pains">
-      <div class="pain"><h3>Tienes decenas de archivos y no encuentras nada.</h3><p>Fotocopias, capturas, archivos y apuntes repartidos en cinco carpetas distintas.</p></div>
-      <div class="pain"><h3>Lees el capítulo y sigue sin quedar claro.</h3><p>Textos largos y densos que explican mucho y aclaran poco.</p></div>
-      <div class="pain"><h3>Pasas más tiempo buscando que estudiando.</h3><p>Horas reuniendo material antes de poder empezar a comprender.</p></div>
-      <div class="pain"><h3>Llega el examen y no tienes cómo repasar rápido.</h3><p>Necesitas ver lo esencial de un tema en minutos, no releer 40 páginas.</p></div>
-    </div>
-    <div class="turn">
-      <h3>La solución no es acumular más archivos.</h3>
-      <p>Es tener <b>un solo lugar</b> donde cada tema ya está resumido, ordenado y explicado de forma visual, para que dediques tu tiempo a entender y no a buscar.</p>
+    <div class="compare">
+      <div class="col before">
+        <h3>Sin la biblioteca</h3>
+        <ul>
+          <li>Tienes decenas de archivos y apuntes repartidos, y no encuentras nada.</li>
+          <li>Lees el capítulo completo y sigue sin quedarte claro.</li>
+          <li>Llega el examen y repasar te lleva toda la noche.</li>
+        </ul>
+      </div>
+      <div class="col after">
+        <h3>Con la biblioteca</h3>
+        <ul>
+          <li>Todo en un solo lugar, ordenado en 11 módulos.</li>
+          <li>Cada tema explicado en una guía visual clara.</li>
+          <li>Repasas lo esencial de un tema en 5 minutos antes del examen.</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
@@ -442,59 +455,10 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
     <div class="head">
       <span class="eyebrow">Lo que hay dentro</span>
       <h2>11 módulos que cubren <em>las grandes áreas</em> de la Psicología.</h2>
-      <p class="lead">Estudia en orden o abre directamente el tema que necesitas hoy. Toca cada módulo para ver qué incluye.</p>
+      <p class="lead">Estudia en orden o abre directamente el tema que entra en tu próximo examen.</p>
     </div>
     <div class="modules" id="modules"></div>
         <div style="margin-top:32px;text-align:center"><a class="cta" href="#oferta" data-buy>Quiero los 11 módulos</a></div>
-  </div>
-</section>
-
-<!-- ANTES / DESPUÉS -->
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="head center">
-      <span class="eyebrow">Lo que cambia en tu forma de estudiar</span>
-      <h2>De apuntes dispersos a <em>una biblioteca que trabaja para ti.</em></h2>
-    </div>
-    <div class="compare">
-      <div class="col before">
-        <h3>Sin la biblioteca</h3>
-        <ul>
-          <li>Buscas el mismo concepto en cinco lugares distintos.</li>
-          <li>Autores y teorías se mezclan en tu cabeza.</li>
-          <li>Repasar antes de un examen te lleva toda la noche.</li>
-          <li>No ves cómo se conectan cerebro, emoción y conducta.</li>
-        </ul>
-      </div>
-      <div class="col after">
-        <h3>Con la biblioteca</h3>
-        <ul>
-          <li>Encuentras cualquier concepto en segundos, ordenado por módulo.</li>
-          <li>Cada autor y corriente explicado en una lámina visual clara.</li>
-          <li>Repasas lo esencial de un tema en minutos.</li>
-          <li>Relacionas las áreas y entiendes la Psicología como un todo.</li>
-          <li>La llevas en el celular, la tablet o la computadora.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PARA QUIÉN -->
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">¿Es para ti?</span>
-      <h2>Hecha para quien quiere <em>entender</em> la Psicología.</h2>
-    </div>
-    <div class="who">
-      <div><b>Estudiantes de Psicología</b><span>Un complemento visual para tus materias y exámenes.</span></div>
-      <div><b>Quienes están empezando</b><span>Una introducción ordenada a los fundamentos.</span></div>
-      <div><b>Quienes necesitan repasar</b><span>Autores, teorías y conceptos siempre a mano.</span></div>
-      <div><b>Curiosos de la mente humana</b><span>Explora la disciplina de forma accesible.</span></div>
-      <div><b>Quienes aprenden visualmente</b><span>Esquemas, mapas y láminas en lugar de texto corrido.</span></div>
-    </div>
-    <p class="note">Material educativo complementario. No sustituye bibliografía académica, estudios universitarios, formación profesional ni supervisión clínica.</p>
   </div>
 </section>
 
@@ -554,6 +518,7 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
           <span class="from">De <s>US$ 79</s> por solo</span>
           <span class="now"><span class="cur">US$</span><span>14,90</span></span>
           <span class="once">Pago único · Sin mensualidades</span>
+          <span class="deliver">Guías visuales de alta calidad · Se leen en el celular y se pueden imprimir · Acceso inmediato por email</span>
         </div>
         <span class="save">AHORRAS US$ 64,10 (81 %)</span>
         <a class="cta block pulse" href="https://pay.hotmart.com/E108015035W?checkoutMode=10" data-buy>Sí, quiero mi biblioteca
@@ -594,8 +559,8 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
 <section class="final">
   <div class="wrap narrow" style="display:grid;gap:22px;justify-items:center">
     <span class="eyebrow" style="color:#9FB89A">Empieza hoy</span>
-    <h2>Menos apuntes dispersos. <em>Más claridad</em> para estudiar Psicología.</h2>
-    <p class="lead">11 módulos, 353 páginas y 5 bonos por US$ 14,90, un solo pago. Empieza a estudiar en los próximos minutos.</p>
+    <h2>Llega a tu próximo examen con <em>todo resumido y claro.</em></h2>
+    <p class="lead">11 módulos, 353 páginas y 5 bonos por US$ 14,90, un solo pago. Empieza a repasar en los próximos minutos.</p>
     <a class="cta pulse" href="#oferta" data-buy>Quiero mi biblioteca por US$ 14,90</a>
     <div class="trust"><span>Acceso inmediato</span><span>Sin mensualidades</span><span>Garantía de 7 días</span></div>
   </div>
@@ -632,17 +597,17 @@ var $=function(s){return document.querySelector(s)};
 var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')};
 
 var modules=[
- ["Fundamentos, autores y corrientes de la Psicología",28,"Origen de la disciplina, grandes autores y las principales corrientes: psicoanálisis, conductismo, cognitivismo y más."],
- ["Neuropsicología y bases biológicas de la conducta",38,"Sistema nervioso, neurotransmisores, plasticidad cerebral, amígdala y funciones ejecutivas."],
- ["Cognición, memoria y aprendizaje",38,"Atención, memoria de trabajo, curva del olvido, refuerzo, sesgos cognitivos y estrategias de estudio."],
- ["Psicología del desarrollo humano",33,"Desarrollo cognitivo infantil, teoría del apego y cambios a lo largo de toda la vida."],
- ["Personalidad y diferencias individuales",28,"Temperamento, teoría de los rasgos, Big Five y comparación de modelos de personalidad."],
- ["Emoción, motivación y regulación emocional",33,"Emoción, sentimiento y estado de ánimo, vocabulario emocional, estrés y estrategias de regulación."],
- ["Psicología social y relaciones humanas",28,"Persuasión, empatía, escucha activa, grupos y resolución de conflictos."],
- ["Psicopatología: Guía visual",33,"Modelo biopsicosocial y conceptos introductorios sobre ansiedad, TOC, autismo y trastornos de personalidad."],
- ["Evaluación psicológica y Psicometría",28,"Entrevista psicológica, modelo ABC, fiabilidad, validez y percentiles."],
- ["Recursos psicoeducativos y reflexión",38,"Rueda de emociones, círculo de control, ciclo del hábito, valores y reflexión educativa."],
- ["Investigación, evidencia y metodología",28,"Hipótesis, variables, correlación vs. causalidad, estadística básica y pensamiento crítico."]
+ ["Fundamentos, autores y corrientes de la Psicología", 28, "Wundt · Freud · Jung · Pávlov · Skinner · Piaget · Vygotsky · Maslow · Rogers"],
+ ["Neuropsicología y bases biológicas de la conducta", 38, "Neurona · Sinapsis · Dopamina · Serotonina · Lóbulos cerebrales · Amígdala · Hipocampo · Funciones ejecutivas"],
+ ["Cognición, memoria y aprendizaje", 38, "Atención · Percepción y Gestalt · Memoria de trabajo · Curva del olvido · Condicionamiento · Sesgos cognitivos"],
+ ["Psicología del desarrollo humano", 33, "Etapas de Piaget · Zona de Desarrollo Próximo · Erikson · Teoría del apego · Adolescencia · Envejecimiento"],
+ ["Personalidad y diferencias individuales", 28, "Temperamento · Big Five · Eysenck · Cattell · Allport · Teorías de la personalidad"],
+ ["Emoción, motivación y regulación emocional", 33, "Emociones básicas · Miedo · Ira · Estrés · Motivación · Necesidades humanas · Regulación emocional"],
+ ["Psicología social y relaciones humanas", 28, "Conformidad · Obediencia · Persuasión · Prejuicios · Empatía · Asertividad · Liderazgo"],
+ ["Psicopatología: Guía visual", 33, "Modelo biopsicosocial · Ansiedad · Pánico · TOC · Depresión · Bipolaridad · Esquizofrenia · TDAH · Autismo"],
+ ["Evaluación psicológica y Psicometría", 28, "Entrevista · Modelo ABC · Psicometría · Fiabilidad · Validez · Percentiles"],
+ ["Recursos psicoeducativos y reflexión", 38, "Rueda de emociones · Pensamientos automáticos · Círculo de control · Ciclo del hábito · Valores y metas"],
+ ["Investigación, evidencia y metodología", 28, "Hipótesis · Variables · Correlación y causalidad · Experimentos · Métodos cualitativos · Estadística básica"]
 ];
 var bonuses=[
  ["Diccionario Esencial de Psicología","Aclara al instante términos y definiciones mientras estudias.",12],
@@ -652,16 +617,12 @@ var bonuses=[
  ["Guía de Lecturas para Estudiantes de Psicología","Lecturas recomendadas para seguir profundizando.",9]
 ];
 var faqs=[
- ["¿Qué recibo exactamente?","La Biblioteca de Psicología Completa (11 módulos, 353 páginas) más los 5 libros digitales de bono, todo por US$ 14,90 en un único pago."],
- ["¿Cómo y cuándo recibo el material?","Inmediatamente después de confirmar el pago recibes en tu correo las instrucciones de acceso."],
- ["¿Puedo verlo desde el celular?","Sí. Funciona en celulares, tablets y computadoras compatibles."],
- ["¿Hay mensualidades o cobros extra?","No. Es un pago único de US$ 14,90. No hay suscripción."],
- ["¿Recibiré libros físicos?","No. Todo el material es digital, así que lo tienes disponible al instante."],
- ["¿Puedo pagar en mi moneda?","El checkout hace la conversión a tu moneda local según disponibilidad. Confirma el importe final antes de pagar."],
- ["¿Necesito estudiar Psicología para aprovecharlo?","No. Está pensado tanto para estudiantes como para cualquier persona que quiera comprender los fundamentos."],
- ["¿Sustituye mis libros universitarios?","No. Es un material complementario que te ayuda a organizar y repasar; no reemplaza la bibliografía especializada ni la formación académica."],
- ["¿Sirve para diagnosticar personas?","No. Su finalidad es educativa y no habilita para diagnosticar ni intervenir profesionalmente."],
- ["¿Cómo funciona la garantía?","Tienes 7 días para solicitar el reembolso, según las condiciones del checkout de Hotmart."]
+ ["¿Qué recibo exactamente?", "La Biblioteca de Psicología Completa (11 módulos, 353 páginas de guías visuales) más los 5 libros digitales de bono, todo por US$ 14,90 en un único pago."],
+ ["¿Cómo y cuándo recibo el material?", "Inmediatamente después de confirmar el pago recibes en tu email las instrucciones de acceso."],
+ ["¿Puedo verlo desde el celular?", "Sí. Las guías funcionan en celulares, tablets y computadoras."],
+ ["¿Puedo imprimir las guías?", "Sí. Puedes estudiar en pantalla o imprimir las páginas que quieras."],
+ ["¿Hay mensualidades o cobros extra?", "No. Es un pago único de US$ 14,90. No hay suscripción."],
+ ["¿Cómo funciona la garantía?", "Tienes 7 días para solicitar el reembolso, según las condiciones del checkout de Hotmart."]
 ];
 var samples=[[1, 8, "Sigmund Freud"], [2, 7, "La neurona"], [1, 18, "Abraham Maslow"], [8, 14, "Trastorno de pánico"], [2, 12, "Dopamina"], [1, 26, "Freud vs. Jung"], [8, 28, "TDAH"], [2, 16, "Plasticidad cerebral"], [1, 27, "Piaget vs. Vygotsky"], [8, 31, "Trastornos de personalidad"], [2, 17, "Organización general del cerebro"], [1, 9, "Carl Gustav Jung"], [8, 13, "Ansiedad generalizada"], [7, 8, "Persuasión"], [1, 12, "B. F. Skinner"], [8, 20, "Trastornos depresivos"], [7, 21, "Empatía"], [1, 25, "Línea del tiempo de la Psicología"], [8, 8, "Modelo biopsicosocial"], [7, 7, "Obediencia"], [1, 6, "Principales áreas de la Psicología"], [8, 29, "Trastorno del espectro autista"], [7, 6, "Conformidad"], [1, 28, "Conductismo vs. Cognitivismo"], [7, 23, "Asertividad"], [9, 11, "Modelo ABC de conducta"], [10, 28, "Ciclo del hábito"], [11, 13, "Correlación no implica causalidad"], [11, 25, "Media, mediana y moda"], [11, 28, "Evidencia y pensamiento crítico"]];
 var pad=function(n){return String(n).padStart(2,'0')};
@@ -669,7 +630,7 @@ samples=samples.map(function(s){var f='assets/muestras/m'+pad(s[0])+'-p'+pad(s[1
 var shortNames=["Fundamentos","Neuropsicología","Cognición","Desarrollo","Personalidad","Emoción","Social","Psicopatología","Evaluación","Psicoeducación","Investigación"];
 
 /* Módulos */
-$('#modules').innerHTML=modules.map(function(m,i){return '<div class="module"><span class="mnum">'+pad(i+1)+'</span><span class="mtitle">'+esc(m[0])+'</span><p>'+esc(m[2])+'</p></div>'}).join('');
+$('#modules').innerHTML=modules.map(function(m,i){return '<div class="module"><span class="mnum">'+pad(i+1)+'</span><span class="mtitle">'+esc(m[0])+'</span><div class="topics">'+m[2].split(' · ').map(function(t){return '<span>'+esc(t)+'</span>'}).join('')+'</div></div>'}).join('');
 
 /* Bonos */
 var bonusImgs=["https://i.ibb.co/VK056rB/af0b199d-c289-4391-ae32-38bcc5ace266.png", "https://i.ibb.co/VYQWNTcq/4f2f220b-929d-433c-8c23-c3a3f0d4711e.png", "https://i.ibb.co/DfjB8t0G/bfa2e8f9-1a9c-4908-a160-fd3cd26b8c8e.png", "https://i.ibb.co/MkJHznML/371201bc-4f49-4dc6-9dd9-4aeddcdb743f.png", "https://i.ibb.co/SXzrbrKY/a4db67ea-e959-4486-bb78-daa878262133.png"];
