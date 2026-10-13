@@ -428,14 +428,11 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
   <div class="wrap">
     <div class="head">
       <span class="eyebrow">Mira por dentro</span>
-      <h2>50 páginas reales para que veas <em>exactamente</em> lo que recibes.</h2>
+      <h2>30 páginas reales para que veas <em>exactamente</em> lo que recibes.</h2>
       <p class="lead">Desliza cada fila y toca cualquier página para ampliarla.</p>
     </div>
     <div class="rails" id="rails"></div>
-    <div class="rail-ctrl">
-      <span class="hint" id="rail-count">50 de las 353 páginas</span>
-      <div class="btns"><button class="round" data-dir="-1" aria-label="Anteriores">‹</button><button class="round" data-dir="1" aria-label="Siguientes">›</button></div>
-    </div>
+    <p class="hint" style="margin-top:18px;text-align:center">30 de las 353 páginas de la biblioteca</p>
   </div>
 </section>
 
@@ -666,8 +663,7 @@ var faqs=[
  ["¿Sirve para diagnosticar personas?","No. Su finalidad es educativa y no habilita para diagnosticar ni intervenir profesionalmente."],
  ["¿Cómo funciona la garantía?","Tienes 7 días para solicitar el reembolso, según las condiciones del checkout de Hotmart."]
 ];
-var samples=[[1, 8, "Sigmund Freud"], [1, 18, "Abraham Maslow"], [1, 26, "Freud vs. Jung"], [1, 27, "Piaget vs. Vygotsky"], [1, 25, "Línea del tiempo de la Psicología"], [1, 6, "Principales áreas de la Psicología"], [4, 14, "Jean Piaget"], [4, 21, "Erik Erikson"], [5, 15, "Freud y la personalidad"], [5, 16, "Jung y la personalidad"], [2, 7, "La neurona"], [2, 12, "Dopamina"], [2, 16, "Plasticidad cerebral"], [2, 17, "Organización general del cerebro"], [2, 25, "Amígdala"], [2, 34, "Funciones ejecutivas"], [3, 12, "¿Qué es la memoria?"], [3, 23, "Curva del olvido"], [3, 24, "Estrategias para mejorar el aprendizaje"], [3, 37, "Sesgos cognitivos"], [6, 7, "Emociones básicas"], [6, 10, "Miedo"], [6, 14, "Organizar el vocabulario emocional"], [6, 18, "El ciclo psicológico"], [6, 28, "Estrés"], [5, 9, "Big Five"], [5, 14, "Neuroticismo"], [5, 8, "¿Por qué somos diferentes?"], [10, 6, "Rueda de emociones"], [10, 18, "Pausa antes de reaccionar"], [4, 22, "Teoría del apego"], [4, 20, "Zona de Desarrollo Próximo"], [4, 27, "Adolescencia"], [3, 28, "Refuerzo positivo y negativo"], [9, 11, "Modelo ABC de conducta"], [10, 28, "Ciclo del hábito"], [7, 6, "Conformidad"], [7, 8, "Persuasión"], [7, 21, "Empatía"], [7, 23, "Asertividad"], [8, 8, "Modelo biopsicosocial"], [8, 14, "Trastorno de pánico"], [8, 18, "Trastorno obsesivo-compulsivo"], [8, 28, "TDAH"], [8, 31, "Trastornos de personalidad"], [9, 20, "Validez"], [9, 25, "Percentiles"], [11, 13, "Correlación no implica causalidad"], [11, 25, "Media, mediana y moda"], [11, 28, "Evidencia y pensamiento crítico"]];
-var railNames=["Grandes autores y teorías", "Cerebro, memoria y aprendizaje", "Emociones y personalidad", "Desarrollo, conducta y relaciones", "Psicopatología, evaluación e investigación"];
+var samples=[[1, 8, "Sigmund Freud"], [2, 7, "La neurona"], [1, 18, "Abraham Maslow"], [8, 14, "Trastorno de pánico"], [2, 12, "Dopamina"], [1, 26, "Freud vs. Jung"], [8, 28, "TDAH"], [2, 16, "Plasticidad cerebral"], [1, 27, "Piaget vs. Vygotsky"], [8, 31, "Trastornos de personalidad"], [2, 17, "Organización general del cerebro"], [1, 9, "Carl Gustav Jung"], [8, 13, "Ansiedad generalizada"], [7, 8, "Persuasión"], [1, 12, "B. F. Skinner"], [8, 20, "Trastornos depresivos"], [7, 21, "Empatía"], [1, 25, "Línea del tiempo de la Psicología"], [8, 8, "Modelo biopsicosocial"], [7, 7, "Obediencia"], [1, 6, "Principales áreas de la Psicología"], [8, 29, "Trastorno del espectro autista"], [7, 6, "Conformidad"], [1, 28, "Conductismo vs. Cognitivismo"], [7, 23, "Asertividad"], [9, 11, "Modelo ABC de conducta"], [10, 28, "Ciclo del hábito"], [11, 13, "Correlación no implica causalidad"], [11, 25, "Media, mediana y moda"], [11, 28, "Evidencia y pensamiento crítico"]];
 var pad=function(n){return String(n).padStart(2,'0')};
 samples=samples.map(function(s){var f='assets/muestras/m'+pad(s[0])+'-p'+pad(s[1])+'.webp';return{m:s[0],p:s[1],t:s[2],thumb:f,src:f}});
 var shortNames=["Fundamentos","Neuropsicología","Cognición","Desarrollo","Personalidad","Emoción","Social","Psicopatología","Evaluación","Psicoeducación","Investigación"];
@@ -691,11 +687,11 @@ function draggable(r,onTap){var down=false,sx=0,sl=0,moved=0;
  r.addEventListener('click',function(e){if(moved>6){e.preventDefault();e.stopPropagation();moved=0;return}onTap(e)},true);
 }
 
-/* Muestras: 5 carruseles de 10 */
+/* Muestras: 3 carruseles de 10 */
 var current=samples;
-var groups=[0,1,2,3,4].map(function(i){return samples.slice(i*10,i*10+10)});
+var groups=[0,1,2].map(function(i){return samples.slice(i*10,i*10+10)});
 $('#rails').innerHTML=groups.map(function(g,gi){var off=gi*10;
-  return '<div class="rail-row"><div class="rail" tabindex="0" aria-label="Carrusel de muestras '+(gi+1)+'">'+g.map(function(s,j){return '<button class="sample" data-i="'+(off+j)+'" aria-label="Ampliar: '+esc(s.t)+'"><div class="ph"><img src="'+s.src+'" width="1086" height="1448" loading="lazy" decoding="async" alt="'+esc(s.t)+'" draggable="false"></div><span>'+esc(s.t)+'</span></button>'}).join('')+'</div><div class="rail-ctrl"><span class="hint">'+esc(railNames[gi])+' · desliza para ver más</span><div class="btns"><button class="round" data-dir="-1" aria-label="Anteriores">‹</button><button class="round" data-dir="1" aria-label="Siguientes">›</button></div></div></div>'}).join('');
+  return '<div class="rail-row"><div class="rail" tabindex="0" aria-label="Carrusel de muestras '+(gi+1)+'">'+g.map(function(s,j){return '<button class="sample" data-i="'+(off+j)+'" aria-label="Ampliar: '+esc(s.t)+'"><div class="ph"><img src="'+s.src+'" width="1086" height="1448" loading="lazy" decoding="async" alt="'+esc(s.t)+'" draggable="false"></div><span>'+esc(s.t)+'</span></button>'}).join('')+'</div><div class="rail-ctrl"><span class="hint">Desliza para ver más</span><div class="btns"><button class="round" data-dir="-1" aria-label="Anteriores">‹</button><button class="round" data-dir="1" aria-label="Siguientes">›</button></div></div></div>'}).join('');
 document.querySelectorAll('.rail-row').forEach(function(row){var r=row.querySelector('.rail');
   row.querySelectorAll('[data-dir]').forEach(function(b){b.onclick=function(){r.scrollBy({left:Number(b.dataset.dir)*r.clientWidth*0.8,behavior:'smooth'})}});
   draggable(r,function(e){var b=e.target.closest('.sample');if(b)openLB('s',Number(b.dataset.i))});
