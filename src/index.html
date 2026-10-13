@@ -41,7 +41,7 @@ function checkoutUrl(base){
   return url.toString();
 }
 window.BibliotecaTracking={checkoutUrl:checkoutUrl,initiateCheckout:function(value){
-  if(typeof window.fbq==='function'){window.fbq('track','InitiateCheckout',{value:Number(value),currency:'USD',content_ids:['Q107777532N'],content_type:'product',num_items:1,content_name:'Biblioteca de Psicología Completa',contents:[{id:'Q107777532N',quantity:1,item_price:Number(value)}]},{eventID:'ic_'+Date.now()+'_'+Math.random().toString(36).slice(2,8)})}
+  if(typeof window.fbq==='function'){window.fbq('track','InitiateCheckout',{value:Number(value),currency:'USD',content_ids:['E108015035W'],content_type:'product',num_items:1,content_name:'Biblioteca de Psicología Completa',contents:[{id:'E108015035W',quantity:1,item_price:Number(value)}]},{eventID:'ic_'+Date.now()+'_'+Math.random().toString(36).slice(2,8)})}
 }};
 if(PREVIEW) return;
 
@@ -51,7 +51,7 @@ if(PREVIEW) return;
 
 /* ---------- 2) Meta Pixel 973045345819425 ---------- */
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-var PRODUCT={content_ids:['Q107777532N'],content_type:'product',content_name:'Biblioteca de Psicología Completa',value:14.90,currency:'USD'};
+var PRODUCT={content_ids:['E108015035W'],content_type:'product',content_name:'Biblioteca de Psicología Completa',value:14.90,currency:'USD'};
 function eid(n){return n+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,8)}
 window.fbq('init','973045345819425');
 window.fbq('track','PageView',{},{eventID:eid('pv')});
@@ -556,7 +556,7 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
           <span class="once">Pago único · Sin mensualidades</span>
         </div>
         <span class="save">AHORRAS US$ 64,10 (81 %)</span>
-        <a class="cta block pulse" href="https://pay.hotmart.com/Q107777532N?checkoutMode=10&bid=1791811641223" data-buy>Sí, quiero mi biblioteca
+        <a class="cta block pulse" href="https://pay.hotmart.com/E108015035W?checkoutMode=10" data-buy>Sí, quiero mi biblioteca
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <div class="trust" style="justify-content:center"><span>Acceso inmediato</span><span>Compra segura</span><span>Garantía 7 días</span></div>
         <p class="fine">Conversión a tu moneda local según disponibilidad. Confirma el importe final en el checkout. Valores de referencia estimados, no precios anteriores.</p>
@@ -626,7 +626,7 @@ dialog::backdrop{background:rgba(14,36,43,.75);backdrop-filter:blur(3px)}
 <script>
 (function(){
 var A='https://biblipsicologia1.vercel.app/assets/';
-var CHECKOUT='https://pay.hotmart.com/Q107777532N?checkoutMode=10&bid=1791811641223';
+var CHECKOUT='https://pay.hotmart.com/E108015035W?checkoutMode=10';
 var PRICE=14.90;
 var $=function(s){return document.querySelector(s)};
 var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')};
