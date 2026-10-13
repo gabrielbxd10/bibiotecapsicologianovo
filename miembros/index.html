@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0B1D23">
+<title>Mi Biblioteca de Psicología · Área de miembros</title>
+<link rel="icon" href="https://biblipsicologia1.vercel.app/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="preload" as="image" href="https://psicologiabiblioteca.vercel.app/assets/hero-mockup-D_g_UxlJ.webp">
+<style>
+/* Área de miembros estilo streaming: fondo tinta profunda, filas horizontales de portadas, ámbar de la oferta como único acento. */
+:root{
+  --bg:#0B1D23;          /* tinta profunda de la marca */
+  --bg-2:#10282F;
+  --card:#163640;
+  --ink:#183640;
+  --amber:#F2B23A;
+  --amber-deep:#D9951C;
+  --sage:#9FB89A;
+  --clay:#D08A6A;
+  --text:#EEF2EF;
+  --muted:#A9BAB7;
+  --line:rgba(255,255,255,.1);
+  --display:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.55 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:6px}
+.pad{padding-inline:clamp(16px,4vw,56px)}
+
+/* Barra superior */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;display:flex;align-items:center;gap:clamp(14px,3vw,36px);min-height:68px;
+  background:linear-gradient(180deg,rgba(11,29,35,.96),rgba(11,29,35,.82));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 .74rem/1.1 var(--body);letter-spacing:.16em;white-space:nowrap}
+.brand i{font:700 1.9rem/1 var(--display);font-style:normal;color:var(--amber)}
+.tabs{display:flex;gap:6px;margin-left:auto}
+.tab{border:1px solid transparent;background:none;border-radius:999px;padding:10px 20px;font-weight:700;font-size:.95rem;color:var(--muted);display:inline-flex;align-items:center;gap:8px;transition:background .2s,color .2s}
+.tab svg{width:18px;height:18px}
+.tab:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.tab[aria-selected="true"]{background:var(--amber);color:#0B1D23}
+@media (max-width:560px){.brand span{display:none}.tab{padding:9px 16px;font-size:.9rem}}
+
+/* Hero */
+.hero{position:relative;min-height:min(78vh,640px);display:grid;align-items:end;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-2;background:radial-gradient(900px 500px at 78% 40%,rgba(242,178,58,.16),transparent 60%),radial-gradient(700px 500px at 10% 0%,rgba(159,184,154,.12),transparent 60%),var(--bg)}
+.hero-art{position:absolute;right:clamp(-80px,-2vw,0px);top:50%;transform:translateY(-50%);width:min(50vw,600px);height:auto;z-index:-1;filter:drop-shadow(0 40px 60px rgba(0,0,0,.55))}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,var(--bg) 0%,rgba(11,29,35,.92) 34%,rgba(11,29,35,.2) 70%,transparent),linear-gradient(0deg,var(--bg) 0%,transparent 35%)}
+.hero-in{padding-block:80px 56px;max-width:640px;display:grid;gap:18px}
+.kicker{font:800 .74rem/1 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:10px}
+.kicker::before{content:"Ψ";font:700 1.2rem/1 var(--display);letter-spacing:0}
+.hero h1{font:700 clamp(2.4rem,6vw,4.4rem)/1.02 var(--display);margin:0;letter-spacing:-.01em;text-wrap:balance}
+.hero h1 em{color:var(--amber)}
+.hero p{margin:0;color:var(--muted);font-size:clamp(1rem,2vw,1.12rem);max-width:52ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-weight:700;font-size:.9rem;color:var(--text)}
+.meta span{display:inline-flex;align-items:center;gap:8px}
+.meta span+span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--sage)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.btn{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:8px;padding:14px 26px;font-weight:800;font-size:1rem;text-decoration:none;transition:transform .15s,background .2s}
+.btn svg{width:20px;height:20px}
+.btn.play{background:var(--amber);color:#0B1D23}
+.btn.play:hover{background:#FFC555;transform:translateY(-1px)}
+.btn.ghost{background:rgba(255,255,255,.14);color:var(--text)}
+.btn.ghost:hover{background:rgba(255,255,255,.22)}
+@media (max-width:820px){
+  .hero{min-height:auto}
+  .hero-art{position:relative;right:auto;top:auto;transform:none;width:min(72vw,340px);margin:20px auto 4px}
+  .hero::after{background:linear-gradient(0deg,var(--bg) 0%,rgba(11,29,35,.6) 45%,transparent 75%)}
+  .hero-in{padding-top:0}
+}
+
+/* Filas */
+.row{padding-block:18px 8px}
+.row-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.row-head h2{margin:0;font:700 clamp(1.4rem,2.6vw,1.9rem)/1.1 var(--display)}
+.row-head small{color:var(--muted);font-weight:600;white-space:nowrap}
+@media (max-width:480px){.row-head small{display:none}}
+.rail-wrap{position:relative}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(150px,17vw,220px);gap:14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
+  padding-block:10px 22px;scrollbar-width:none;scroll-padding-inline:clamp(16px,4vw,56px)}
+.rail::-webkit-scrollbar{display:none}
+.rail>*{scroll-snap-align:start}
+.arrow{position:absolute;top:10px;bottom:22px;width:clamp(36px,4vw,56px);border:0;z-index:2;font-size:2rem;color:#fff;opacity:0;transition:opacity .2s}
+.arrow.l{left:0;background:linear-gradient(90deg,rgba(11,29,35,.95),transparent)}
+.arrow.r{right:0;background:linear-gradient(270deg,rgba(11,29,35,.95),transparent)}
+.rail-wrap:hover .arrow{opacity:1}
+.arrow[hidden]{display:none}
+@media (hover:none){.arrow{display:none}}
+
+/* Tarjetas de módulo */
+.card{position:relative;border:0;padding:0;background:none;text-align:left;display:grid;gap:9px;transition:transform .25s ease}
+.cover{position:relative;aspect-ratio:3/4;border-radius:8px;overflow:hidden;background:var(--card);box-shadow:0 12px 26px -12px rgba(0,0,0,.7);transition:box-shadow .25s}
+.cover img{width:100%;height:100%;object-fit:cover}
+.cover::after{content:"";position:absolute;inset:0;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.num{position:absolute;left:8px;top:8px;background:rgba(11,29,35,.85);color:var(--amber);font:800 .78rem/1 var(--body);padding:6px 8px;border-radius:6px;letter-spacing:.06em}
+.done{position:absolute;right:8px;top:8px;background:var(--amber);color:#0B1D23;font:800 .7rem/1 var(--body);padding:6px 8px;border-radius:6px;display:none}
+.card.seen .done{display:block}
+.card .t{font-weight:700;font-size:.95rem;line-height:1.3}
+.card .s{color:var(--muted);font-size:.82rem;font-weight:600;margin-top:-6px}
+@media (hover:hover){
+  .card:hover{transform:translateY(-6px)}
+  .card:hover .cover{box-shadow:0 22px 40px -14px rgba(0,0,0,.85),0 0 0 2px var(--amber)}
+}
+.card.wide{grid-template-columns:1fr}
+.card.wide .cover{aspect-ratio:1/1}
+.rail.bonus{grid-auto-columns:clamp(170px,19vw,240px)}
+
+/* Bonos (pestaña) */
+.page-head{padding-block:48px 8px;display:grid;gap:10px;max-width:720px}
+.page-head h1{margin:0;font:700 clamp(2.2rem,5vw,3.4rem)/1.05 var(--display)}
+.page-head h1 em{color:var(--amber)}
+.page-head p{margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:22px;padding-block:24px 64px}
+
+/* Detalle (modal) */
+dialog{border:0;padding:0;background:transparent;color:var(--text);max-width:min(94vw,860px);width:100%;max-height:92vh}
+dialog::backdrop{background:rgba(4,12,15,.8);backdrop-filter:blur(4px)}
+.sheet{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;overflow:auto;max-height:92vh;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr)}
+.sheet .art{background:#08161B;padding:22px;display:grid;place-items:center}
+.sheet .art img{border-radius:10px;box-shadow:0 20px 40px -14px rgba(0,0,0,.8);max-height:60vh;width:auto}
+.sheet .info{padding:30px 30px 28px;display:grid;gap:14px;align-content:start}
+.sheet .info .kicker{font-size:.7rem}
+.sheet h3{margin:0;font:700 clamp(1.7rem,3vw,2.3rem)/1.08 var(--display)}
+.sheet p{margin:0;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.82rem;font-weight:700;color:var(--text)}
+.pending{font-size:.85rem;color:var(--muted);background:rgba(255,255,255,.05);border-radius:8px;padding:10px 12px}
+.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.close{position:absolute;right:12px;top:12px;width:42px;height:42px;border-radius:50%;border:0;background:rgba(0,0,0,.55);font-size:1.4rem;z-index:3}
+@media (max-width:680px){.sheet{grid-template-columns:1fr}.sheet .art img{max-height:42vh}.sheet .info{padding:22px}}
+
+footer{border-top:1px solid var(--line);padding-block:28px 40px;color:var(--muted);font-size:.85rem;display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between}
+
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="top pad">
+  <a class="brand" href="#inicio"><i>Ψ</i><span>BIBLIOTECA DE<br>PSICOLOGÍA</span></a>
+  <nav class="tabs" role="tablist" aria-label="Secciones">
+    <button class="tab" role="tab" id="tab-inicio" data-view="inicio" aria-selected="true" aria-controls="view-inicio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Inicio</button>
+    <button class="tab" role="tab" id="tab-bonos" data-view="bonos" aria-selected="false" aria-controls="view-bonos">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="1.5"/><path d="M12 8v13M3 12h18M12 8S10.5 3 7.5 3a2.5 2.5 0 0 0 0 5M12 8s1.5-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>Bonos</button>
+  </nav>
+</header>
+
+<!-- ===== INICIO ===== -->
+<main id="view-inicio" role="tabpanel" aria-labelledby="tab-inicio">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <img class="hero-art" src="https://psicologiabiblioteca.vercel.app/assets/hero-mockup-D_g_UxlJ.webp" width="1254" height="1254" alt="Biblioteca de Psicología Completa">
+    <div class="hero-in pad">
+      <span class="kicker">Tu biblioteca</span>
+      <h1>Bienvenido/a a tu <em>Biblioteca de Psicología</em></h1>
+      <p>Todo el contenido de la carrera organizado en guías visuales. Empieza por el Módulo 01 o elige el tema que necesitas hoy.</p>
+      <div class="meta"><span>11 módulos</span><span>353 páginas</span><span>5 bonos</span></div>
+      <div class="actions">
+        <button class="btn play" id="hero-start"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.52.85l12-7.5a1 1 0 0 0 0-1.7l-12-7.5A1 1 0 0 0 7 4.5z"/></svg><span id="hero-start-label">Empezar por el Módulo 01</span></button>
+        <button class="btn ghost" data-go="bonos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg>Ver mis bonos</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="row pad" id="row-continue" hidden>
+    <div class="row-head"><h2>Continuar estudiando</h2><small>Lo último que abriste</small></div>
+    <div class="rail-wrap"><div class="rail" id="rail-continue"></div></div>
+  </section>
+
+  <section class="row pad">
+    <div class="row-head"><h2>Los 11 módulos</h2><small>353 páginas visuales</small></div>
+    <div class="rail-wrap"><button class="arrow l" aria-label="Anterior">‹</button><div class="rail" id="rail-modules"></div><button class="arrow r" aria-label="Siguiente">›</button></div>
+  </section>
+
+  <section class="row pad">
+    <div class="row-head"><h2>Mente, cerebro y aprendizaje</h2><small>Módulos 01 a 03</small></div>
+    <div class="rail-wrap"><div class="rail" data-mods="1,2,3"></div></div>
+  </section>
+
+  <section class="row pad">
+    <div class="row-head"><h2>Desarrollo, personalidad y emociones</h2><small>Módulos 04 a 06</small></div>
+    <div class="rail-wrap"><div class="rail" data-mods="4,5,6"></div></div>
+  </section>
+
+  <section class="row pad">
+    <div class="row-head"><h2>Relaciones, salud mental y método</h2><small>Módulos 07 a 11</small></div>
+    <div class="rail-wrap"><button class="arrow l" aria-label="Anterior">‹</button><div class="rail" data-mods="7,8,9,10,11"></div><button class="arrow r" aria-label="Siguiente">›</button></div>
+  </section>
+
+  <section class="row pad">
+    <div class="row-head"><h2>Tus 5 bonos</h2><small><a href="#bonos" data-go="bonos">Ver todos →</a></small></div>
+    <div class="rail-wrap"><div class="rail bonus" id="rail-bonus"></div></div>
+  </section>
+</main>
+
+<!-- ===== BONOS ===== -->
+<main id="view-bonos" role="tabpanel" aria-labelledby="tab-bonos" hidden>
+  <div class="page-head pad">
+    <span class="kicker">Incluidos en tu compra</span>
+    <h1>Tus <em>5 bonos</em></h1>
+    <p>Guías complementarias para ampliar tu biblioteca. Toca cualquier bono para abrirlo.</p>
+  </div>
+  <div class="grid pad" id="grid-bonus"></div>
+</main>
+
+<footer class="pad"><span>© 2026 Biblioteca de Psicología</span><span>Material educativo. No sustituye formación académica ni supervisión profesional.</span></footer>
+
+<dialog id="detail" aria-labelledby="d-title">
+  <button class="close" data-close aria-label="Cerrar">×</button>
+  <div class="sheet">
+    <div class="art"><img id="d-img" alt=""></div>
+    <div class="info">
+      <span class="kicker" id="d-kicker"></span>
+      <h3 id="d-title"></h3>
+      <div class="chips" id="d-chips"></div>
+      <p id="d-desc"></p>
+      <div class="actions">
+        <a class="btn play" id="d-open" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.52.85l12-7.5a1 1 0 0 0 0-1.7l-12-7.5A1 1 0 0 0 7 4.5z"/></svg><span id="d-open-label">Abrir</span></a>
+      </div>
+      <p class="pending" id="d-pending" hidden>Este contenido estará disponible muy pronto.</p>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+/* ======================================================================
+   ENTREGABLES: pega aquí el enlace de cada módulo y bono (url:'').
+   Mientras url esté vacío, el botón aparece como "disponible pronto".
+   ====================================================================== */
+var MODULES=[
+ {n:1, t:"Fundamentos, autores y corrientes de la Psicología", p:28, d:"Origen de la disciplina, grandes autores y las principales corrientes: psicoanálisis, conductismo, cognitivismo y más.", url:""},
+ {n:2, t:"Neuropsicología y bases biológicas de la conducta", p:38, d:"Sistema nervioso, neurotransmisores, plasticidad cerebral, amígdala y funciones ejecutivas.", url:""},
+ {n:3, t:"Cognición, memoria y aprendizaje", p:38, d:"Atención, memoria de trabajo, curva del olvido, refuerzo, sesgos cognitivos y estrategias de estudio.", url:""},
+ {n:4, t:"Psicología del desarrollo humano", p:33, d:"Desarrollo cognitivo infantil, teoría del apego y cambios a lo largo de toda la vida.", url:""},
+ {n:5, t:"Personalidad y diferencias individuales", p:28, d:"Temperamento, teoría de los rasgos, Big Five y comparación de modelos de personalidad.", url:""},
+ {n:6, t:"Emoción, motivación y regulación emocional", p:33, d:"Emoción, sentimiento y estado de ánimo, vocabulario emocional, estrés y estrategias de regulación.", url:""},
+ {n:7, t:"Psicología social y relaciones humanas", p:28, d:"Persuasión, empatía, escucha activa, grupos y resolución de conflictos.", url:""},
+ {n:8, t:"Psicopatología: Guía visual", p:33, d:"Modelo biopsicosocial y conceptos introductorios sobre ansiedad, TOC, autismo y trastornos de personalidad.", url:""},
+ {n:9, t:"Evaluación psicológica y Psicometría", p:28, d:"Entrevista psicológica, modelo ABC, fiabilidad, validez y percentiles.", url:""},
+ {n:10,t:"Recursos psicoeducativos y reflexión", p:38, d:"Rueda de emociones, círculo de control, ciclo del hábito, valores y herramientas de reflexión.", url:""},
+ {n:11,t:"Investigación, evidencia y metodología", p:28, d:"Hipótesis, variables, correlación vs. causalidad, estadística básica y pensamiento crítico.", url:""}
+];
+var BONUSES=[
+ {n:1, t:"Diccionario Esencial de Psicología", d:"Aclara al instante términos y definiciones mientras estudias.", img:"https://i.ibb.co/VK056rB/af0b199d-c289-4391-ae32-38bcc5ace266.png", url:""},
+ {n:2, t:"15 Grandes Autores de la Psicología", d:"Sus ideas y aportaciones principales, resumidas y comparadas.", img:"https://i.ibb.co/VYQWNTcq/4f2f220b-929d-433c-8c23-c3a3f0d4711e.png", url:""},
+ {n:3, t:"Historia de la Psicología: Guía Rápida", d:"Los momentos clave de la disciplina en orden cronológico.", img:"https://i.ibb.co/DfjB8t0G/bfa2e8f9-1a9c-4908-a160-fd3cd26b8c8e.png", url:""},
+ {n:4, t:"10 Experimentos que Marcaron la Psicología", d:"Qué demostraron, sus límites y las cuestiones éticas.", img:"https://i.ibb.co/MkJHznML/371201bc-4f49-4dc6-9dd9-4aeddcdb743f.png", url:""},
+ {n:5, t:"Guía de Lecturas para Estudiantes de Psicología", d:"Lecturas recomendadas para seguir profundizando.", img:"https://i.ibb.co/SXzrbrKY/a4db67ea-e959-4486-bb78-daa878262133.png", url:""}
+];
+/* ====================================================================== */
+
+var $=function(s){return document.querySelector(s)};
+var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')};
+var pad=function(n){return String(n).padStart(2,'0')};
+var cover=function(m){return 'assets/m'+pad(m.n)+'.webp'};
+var KEY='bp_miembros_v1',state={seen:[],last:null};
+try{var s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&Array.isArray(s.seen))state=s}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+
+function modCard(m){
+  var seen=state.seen.indexOf(m.n)>-1;
+  return '<button class="card'+(seen?' seen':'')+'" data-mod="'+m.n+'" aria-label="Módulo '+pad(m.n)+': '+esc(m.t)+'">'+
+    '<div class="cover"><img src="'+cover(m)+'" width="780" height="1040" loading="lazy" decoding="async" alt=""><span class="num">MÓDULO '+pad(m.n)+'</span><span class="done">✓ VISTO</span></div>'+
+    '<span class="t">'+esc(m.t)+'</span><span class="s">'+m.p+' páginas</span></button>';
+}
+function bonusCard(b){
+  return '<button class="card wide" data-bonus="'+b.n+'" aria-label="Bono '+pad(b.n)+': '+esc(b.t)+'">'+
+    '<div class="cover"><img src="'+b.img+'" width="1254" height="1254" loading="lazy" decoding="async" alt=""><span class="num">BONO '+pad(b.n)+'</span></div>'+
+    '<span class="t">'+esc(b.t)+'</span></button>';
+}
+function render(){
+  $('#rail-modules').innerHTML=MODULES.map(modCard).join('');
+  document.querySelectorAll('.rail[data-mods]').forEach(function(r){
+    r.innerHTML=r.dataset.mods.split(',').map(function(n){return modCard(MODULES[n-1])}).join('');
+  });
+  $('#rail-bonus').innerHTML=BONUSES.map(bonusCard).join('');
+  $('#grid-bonus').innerHTML=BONUSES.map(bonusCard).join('');
+  var cont=state.seen.slice().reverse().slice(0,6);
+  $('#row-continue').hidden=!cont.length;
+  $('#rail-continue').innerHTML=cont.map(function(n){return modCard(MODULES[n-1])}).join('');
+  var next=MODULES.filter(function(m){return state.seen.indexOf(m.n)<0})[0];
+  var target=state.last?MODULES[state.last-1]:MODULES[0];
+  $('#hero-start-label').textContent=state.last?('Continuar: Módulo '+pad(target.n)):'Empezar por el Módulo 01';
+  $('#hero-start').dataset.mod=target.n;
+  arrows();
+}
+
+/* Detalle */
+var dlg=$('#detail');
+function openDetail(kind,n){
+  var x=kind==='mod'?MODULES[n-1]:BONUSES[n-1];
+  $('#d-img').src=kind==='mod'?cover(x):x.img;
+  $('#d-img').alt=x.t;
+  $('#d-kicker').textContent=kind==='mod'?('Módulo '+pad(x.n)+' de 11'):('Bono '+pad(x.n)+' de 5');
+  $('#d-title').textContent=x.t;
+  $('#d-desc').textContent=x.d;
+  $('#d-chips').innerHTML=kind==='mod'?('<span class="chip">'+x.p+' páginas</span><span class="chip">Guía visual</span><span class="chip">Lectura en celular y PC</span>'):'<span class="chip">Bono incluido</span><span class="chip">Guía digital</span>';
+  var a=$('#d-open');
+  $('#d-open-label').textContent=kind==='mod'?'Abrir módulo':'Abrir bono';
+  if(x.url){a.href=x.url;a.removeAttribute('aria-disabled');$('#d-pending').hidden=true}
+  else{a.removeAttribute('href');a.setAttribute('aria-disabled','true');$('#d-pending').hidden=false}
+  a.onclick=function(){if(kind==='mod'&&x.url){if(state.seen.indexOf(x.n)<0)state.seen.push(x.n);else{state.seen.splice(state.seen.indexOf(x.n),1);state.seen.push(x.n)}state.last=x.n;save();setTimeout(render,300)}};
+  dlg.showModal();
+}
+document.addEventListener('click',function(e){
+  var c=e.target.closest('[data-mod]');if(c){openDetail('mod',Number(c.dataset.mod));return}
+  var b=e.target.closest('[data-bonus]');if(b){openDetail('bonus',Number(b.dataset.bonus));return}
+  var g=e.target.closest('[data-go]');if(g){e.preventDefault();show(g.dataset.go,true)}
+});
+dlg.addEventListener('click',function(e){if(e.target===dlg||e.target.closest('[data-close]'))dlg.close()});
+
+/* Pestañas Inicio / Bonos */
+function show(view,scroll){
+  ['inicio','bonos'].forEach(function(v){
+    $('#view-'+v).hidden=v!==view;
+    $('#tab-'+v).setAttribute('aria-selected',v===view);
+  });
+  if(location.hash!=='#'+view)history.replaceState(null,'','#'+view);
+  if(scroll)window.scrollTo({top:0,behavior:'smooth'});
+  arrows();
+}
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){show(t.dataset.view,true)}});
+$('.brand').onclick=function(e){e.preventDefault();show('inicio',true)};
+addEventListener('hashchange',function(){show(location.hash==='#bonos'?'bonos':'inicio')});
+
+/* Flechas de filas (escritorio) */
+function arrows(){
+  document.querySelectorAll('.rail-wrap').forEach(function(w){
+    var r=w.querySelector('.rail'),l=w.querySelector('.arrow.l'),rt=w.querySelector('.arrow.r');if(!l)return;
+    function upd(){l.hidden=r.scrollLeft<8;rt.hidden=r.scrollLeft+r.clientWidth>=r.scrollWidth-8}
+    l.onclick=function(){r.scrollBy({left:-r.clientWidth*.85,behavior:'smooth'})};
+    rt.onclick=function(){r.scrollBy({left:r.clientWidth*.85,behavior:'smooth'})};
+    r.onscroll=upd;upd();
+  });
+}
+addEventListener('resize',arrows);
+
+render();
+show(location.hash==='#bonos'?'bonos':'inicio');
+})();
+</script>
+</body>
+</html>
