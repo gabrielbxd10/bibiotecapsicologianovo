@@ -397,7 +397,7 @@ def offer_card(badge, h2, old, now, save, note, clock_label):
     return f"""<section class="offer" id="oferta"><div class="wrap"><div class="offer-card">
 <span class="badge">{badge}</span>
 <h2>{h2}</h2>
-<img class="mock" src="{MOCKUP}" width="1254" height="1254" loading="lazy" decoding="async" alt="Biblioteca Práctica de Psicología">
+<img class="mock" src="{MOCKUP}" width="1024" height="1024" loading="lazy" decoding="async" alt="Biblioteca Práctica de Psicología">
 {stack()}
 <div class="price"><div class="old">Valor total: <s>US$ {old}</s></div><div class="now"><small>US$</small>{now}</div><div class="save">{save}</div><div class="terms">Pago único · Acceso inmediato · Sin mensualidades</div></div>
 <div class="offer-timer">{clock_label} {CLOCK}</div>
@@ -418,7 +418,7 @@ up += """<div class="confirm"><strong>✓ ¡Tu compra fue confirmada!</strong> E
 <p class="eyebrow">Solo para quien acaba de comprar la biblioteca</p>
 <h1>Ya tienes la teoría. Ahora aprende a <em>reconocerla en personas reales</em>.</h1>
 <p class="sub">La <strong>Biblioteca Práctica</strong> suma <strong>más de 900 recursos visuales</strong> —fichas de patrones, casos, ejercicios, estructuras de sesión, plantillas y mucho más— con <strong>6 bonos exclusivos</strong> incluidos para que pases de memorizar conceptos a analizarlos, explicarlos y aplicarlos.</p>
-<div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1254" height="1254" fetchpriority="high" alt="Biblioteca Práctica de Psicología: más de 900 recursos"><span class="ribbon">+ 6 bonos hoy</span></div>
+<div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1024" height="1024" fetchpriority="high" alt="Biblioteca Práctica de Psicología: más de 900 recursos"><span class="ribbon">+ 6 bonos hoy</span></div>
 <p class="pricehint">Precio normal <s>US$ 24,90</s> · Hoy <strong>US$ 19,90</strong></p>
 <a class="btn" href="#oferta" data-go="hero">Sí, quiero añadirla a mi pedido</a>
 <p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
@@ -495,7 +495,7 @@ down += """<div class="steps" aria-label="Progreso del pedido"><span class="done
 <p class="eyebrow">Precio especial · solo una vez</p>
 <h1>Lo entendemos. Por eso te dejamos <em>todo por US$ 9,90</em>.</h1>
 <p class="sub">Los mismos <strong>más de 900 recursos</strong>, con los <strong>6 bonos exclusivos</strong>, sin quitar nada, por la mitad del precio. Esta oferta no vuelve a aparecer.</p>
-<div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1254" height="1254" fetchpriority="high" alt="Biblioteca Práctica de Psicología: más de 900 recursos"><span class="ribbon">−50%</span></div>
+<div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1024" height="1024" fetchpriority="high" alt="Biblioteca Práctica de Psicología: más de 900 recursos"><span class="ribbon">−50%</span></div>
 <p class="pricehint"><s>US$ 19,90</s> · Ahora <strong>US$ 9,90</strong></p>
 <a class="btn" href="#oferta" data-go="hero">Sí, lo quiero por US$ 9,90</a>
 <p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
