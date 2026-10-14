@@ -1,66 +1,54 @@
 #!/usr/bin/env python3
-"""Genera upsell/index.html y downsell/index.html (español) para la Biblioteca Práctica."""
-import json, os, sys
+"""Genera upsell/index.html (US$19,90) y downsell/index.html (US$9,90) de la Biblioteca Práctica.
+Uso: python3 src/build-funnel.py .   (desde la raíz del repo)"""
+import os, sys
+from html import escape as esc
 
-OUT = sys.argv[1]
-IMG = "https://psicologiaupsell.vercel.app/assets/"
-MOCKUP = IMG + "biblioteca-practica-mockup.webp"
+OUT = sys.argv[1] if len(sys.argv) > 1 else "."
+A = "/upsell/assets/"
+MOCKUP = A + "mockup.webp"
 
 COLLECTIONS = [
-    (50, "Estructuras de Sesión", "Guías paso a paso para estudiar un tema y ver cómo se organiza una sesión educativa."),
-    (50, "Metáforas Terapéuticas", "Historias y comparaciones para entender ansiedad, emociones, límites y cambio desde otra perspectiva."),
-    (50, "Casos Prácticos para Análisis", "Situaciones ficticias para observar cómo se conectan pensamientos, emociones, conductas y contexto."),
-    (100, "Ejercicios y Herramientas", "Registros, hojas de reflexión, escalas y mapas organizados por áreas."),
-    (50, "Preguntas para Explorar Emociones", "Preguntas sobre intensidad, necesidades, contexto y expresión emocional."),
-    (20, "Diferencias Psicológicas", "Emoción y sentimiento, culpa y responsabilidad, pensamiento y hecho: explicadas lado a lado."),
-    (30, "Emociones y Necesidades · Atlas Visual", "Cada emoción con sus sensaciones, necesidades posibles y ejemplos cotidianos."),
-    (100, "Fichas Visuales de Emociones", "Fichas para repasar y consultar rápido durante el estudio."),
+    (50, "Estructuras de Sesión", "Guías paso a paso sobre ansiedad, autoestima, emociones y relaciones: objetivo, preguntas, ejercicio e idea clave en cada una."),
+    (50, "Casos Prácticos para Análisis", "Situaciones reales del día a día con pensamientos, emociones, conductas, patrón observable y preguntas de análisis."),
+    (100, "Fichas Visuales de Patrones", "Mecanismos de defensa, evitación, vínculos, pensamiento y autosabotaje: qué son, cómo aparecen y ejemplos cotidianos."),
+    (100, "Ejercicios y Herramientas", "Registros, mapas, escalas y hojas de trabajo listas para completar e imprimir."),
+    (50, "Metáforas Terapéuticas", "Historias breves que explican ansiedad, emociones, límites y cambio de una forma que no se olvida."),
+    (50, "Preguntas para Explorar Emociones", "Preguntas organizadas en 10 áreas para reflexionar sobre miedo, culpa, límites, autocrítica y más."),
+    (20, "Diferencias Psicológicas", "Conceptos que se confunden, comparados lado a lado: culpa y vergüenza, negación y supresión, y muchos más."),
+    (30, "Atlas Visual de Emociones y Necesidades", "30 emociones con lo que pueden señalar, las necesidades asociadas y preguntas para explorarlas."),
 ]
 
-RAILS = [
-    ("Emociones y pensamientos", [
-        ("estructuras-6", "Entender el ciclo de la ansiedad", "Estructuras de Sesión"),
-        ("casos-9", "No puedo dejar de comprobar", "Casos Prácticos"),
-        ("ejercicios-6", "Ciclo de ansiedad · Hecho e interpretación", "Ejercicios y Herramientas"),
-        ("metaforas-7", "La alarma demasiado sensible", "Metáforas Terapéuticas"),
-        ("ejercicios-12", "Mapa corporal de ansiedad · Plan breve de regulación", "Ejercicios y Herramientas"),
-        ("estructuras-9", "Diferenciar peligro real y peligro anticipado", "Estructuras de Sesión"),
-        ("ejercicios-9", "Círculo de control · Pensamiento alternativo", "Ejercicios y Herramientas"),
-        ("casos-15", "Pienso durante horas en una conversación", "Casos Prácticos"),
-        ("estructuras-16", "Cuestionar predicciones catastróficas", "Estructuras de Sesión"),
-        ("estructuras-61", "Comprender los detonantes emocionales", "Estructuras de Sesión"),
-        ("ejercicios-20", "Ventana de tolerancia · Lo que mi emoción intenta decirme", "Ejercicios y Herramientas"),
-        ("ejercicios-18", "Mapa corporal emocional · Semáforo emocional", "Ejercicios y Herramientas"),
-    ]),
-    ("Relaciones y límites", [
-        ("estructuras-84", "Aprender a decir «no» con claridad", "Estructuras de Sesión"),
-        ("casos-6", "No responde mi mensaje", "Casos Prácticos"),
-        ("estructuras-88", "Comunicar necesidades de forma asertiva", "Estructuras de Sesión"),
-        ("casos-11", "Evito hablar en reuniones", "Casos Prácticos"),
-        ("ejercicios-40", "Escucha activa · Conversaciones difíciles", "Ejercicios y Herramientas"),
-        ("casos-28", "Cuando me enojo dejo de hablar", "Casos Prácticos"),
-        ("estructuras-95", "Observar miedo al rechazo o abandono", "Estructuras de Sesión"),
-        ("ejercicios-45", "Límites digitales · Mi red de apoyo", "Ejercicios y Herramientas"),
-        ("casos-39", "No sé pedir lo que necesito", "Casos Prácticos"),
-        ("casos-42", "Necesito confirmación constante", "Casos Prácticos"),
-        ("ejercicios-15", "Antes, durante y después · Tarjeta de calma", "Ejercicios y Herramientas"),
-    ]),
-    ("Reflexión y cambio", [
-        ("estructuras-30", "Identificar el diálogo interno", "Estructuras de Sesión"),
-        ("casos-22", "Me comparo constantemente", "Casos Prácticos"),
-        ("estructuras-35", "Diferenciar valor personal y rendimiento", "Estructuras de Sesión"),
-        ("ejercicios-25", "Mi kit emocional · Revisión semanal", "Ejercicios y Herramientas"),
-        ("casos-25", "Me hablo peor de lo que hablaría a otra persona", "Casos Prácticos"),
-        ("estructuras-43", "Construir un lenguaje interno más equilibrado", "Estructuras de Sesión"),
-        ("ejercicios-30", "Evidencias de capacidad · Carta a mí mismo", "Ejercicios y Herramientas"),
-        ("casos-33", "Me siento culpable por estar enojado", "Casos Prácticos"),
-        ("estructuras-47", "Crear una visión personal más completa", "Estructuras de Sesión"),
-        ("ejercicios-50", "Cadena de hábitos · Procrastinación: antes y después", "Ejercicios y Herramientas"),
-        ("estructuras-58", "Diferenciar emoción, pensamiento y conducta", "Estructuras de Sesión"),
-        ("casos-49", "No sé qué quiero realmente", "Casos Prácticos"),
-        ("estructuras-22", "Construir un plan breve de regulación", "Estructuras de Sesión"),
-    ]),
+BONOS = [
+    ("b-plantillas", "Plantillas de Análisis de Caso", "30 fichas imprimibles para analizar casos en exámenes, trabajos y prácticas: ABC, 4 P, hipótesis, genograma y más.", "US$ 9"),
+    ("b-glosario", "Glosario de Psicología", "300 términos esenciales de la A a la Z, explicados en una o dos frases claras.", "US$ 7"),
+    ("b-autores", "Mapa de Autores y Teorías", "47 autores y escuelas en una línea del tiempo, con sus ideas y los conceptos que más se preguntan.", "US$ 7"),
+    ("b-tests", "Guía Educativa de Tests Psicológicos", "Los 31 tests más citados en la carrera: qué miden, a quién se aplican y qué recordar de cada uno.", "US$ 9"),
+    ("b-dinamicas", "60 Dinámicas para Clases y Seminarios", "Actividades paso a paso para estudiar en grupo, debatir, exponer y repasar.", "US$ 9"),
+    ("b-diario", "Diario de Autoconocimiento en 30 Días", "Un ejercicio guiado por día para observar tus emociones, tus relaciones y tus valores.", "US$ 7"),
 ]
+
+S = [
+    ("Negación", "Fichas Visuales de Patrones"), ("Miedo al abandono", "Fichas Visuales de Patrones"),
+    ("Síndrome del impostor", "Fichas Visuales de Patrones"), ("Procrastinación por perfeccionismo", "Fichas Visuales de Patrones"),
+    ("Evitación emocional", "Fichas Visuales de Patrones"), ("Hipersensibilidad al rechazo", "Fichas Visuales de Patrones"),
+    ("20 mecanismos de defensa clásicos", "Fichas Visuales de Patrones"), ("Miedo al fracaso", "Fichas Visuales de Patrones"),
+    ("Proyección", "Fichas Visuales de Patrones"), ("Celos y vigilancia", "Fichas Visuales de Patrones"),
+    ("Entender el ciclo de la ansiedad", "Estructuras de Sesión"), ("Miedo + Ansiedad", "Atlas de Emociones y Necesidades"),
+    ("Identificar y nombrar emociones", "Estructuras de Sesión"), ("Explorar la intensidad emocional", "Estructuras de Sesión"),
+    ("Escisión × Pensamiento dicotómico · Culpa × Vergüenza", "Diferencias Psicológicas"), ("Ampliar la ventana de tolerancia", "Estructuras de Sesión"),
+    ("Emociones difíciles", "Preguntas para Explorar Emociones"), ("Reconocer sensaciones corporales", "Estructuras de Sesión"),
+    ("Enojo + Irritación", "Atlas de Emociones y Necesidades"), ("Practicar una pausa emocional", "Estructuras de Sesión"),
+    ("No responde mi mensaje", "Casos Prácticos"), ("Aprender a decir «no» con claridad", "Estructuras de Sesión"),
+    ("Todos avanzan menos yo", "Casos Prácticos"), ("Observar la autocrítica excesiva", "Estructuras de Sesión"),
+    ("Siempre soy yo quien resuelve todo", "Casos Prácticos"), ("Explorar la comparación social", "Estructuras de Sesión"),
+    ("Una forma de analizar sin etiquetar", "Casos Prácticos"), ("Diferenciar valor personal y rendimiento", "Estructuras de Sesión"),
+    ("Negación × Supresión · Represión × Supresión", "Diferencias Psicológicas"), ("Rueda de emociones · Diario emocional", "Ejercicios y Herramientas"),
+]
+SAMPLES = [(f"p{i:02d}", t, c) for i, (t, c) in enumerate(S, 1)]
+RAILS = [("Patrones que explican la conducta", SAMPLES[0:10]),
+         ("Emociones: entender y regular", SAMPLES[10:20]),
+         ("Casos, relaciones y autoestima", SAMPLES[20:30])]
 
 WIDGET = """<!-- HOTMART - Sales Funnel Widget -->
 <!--- sales funnel container --->
@@ -74,7 +62,7 @@ checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel')
 <!-- HOTMART - Sales Funnel Widget -->"""
 
 CSS = r"""
-:root{--ink:#183640;--ink-deep:#0E242B;--paper:#FFFFFF;--paper-2:#F4F6F5;--card:#FFFDF8;--sage:#5F7A5B;--clay:#B0603F;--amber:#F2B23A;--amber-deep:#D9951C;--text:#1E2F35;--muted:#56676C;--line:rgba(24,54,64,.14);--ok:#2E7D4F;--display:"Cormorant Garamond","Iowan Old Style",Georgia,serif;--body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--r:14px;--wrap:1080px}
+:root{--ink:#183640;--ink-deep:#0E242B;--paper:#FFFFFF;--paper-2:#F4F6F5;--card:#FFFDF8;--sage:#5F7A5B;--clay:#B0603F;--amber:#F2B23A;--amber-deep:#D9951C;--text:#1E2F35;--muted:#56676C;--line:rgba(24,54,64,.14);--ok:#2E7D4F;--red:#C2410C;--display:"Cormorant Garamond","Iowan Old Style",Georgia,serif;--body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--r:14px;--wrap:1080px}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;background:var(--paper);color:var(--text);font:400 17px/1.6 var(--body);overflow-x:hidden}
 img{max-width:100%;height:auto;display:block}
@@ -87,30 +75,49 @@ h2{font-size:clamp(30px,5vw,42px);font-weight:700}
 h3{font-size:24px;font-weight:700}
 p{margin:0}
 .eyebrow{font:700 12.5px/1.3 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:12px}
-.status{background:var(--ok);color:#fff;text-align:center;padding:11px 16px;font-size:15px;line-height:1.4}
-.status strong{font-weight:800}
-.status.wait{background:var(--ink-deep)}
-.status.wait strong{color:var(--amber)}
+/* barra superior + timer */
+.topbar{position:sticky;top:0;z-index:50;background:var(--ink-deep);color:#fff;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.topbar .in{max-width:var(--wrap);margin:0 auto;padding:9px 16px;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;text-align:center}
+.topbar .msg{font-size:14px;line-height:1.3}
+.topbar .msg strong{color:var(--amber)}
+.clock{display:inline-flex;gap:4px;align-items:center;font-variant-numeric:tabular-nums}
+.clock span{background:#fff;color:var(--ink-deep);border-radius:6px;padding:4px 7px;font:800 18px/1 var(--body);min-width:36px;text-align:center}
+.clock i{font-style:normal;font-weight:800;color:var(--amber)}
+.clock small{display:block;font:600 9px/1 var(--body);color:var(--muted);letter-spacing:.06em;margin-top:2px}
+.topbar.done .clock span{background:#F7D9CB;color:var(--red)}
+.confirm{background:#E7F3EC;color:#1F5A38;text-align:center;padding:10px 16px;font-size:14.5px;line-height:1.4;border-bottom:1px solid #CFE6D8}
+.confirm strong{font-weight:800}
 .steps{display:flex;justify-content:center;gap:8px;align-items:center;padding:14px 16px 0;font-size:13px;color:var(--muted);font-weight:600}
-.steps span{display:inline-flex;white-space:nowrap;align-items:center;gap:6px}
+.steps span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .steps i{width:22px;height:22px;border-radius:50%;display:inline-grid;place-items:center;font-style:normal;font-size:12px;background:var(--paper-2);color:var(--muted);border:1px solid var(--line)}
 .steps .done i{background:var(--ok);color:#fff;border-color:var(--ok)}
 .steps .now{color:var(--ink)}.steps .now i{background:var(--amber);color:var(--ink-deep);border-color:var(--amber)}
 .steps b{width:18px;flex:0 0 auto;height:2px;background:var(--line)}
-.hero{padding:26px 0 40px;text-align:center}
-.hero h1{max-width:820px;margin:0 auto}
-.hero .sub{max-width:640px;margin:16px auto 0;color:var(--muted);font-size:18px}
-.hero-media{max-width:520px;margin:22px auto 0}
+/* hero */
+.hero{padding:24px 0 44px;text-align:center}
+.hero h1{max-width:860px;margin:0 auto}
+.hero .sub{max-width:660px;margin:16px auto 0;color:var(--muted);font-size:18px}
+.hero .sub strong{color:var(--ink)}
+.hero-media{max-width:520px;margin:22px auto 0;position:relative}
 .hero-media img{border-radius:18px;width:100%}
+.ribbon{position:absolute;top:14px;right:-6px;background:var(--clay);color:#fff;font:800 13px/1.2 var(--body);padding:8px 12px;border-radius:8px 0 0 8px;box-shadow:0 6px 16px rgba(0,0,0,.18)}
 .pricehint{margin-top:18px;font-size:16px;color:var(--muted)}
 .pricehint s{opacity:.75}
-.pricehint strong{color:var(--ink);font-size:20px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:56px;padding:15px 28px;border-radius:999px;background:var(--amber);color:var(--ink-deep);font:800 17px/1.2 var(--body);text-decoration:none;border:0;cursor:pointer;box-shadow:0 6px 0 var(--amber-deep),0 14px 28px rgba(217,149,28,.28);transition:transform .15s}
+.pricehint strong{color:var(--ink);font-size:22px;white-space:nowrap}
+.pricehint s{white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:58px;padding:15px 28px;border-radius:999px;background:var(--amber);color:var(--ink-deep);font:800 17px/1.2 var(--body);text-decoration:none;border:0;cursor:pointer;box-shadow:0 6px 0 var(--amber-deep),0 14px 28px rgba(217,149,28,.28);transition:transform .15s}
 .btn:active{transform:translateY(3px);box-shadow:0 3px 0 var(--amber-deep)}
-.hero .btn{margin-top:18px;width:100%;max-width:420px}
-section{scroll-margin-top:12px}
-.why{background:var(--paper-2);padding:52px 0}
-.why h2{text-align:center;max-width:720px;margin:0 auto}
+.hero .btn,.cta .btn{margin-top:18px;width:100%;max-width:440px}
+.micro{font-size:13.5px;color:var(--muted);margin-top:10px}
+section{scroll-margin-top:70px}
+/* dolor */
+.pain{background:var(--paper-2);padding:54px 0}
+.pain h2{text-align:center;max-width:760px;margin:0 auto}
+.pain ul{list-style:none;padding:0;margin:26px auto 0;max-width:720px;display:grid;gap:10px}
+.pain li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px 14px 46px;position:relative;font-size:16.5px}
+.pain li::before{content:"✕";position:absolute;left:16px;top:13px;color:var(--clay);font-weight:900}
+.pain .turn{max-width:720px;margin:24px auto 0;text-align:center;font:600 21px/1.4 var(--display);color:var(--ink)}
+.pain .turn em{color:var(--clay)}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
 .pair>div{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px}
 .pair .tag{display:inline-block;font:700 12px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;padding:7px 10px;border-radius:999px;background:var(--paper-2);color:var(--muted);margin-bottom:12px}
@@ -118,14 +125,16 @@ section{scroll-margin-top:12px}
 .pair .new .tag{background:var(--amber);color:var(--ink-deep)}
 .pair h3{margin-bottom:8px}
 .pair p{color:var(--muted);font-size:16px}
+/* recibes */
 .receive{padding:56px 0}
-.head{text-align:center;max-width:720px;margin:0 auto 28px}
+.head{text-align:center;max-width:740px;margin:0 auto 28px}
 .head p.lead{color:var(--muted);margin-top:10px}
 .grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .grid li{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);border-radius:var(--r);padding:18px;background:var(--card)}
 .grid .n{flex:0 0 auto;min-width:62px;font:700 34px/1 var(--display);color:var(--clay)}
 .grid h3{font:700 17px/1.3 var(--body);color:var(--ink)}
 .grid p{font-size:15px;color:var(--muted);margin-top:4px}
+/* muestras */
 .samples{padding:56px 0;background:var(--paper-2)}
 .rail{margin-top:26px}
 .rail-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
@@ -136,30 +145,55 @@ section{scroll-margin-top:12px}
 .track::-webkit-scrollbar{display:none}
 .track.drag{cursor:grabbing;scroll-snap-type:none}
 .track.drag *{pointer-events:none}
-.card{flex:0 0 auto;width:min(68vw,250px);scroll-snap-align:start;margin:0}
+.card{flex:0 0 auto;width:min(72vw,270px);scroll-snap-align:start;margin:0}
 .card button{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;border-radius:10px;overflow:hidden;box-shadow:0 8px 22px rgba(14,36,43,.14)}
 .card img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#e9ece9;-webkit-user-drag:none;user-select:none}
 .card figcaption{font-size:14px;font-weight:600;color:var(--ink);margin-top:10px;line-height:1.35}
 .card small{display:block;color:var(--muted);font-weight:500;font-size:12.5px;margin-top:2px}
 .hint{text-align:center;color:var(--muted);font-size:14px;margin-top:4px}
+/* bonos */
+.bonus{padding:58px 0}
+.bonus .head .eyebrow{color:var(--clay)}
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.bcard{border:1px solid var(--line);border-radius:16px;background:var(--card);overflow:hidden;display:flex;flex-direction:column}
+.bcard .cov{background:linear-gradient(160deg,#F3EBDD,#E4D6BF);padding:18px 18px 0;display:flex;justify-content:center}
+.bcard .cov img{width:62%;border-radius:6px 6px 0 0;box-shadow:0 -4px 22px rgba(14,36,43,.28)}
+.bcard .tx{padding:16px 18px 18px;flex:1;display:flex;flex-direction:column}
+.bcard .no{font:800 11.5px/1 var(--body);letter-spacing:.14em;color:var(--clay);text-transform:uppercase}
+.bcard h3{font:700 19px/1.25 var(--body);color:var(--ink);margin:6px 0}
+.bcard p{font-size:14.5px;color:var(--muted);flex:1}
+.bcard .val{margin-top:12px;font-size:13.5px;color:var(--muted)}
+.bcard .val s{font-weight:700}
+.bcard .val b{color:var(--ok)}
+/* para quién */
+.who{background:var(--paper-2);padding:54px 0}
+.wgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:860px;margin:0 auto}
+.wgrid div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 16px 16px 48px;position:relative;font-size:16px}
+.wgrid div::before{content:"✓";position:absolute;left:16px;top:14px;width:22px;height:22px;border-radius:50%;background:var(--ok);color:#fff;font-size:13px;font-weight:900;display:grid;place-items:center}
+.wgrid strong{color:var(--ink)}
+/* oferta */
 .offer{padding:60px 0}
-.offer-card{max-width:620px;margin:0 auto;border:3px solid var(--amber);border-radius:22px;background:var(--card);padding:28px 22px;box-shadow:0 20px 50px rgba(14,36,43,.12);text-align:center}
+.offer-card{max-width:640px;margin:0 auto;border:3px solid var(--amber);border-radius:22px;background:var(--card);padding:28px 22px;box-shadow:0 20px 50px rgba(14,36,43,.12);text-align:center}
 .offer-card .badge{display:inline-block;background:var(--ink);color:#fff;font:800 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;padding:9px 14px;border-radius:999px}
 .offer-card h2{margin-top:14px;font-size:clamp(28px,5vw,38px)}
 .offer-card .mock{max-width:300px;margin:16px auto 0;border-radius:14px}
 .stack{list-style:none;padding:0;margin:20px 0 0;text-align:left}
-.stack li{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px dashed var(--line);font-size:16px}
+.stack li{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px dashed var(--line);font-size:15.5px}
 .stack li:last-child{border-bottom:0}
 .stack .ck{color:var(--ok);font-weight:900}
 .stack strong{color:var(--ink)}
+.stack .b{margin-left:auto;font-size:11px;font-weight:800;letter-spacing:.08em;background:#FBEFE6;color:var(--clay);border-radius:999px;padding:3px 8px;white-space:nowrap}
+.stack .sep{display:block;font:800 11.5px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--clay);padding:14px 0 4px;border:0}
 .price{margin-top:20px;padding:18px;border-radius:16px;background:#fff;border:1px solid var(--line)}
 .price .old{color:var(--muted);font-size:16px}
-.price .old s{font-weight:600}
-.price .now{font:700 58px/1 var(--display);color:var(--ink);margin:6px 0 2px;white-space:nowrap}
+.price .old s{font-weight:700}
+.price .now{font:700 60px/1 var(--display);color:var(--ink);margin:6px 0 2px;white-space:nowrap}
 .price .now small{font:800 20px/1 var(--body);vertical-align:top;margin-right:4px;position:relative;top:10px}
 .price .save{display:inline-block;background:#E7F3EC;color:var(--ok);font-weight:800;font-size:14px;padding:6px 12px;border-radius:999px;margin-top:6px}
 .price .terms{color:var(--muted);font-size:14px;margin-top:10px}
-.widget{margin-top:18px;min-height:60px}
+.offer-timer{margin-top:14px;display:flex;justify-content:center;align-items:center;gap:10px;font-size:14px;font-weight:700;color:var(--red)}
+.offer-timer .clock span{background:var(--ink-deep);color:#fff}
+.widget{margin-top:16px;min-height:60px}
 .oneclick{font-size:14px;color:var(--muted);margin-top:12px}
 .guarantee{padding:0 0 56px}
 .g-box{max-width:760px;margin:0 auto;display:flex;gap:18px;align-items:center;border:1px solid var(--line);border-radius:var(--r);padding:22px;background:var(--paper-2)}
@@ -174,9 +208,11 @@ section{scroll-margin-top:12px}
 .faq summary::after{content:"+";position:absolute;right:0;top:12px;font-size:24px;color:var(--clay)}
 .faq details[open] summary::after{content:"–"}
 .faq details p{padding:0 0 16px;color:var(--muted);font-size:16px}
-.closing{background:var(--ink-deep);color:#fff;text-align:center;padding:56px 0}
+.closing{background:var(--ink-deep);color:#fff;text-align:center;padding:58px 0}
 .closing h2{color:#fff}
-.closing p{color:rgba(255,255,255,.78);margin:12px auto 22px;max-width:560px}
+.closing h2 em{color:var(--amber)}
+.closing p{color:rgba(255,255,255,.8);margin:14px auto 0;max-width:580px}
+.closing .btn{margin-top:22px;width:100%;max-width:440px}
 footer{padding:26px 0 40px;text-align:center;color:var(--muted);font-size:13px;line-height:1.5}
 dialog.viewer{border:0;padding:0;max-width:min(94vw,720px);width:100%;border-radius:14px;background:#fff}
 dialog.viewer::backdrop{background:rgba(8,20,25,.82)}
@@ -187,27 +223,45 @@ dialog.viewer::backdrop{background:rgba(8,20,25,.82)}
 .v-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 16px;font:700 14px var(--body);color:var(--ink);cursor:pointer}
 #v-img{width:100%;max-height:74vh;object-fit:contain;background:#f1f1ef}
 body.modal{overflow:hidden}
+@media (max-width:860px){.bgrid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:720px){
   body{font-size:16px}
-  .pair,.grid{grid-template-columns:1fr}
+  .pair,.grid,.wgrid{grid-template-columns:1fr}
   .hero{padding-top:18px}
   .hero .sub{font-size:16.5px}
   .rail-head h3{font-size:22px}
   .ctrl{display:none}
   .g-box{flex-direction:column;text-align:center}
   .offer-card{padding:24px 16px}
-  .price .now{font-size:52px}
+  .price .now{font-size:54px}
+  .topbar .in{gap:8px;padding:8px 12px}
+  .topbar .msg{font-size:12.5px}
+  .clock span{font-size:16px;min-width:32px;padding:4px 6px}
+  .ribbon{font-size:12px}
 }
+@media (max-width:520px){.bgrid{grid-template-columns:1fr}.bcard{flex-direction:row}.bcard .cov{width:38%;padding:12px 10px 0;align-items:flex-end}.bcard .cov img{width:100%}.bcard .tx{padding:12px 14px}.bcard h3{font-size:16.5px}.bcard p{font-size:13.5px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 """
 
 JS = r"""
 (function(){
 'use strict';
+function track(n,p){try{if(typeof window.fbq==='function')window.fbq('trackCustom',n,p||{})}catch(e){}}
+/* --- Temporizador de la oferta --- */
+var MIN=window.TIMER_MIN||15,KEY='bp_'+window.PAGE+'_deadline',now=Date.now(),end=0;
+try{end=parseInt(localStorage.getItem(KEY)||'0',10)}catch(e){}
+if(!end||end-now>MIN*60000){end=now+MIN*60000;try{localStorage.setItem(KEY,String(end))}catch(e){}}
+var clocks=[].slice.call(document.querySelectorAll('[data-clock]')),bar=document.querySelector('.topbar'),msg=document.querySelector('[data-timer-msg]');
+function pad(n){return n<10?'0'+n:''+n}
+function tick(){var left=Math.max(0,end-Date.now()),m=Math.floor(left/60000),s=Math.floor(left%60000/1000);
+  clocks.forEach(function(c){c.querySelector('.m').textContent=pad(m);c.querySelector('.s').textContent=pad(s)});
+  if(left<=0){if(bar)bar.classList.add('done');if(msg)msg.innerHTML=window.TIMER_DONE;clearInterval(iv)}}
+var iv=setInterval(tick,1000);tick();
+/* --- Visor de muestras --- */
 var v=document.getElementById('viewer'),vi=document.getElementById('v-img'),vt=document.getElementById('v-title'),vm=document.getElementById('v-meta'),vc=document.getElementById('v-count');
 var items=[].slice.call(document.querySelectorAll('[data-full]')),idx=0;
 function show(i){idx=(i+items.length)%items.length;var b=items[idx];vi.src=b.dataset.full;vi.alt=b.dataset.title;vt.textContent=b.dataset.title;vm.textContent=b.dataset.col;vc.textContent=(idx+1)+' / '+items.length}
-items.forEach(function(b,i){b.addEventListener('click',function(){show(i);v.showModal();document.body.classList.add('modal');track('AmpliarMuestra',{muestra:b.dataset.title})})});
+items.forEach(function(b,i){b.addEventListener('click',function(){show(i);v.showModal();document.body.classList.add('modal');track('AmpliarMuestra',{muestra:b.dataset.title,pagina:window.PAGE})})});
 document.getElementById('v-prev').onclick=function(){show(idx-1)};
 document.getElementById('v-next').onclick=function(){show(idx+1)};
 document.getElementById('v-close').onclick=function(){v.close()};
@@ -219,18 +273,21 @@ document.querySelectorAll('.track').forEach(function(t){
   var g=null,until=0;
   t.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse'||e.button!==0)return;g={id:e.pointerId,x:e.clientX,s:t.scrollLeft,d:false}});
   t.addEventListener('pointermove',function(e){if(!g||g.id!==e.pointerId)return;var dx=e.clientX-g.x;if(!g.d&&Math.abs(dx)>7){g.d=true;t.classList.add('drag');t.setPointerCapture(e.pointerId)}if(g.d){e.preventDefault();t.scrollLeft=g.s-dx}});
-  function end(e){if(!g||g.id!==e.pointerId)return;if(g.d)until=Date.now()+300;g=null;t.classList.remove('drag')}
-  t.addEventListener('pointerup',end);t.addEventListener('pointercancel',end);t.addEventListener('lostpointercapture',end);
+  function endG(e){if(!g||g.id!==e.pointerId)return;if(g.d)until=Date.now()+300;g=null;t.classList.remove('drag')}
+  t.addEventListener('pointerup',endG);t.addEventListener('pointercancel',endG);t.addEventListener('lostpointercapture',endG);
   t.addEventListener('click',function(e){if(Date.now()<until){e.preventDefault();e.stopImmediatePropagation()}},true);
 });
-function track(n,p){try{if(typeof window.fbq==='function')window.fbq('trackCustom',n,p||{})}catch(e){}}
-document.querySelectorAll('[data-go]').forEach(function(a){a.addEventListener('click',function(){track('ClicBoton',{boton:a.dataset.go,pagina:PAGE})})});
+/* --- Eventos --- */
+document.querySelectorAll('[data-go]').forEach(function(a){a.addEventListener('click',function(){track('ClicBoton',{boton:a.dataset.go,pagina:window.PAGE})})});
 var seen={};
-if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(en){var id=en.target.id;if(en.isIntersecting&&!seen[id]){seen[id]=1;track('Ver_'+id,{pagina:PAGE})}})},{threshold:.35});document.querySelectorAll('section[id]').forEach(function(s){io.observe(s)})}
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(en){var id=en.target.id;if(en.isIntersecting&&!seen[id]){seen[id]=1;track('Ver_'+id,{pagina:window.PAGE})}})},{threshold:.35});document.querySelectorAll('section[id]').forEach(function(s){io.observe(s)})}
+var marks={25:0,50:0,75:0,90:0};
+window.addEventListener('scroll',function(){var h=document.documentElement,p=(h.scrollTop+innerHeight)/h.scrollHeight*100;for(var k in marks){if(!marks[k]&&p>=k){marks[k]=1;track('Scroll'+k,{pagina:window.PAGE})}}},{passive:true});
 })();
 """
 
 def pixel(page, value):
+    ev = "VerUpsell" if page == "upsell" else "VerDownsell"
     return f"""<script>
 window.PAGE='{page}';
 (function(){{
@@ -238,152 +295,191 @@ if(window.__NO_TRACK||location.protocol==='file:')return;
 !function(f,b,e,v,n,t,s){{if(f.fbq)return;n=f.fbq=function(){{n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)}};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','973045345819425');
 fbq('track','PageView');
-fbq('trackCustom','{"VerUpsell" if page=="upsell" else "VerDownsell"}',{{value:{value},currency:'USD',content_name:'Biblioteca Práctica de Psicología'}});
+fbq('trackCustom','{ev}',{{value:{value},currency:'USD',content_name:'Biblioteca Práctica de Psicología'}});
 }})();
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=973045345819425&ev=PageView&noscript=1" alt=""></noscript>"""
 
-def head(title, desc, page, value):
+def head(title, desc, page, value, timer_min, timer_done):
     return f"""<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#183640">
+<meta name="theme-color" content="#0E242B">
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <link rel="icon" href="https://biblipsicologia1.vercel.app/favicon.svg">
-<link rel="preconnect" href="https://psicologiaupsell.vercel.app" crossorigin>
 <link rel="preload" as="image" href="{MOCKUP}" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Figtree:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Figtree:wght@400;500;600;700;800&display=swap"></noscript>
 <link rel="dns-prefetch" href="https://checkout.hotmart.com">
+<link rel="dns-prefetch" href="https://connect.facebook.net">
+<script>window.TIMER_MIN={timer_min};window.TIMER_DONE={timer_done!r};</script>
 {pixel(page, value)}
 <style>{CSS}</style>
 </head>
 <body>
 """
 
+CLOCK = '<span class="clock" data-clock aria-label="Tiempo restante"><span class="m">15</span><i>:</i><span class="s">00</span></span>'
+
+def topbar(text):
+    return f'<div class="topbar" role="status"><div class="in"><span class="msg" data-timer-msg>{text}</span>{CLOCK}</div></div>'
+
 def rail(i, title, items):
     tid = f"rail{i}"
     cards = "".join(
-        f'<figure class="card"><button type="button" data-full="{IMG}{f}.webp" data-title="{t}" data-col="{c}" aria-label="Ampliar: {t}">'
-        f'<img src="{IMG}{f}-thumb.webp" width="440" height="587" loading="lazy" decoding="async" draggable="false" alt="Página interior: {t}"></button>'
-        f'<figcaption>{t}<small>{c}</small></figcaption></figure>'
+        f'<figure class="card"><button type="button" data-full="{A}{f}.webp" data-title="{esc(t)}" data-col="{esc(c)}" aria-label="Ampliar: {esc(t)}">'
+        f'<img src="{A}{f}-t.webp" width="440" height="587" loading="lazy" decoding="async" draggable="false" alt="Página interior: {esc(t)}"></button>'
+        f'<figcaption>{esc(t)}<small>{esc(c)}</small></figcaption></figure>'
         for f, t, c in items)
-    return (f'<div class="rail"><div class="rail-head"><h3>{title}</h3><div class="ctrl">'
+    return (f'<div class="rail"><div class="rail-head"><h3>{esc(title)}</h3><div class="ctrl">'
             f'<button type="button" data-scroll="prev" data-track="{tid}" aria-label="Anteriores">←</button>'
             f'<button type="button" data-scroll="next" data-track="{tid}" aria-label="Siguientes">→</button></div></div>'
             f'<div class="track" id="{tid}" tabindex="0">{cards}</div></div>')
 
 def grid():
-    return '<ul class="grid">' + "".join(
-        f'<li><span class="n">{n}</span><div><h3>{t}</h3><p>{d}</p></div></li>' for n, t, d in COLLECTIONS) + "</ul>"
+    return '<ul class="grid">' + "".join(f'<li><span class="n">{n}</span><div><h3>{esc(t)}</h3><p>{esc(d)}</p></div></li>' for n, t, d in COLLECTIONS) + "</ul>"
+
+def bonus_grid(tag):
+    return '<div class="bgrid">' + "".join(
+        f'<article class="bcard"><div class="cov"><img src="{A}{img}.webp" width="520" height="735" loading="lazy" decoding="async" alt="Portada: {esc(t)}"></div>'
+        f'<div class="tx"><span class="no">Bono {i:02d}</span><h3>{esc(t)}</h3><p>{esc(d)}</p><div class="val">Valor: <s>{v}</s> · <b>{tag}</b></div></div></article>'
+        for i, (img, t, d, v) in enumerate(BONOS, 1)) + "</div>"
 
 def stack():
-    return '<ul class="stack">' + "".join(
-        f'<li><span class="ck">✓</span><span><strong>{n}</strong> {t}</span></li>' for n, t, _ in COLLECTIONS) + "</ul>"
+    h = '<ul class="stack"><li class="sep">Biblioteca Práctica · 450 recursos</li>'
+    h += "".join(f'<li><span class="ck">✓</span><span><strong>{n}</strong> {esc(t)}</span></li>' for n, t, _ in COLLECTIONS)
+    h += '<li class="sep">+ 6 bonos exclusivos de hoy</li>'
+    h += "".join(f'<li><span class="ck">✓</span><span>{esc(t)}</span><span class="b">BONO</span></li>' for _, t, _, _ in BONOS)
+    return h + "</ul>"
 
 VIEWER = """<dialog id="viewer" class="viewer" aria-labelledby="v-title"><div class="v-head"><div><p id="v-title"></p><small id="v-meta"></small></div><button type="button" class="v-btn" id="v-close">Cerrar</button></div><img id="v-img" alt=""><div class="v-foot"><button type="button" class="v-btn" id="v-prev">← Anterior</button><span id="v-count" aria-live="polite"></span><button type="button" class="v-btn" id="v-next">Siguiente →</button></div></dialog>"""
-
 FOOTER = """<footer><div class="wrap">Biblioteca Práctica de Psicología · Material educativo de apoyo al estudio y la reflexión. No sustituye formación clínica, evaluación, diagnóstico, tratamiento ni supervisión profesional.</div></footer>"""
+GUARANTEE = """<section class="guarantee" id="garantia"><div class="wrap"><div class="g-box"><div class="seal"><span><b>7</b>DÍAS</span></div><div><h3>Riesgo cero: garantía de 7 días</h3><p>Entra, explora los 450 recursos y los 6 bonos. Si sientes que no te sirven, pides el reembolso en Hotmart dentro de 7 días. Sin preguntas, y sin perder la biblioteca que ya compraste.</p></div></div></div></section>"""
 
-GUARANTEE = """<section class="guarantee" id="garantia"><div class="wrap"><div class="g-box"><div class="seal"><span><b>7</b>DÍAS</span></div><div><h3>Garantía de 7 días</h3><p>Si la Biblioteca Práctica no te sirve, pides el reembolso dentro de 7 días directamente en Hotmart. Sin preguntas y sin perder la biblioteca que ya compraste.</p></div></div></div></section>"""
-
-def offer_card(badge, h2, old, now, save, note):
+def offer_card(badge, h2, old, now, save, note, clock_label):
     return f"""<section class="offer" id="oferta"><div class="wrap"><div class="offer-card">
 <span class="badge">{badge}</span>
 <h2>{h2}</h2>
 <img class="mock" src="{MOCKUP}" width="1254" height="1254" loading="lazy" decoding="async" alt="Biblioteca Práctica de Psicología">
 {stack()}
-<div class="price"><div class="old">Precio normal: <s>US$ {old}</s></div><div class="now"><small>US$</small>{now}</div><div class="save">{save}</div><div class="terms">Pago único · Acceso inmediato · Sin mensualidades</div></div>
+<div class="price"><div class="old">Valor total: <s>US$ {old}</s></div><div class="now"><small>US$</small>{now}</div><div class="save">{save}</div><div class="terms">Pago único · Acceso inmediato · Sin mensualidades</div></div>
+<div class="offer-timer">{clock_label} {CLOCK}</div>
 <div class="widget">
 {WIDGET}
 </div>
 <p class="oneclick">{note}</p>
 </div></div></section>"""
 
-# ---------------------------------------------------------------- UPSELL
-up = head("Biblioteca Práctica de Psicología · Oferta única", "Añade a tu pedido 450 recursos prácticos y visuales de Psicología por US$ 19,90. Pago único.", "upsell", 19.90)
-up += """<div class="status"><strong>✓ ¡Tu compra fue confirmada!</strong> Recibirás el acceso en tu email. No cierres esta página: tenemos una oferta única para ti.</div>
+# ======================================================================= UPSELL
+up = head("Biblioteca Práctica de Psicología · Oferta complementaria", "Añade a tu pedido 450 recursos prácticos y 6 bonos exclusivos por US$ 19,90. Solo hoy, solo en esta página.",
+          "upsell", 19.90, 15, "<strong>Tiempo agotado.</strong> La oferta sigue disponible solo mientras no cierres esta página.")
+up += topbar("<strong>Oferta complementaria · solo hoy.</strong> Tu precio especial se reserva durante:")
+up += """<div class="confirm"><strong>✓ ¡Tu compra fue confirmada!</strong> El acceso llegará a tu email. Antes de irte, mira esto: es la única vez que verás esta oferta.</div>
 <div class="steps" aria-label="Progreso del pedido"><span class="done"><i>✓</i>Compra</span><b></b><span class="now"><i>2</i>Oferta única</span><b></b><span><i>3</i>Acceso</span></div>
 <main>
 <section class="hero" id="inicio"><div class="wrap">
-<p class="eyebrow">Solo para nuevos alumnos · solo en esta página</p>
-<h1>Ya tienes la teoría. Ahora <em>llévala a la práctica</em> con 450 recursos visuales.</h1>
-<p class="sub">La <strong>Biblioteca Práctica</strong> complementa lo que acabas de comprar con casos, ejercicios, metáforas y fichas para aplicar lo que estudias.</p>
-<div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1254" height="1254" fetchpriority="high" alt="Biblioteca Práctica de Psicología: 450 recursos en 8 colecciones"></div>
-<p class="pricehint">Hoy: <s>US$ 24,90</s> <strong>US$ 19,90</strong> · pago único</p>
+<p class="eyebrow">Solo para quien acaba de comprar la biblioteca</p>
+<h1>Ya tienes la teoría. Ahora aprende a <em>reconocerla en personas reales</em>.</h1>
+<p class="sub">La <strong>Biblioteca Práctica</strong> suma <strong>450 recursos visuales</strong> —casos, fichas de patrones, ejercicios y estructuras de sesión— y <strong>6 bonos exclusivos</strong> para que pases de memorizar conceptos a analizarlos, explicarlos y aplicarlos.</p>
+<div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1254" height="1254" fetchpriority="high" alt="Biblioteca Práctica de Psicología: 450 recursos en 8 colecciones"><span class="ribbon">+ 6 bonos hoy</span></div>
+<p class="pricehint">Precio normal <s>US$ 24,90</s> · Hoy <strong>US$ 19,90</strong></p>
 <a class="btn" href="#oferta" data-go="hero">Sí, quiero añadirla a mi pedido</a>
+<p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
 </div></section>
 
-<section class="why" id="porque"><div class="wrap">
-<p class="eyebrow" style="text-align:center">El complemento natural</p>
-<h2>Entender la Psicología es el primer paso. <em>Aplicarla</em> es lo que fija el aprendizaje.</h2>
+<section class="pain" id="dolor"><div class="wrap">
+<p class="eyebrow" style="text-align:center">Seamos honestos</p>
+<h2>Saber la definición no es lo mismo que <em>saber verla</em>.</h2>
+<ul>
+<li>Sabes qué es la proyección, pero no la reconocerías en una conversación real.</li>
+<li>En el examen piden «analiza el caso» y no sabes por dónde empezar.</li>
+<li>Estudias horas, pero sientes que solo memorizas conceptos sueltos.</li>
+<li>Se acercan las prácticas o los seminarios y te preocupa no estar preparado.</li>
+</ul>
+<p class="turn">La teoría te da el mapa. <em>La práctica te enseña a usarlo.</em> Para eso existe esta colección.</p>
 <div class="pair">
 <div><span class="tag">Lo que ya tienes</span><h3>Biblioteca de Psicología</h3><p>Te explica las teorías, los autores y los conceptos de forma clara y visual.</p></div>
-<div class="new"><span class="tag">Lo que añades hoy</span><h3>Biblioteca Práctica</h3><p>Te muestra esos conceptos funcionando en situaciones reales: casos para analizar, ejercicios para completar y fichas para repasar.</p></div>
+<div class="new"><span class="tag">Lo que añades hoy</span><h3>Biblioteca Práctica</h3><p>Te muestra esos conceptos funcionando en situaciones reales: casos para analizar, patrones para reconocer, ejercicios para completar y plantillas para tus trabajos.</p></div>
 </div>
 </div></section>
 
 <section class="receive" id="recibes"><div class="wrap">
-<div class="head"><p class="eyebrow">450 recursos · 8 colecciones</p><h2>Lo que vas a recibir</h2><p class="lead">Todo organizado en una sola biblioteca, listo para leer en el celular o imprimir.</p></div>
+<div class="head"><p class="eyebrow">450 recursos · 8 colecciones</p><h2>Todo lo que vas a recibir</h2><p class="lead">Organizado por temas, en guías visuales para leer en el celular o imprimir.</p></div>
 """ + grid() + """
 </div></section>
 
 <section class="samples" id="muestras"><div class="wrap">
-<div class="head"><p class="eyebrow">Mira por dentro</p><h2>Algunas páginas de la colección</h2><p class="lead">Es solo una pequeña selección. La biblioteca completa trae mucho más.</p></div>
+<div class="head"><p class="eyebrow">Mira por dentro</p><h2>30 páginas reales de la colección</h2><p class="lead">Esto es solo una pequeña muestra. La biblioteca completa trae cientos de páginas más.</p></div>
 <p class="hint">Desliza para ver más · Toca una página para ampliarla</p>
 """ + "".join(rail(i, t, it) for i, (t, it) in enumerate(RAILS)) + """
 </div></section>
 
-""" + offer_card("Oferta única para nuevos alumnos", "Añade hoy la Biblioteca Práctica", "24,90", "19,90", "Ahorras US$ 5,00 solo en esta página",
-                 "Se añade a tu pedido en segundos. Esta oferta no vuelve a aparecer después de salir de esta página.") + GUARANTEE + """
+<section class="bonus" id="bonos"><div class="wrap">
+<div class="head"><p class="eyebrow">Solo en esta página</p><h2>Y hoy te llevas <em>6 bonos exclusivos</em></h2><p class="lead">Materiales nuevos, creados para complementar la Biblioteca Práctica. No se venden por separado.</p></div>
+""" + bonus_grid("hoy incluido") + """
+</div></section>
+
+<section class="who" id="paraquien"><div class="wrap">
+<div class="head"><h2>Es para ti si…</h2></div>
+<div class="wgrid">
+<div><strong>Estudias Psicología</strong> y quieres llegar a los exámenes sabiendo aplicar, no solo repetir.</div>
+<div><strong>Te preparas para prácticas o seminarios</strong> y necesitas casos, plantillas y dinámicas listas.</div>
+<div><strong>Quieres entenderte mejor</strong>: tus emociones, tus patrones y tus relaciones.</div>
+<div><strong>Te gusta aprender con ejemplos</strong> visuales y situaciones del día a día.</div>
+</div>
+</div></section>
+
+""" + offer_card("Oferta complementaria · solo hoy", "Añade todo a tu pedido", "72,90", "19,90", "Ahorras US$ 53 · 73% de descuento",
+                 "Se añade a tu pedido en segundos. Si sales de esta página, la oferta y los bonos desaparecen.", "Tu precio especial termina en") + GUARANTEE + """
 <section class="faq" id="preguntas"><div class="wrap narrow">
 <div class="head"><h2>Preguntas frecuentes</h2></div>
-<details><summary>¿Es lo mismo que la biblioteca que acabo de comprar?</summary><p>No. Tu Biblioteca de Psicología explica las teorías y los conceptos. La Biblioteca Práctica es una colección distinta, con 450 recursos para aplicar esos conceptos: casos, ejercicios, metáforas, preguntas y fichas.</p></details>
-<details><summary>¿Cómo la recibo?</summary><p>Al aceptar la oferta, se suma a tu pedido y recibes el acceso en el mismo email de tu compra, de forma inmediata.</p></details>
+<details><summary>¿Es lo mismo que la biblioteca que acabo de comprar?</summary><p>No. Tu Biblioteca de Psicología explica las teorías y los conceptos. La Biblioteca Práctica es una colección distinta, con 450 recursos para aplicarlos: casos, fichas de patrones, ejercicios, metáforas, preguntas y estructuras de sesión, más 6 bonos nuevos.</p></details>
+<details><summary>¿Cómo y cuándo la recibo?</summary><p>Al aceptar la oferta se suma a tu pedido y recibes el acceso de forma inmediata, en el mismo email de tu compra.</p></details>
 <details><summary>¿Tengo que volver a ingresar mis datos?</summary><p>Si pagaste con tarjeta, no: se añade a tu pedido con un clic, usando los datos de la compra que acabas de hacer.</p></details>
-<details><summary>¿Me sirve si no estudio Psicología?</summary><p>Sí. Los recursos usan situaciones cotidianas —ansiedad, límites, relaciones, diálogo interno— y sirven a cualquier persona que quiera entenderse mejor.</p></details>
+<details><summary>¿Me sirve si no estudio Psicología?</summary><p>Sí. Los recursos usan situaciones cotidianas —ansiedad, límites, relaciones, autocrítica— y sirven a cualquier persona que quiera entenderse mejor. El Diario de Autoconocimiento está pensado justamente para eso.</p></details>
+<details><summary>¿Puedo comprar los bonos después?</summary><p>No. Los 6 bonos solo se incluyen en esta oferta complementaria y no se venden por separado.</p></details>
 </div></section>
 
 <section class="closing" id="cierre"><div class="wrap narrow">
-<h2>Tu biblioteca te ayuda a comprender. Esta te ayuda a aplicar.</h2>
-<p>450 recursos prácticos por US$ 19,90, pago único. Solo en esta página.</p>
-<a class="btn" href="#oferta" data-go="cierre">Quiero la Biblioteca Práctica</a>
+<h2>Tu biblioteca te ayuda a <em>comprender</em>. Esta te ayuda a <em>aplicar</em>.</h2>
+<p>450 recursos + 6 bonos exclusivos por US$ 19,90, pago único. Cuando cierres esta página, la oferta desaparece.</p>
+<a class="btn" href="#oferta" data-go="cierre">Sí, quiero la Biblioteca Práctica</a>
 </div></section>
 </main>
 """ + FOOTER + VIEWER + "<script>" + JS + "</script>\n</body>\n</html>\n"
 
-# ---------------------------------------------------------------- DOWNSELL
-down = head("Biblioteca Práctica de Psicología · Última oportunidad", "Última oportunidad: los 450 recursos de la Biblioteca Práctica por US$ 9,90. Pago único.", "downsell", 9.90)
-down += """<div class="status wait"><strong>Espera…</strong> Antes de acceder a tu biblioteca, mira esto. Es la última vez que verás esta oferta.</div>
-<div class="steps" aria-label="Progreso del pedido"><span class="done"><i>✓</i>Compra</span><b></b><span class="now"><i>2</i>Última oferta</span><b></b><span><i>3</i>Acceso</span></div>
+# ======================================================================= DOWNSELL
+down = head("Biblioteca Práctica de Psicología · Última oportunidad", "Última oportunidad: los 450 recursos de la Biblioteca Práctica y los 6 bonos por US$ 9,90. Pago único.",
+            "downsell", 9.90, 10, "<strong>Tiempo agotado.</strong> Esta es tu última oportunidad: la oferta desaparece al cerrar la página.")
+down += topbar("<strong>Espera · última oportunidad.</strong> Este precio solo se mantiene durante:")
+down += """<div class="steps" aria-label="Progreso del pedido"><span class="done"><i>✓</i>Compra</span><b></b><span class="now"><i>2</i>Última oferta</span><b></b><span><i>3</i>Acceso</span></div>
 <main>
 <section class="hero" id="inicio"><div class="wrap">
 <p class="eyebrow">Precio especial · solo una vez</p>
-<h1>Entendemos. Por eso te dejamos la Biblioteca Práctica <em>completa por US$ 9,90</em>.</h1>
-<p class="sub">Son los mismos <strong>450 recursos en 8 colecciones</strong>, sin quitar nada, por menos de la mitad del precio.</p>
-<div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1254" height="1254" fetchpriority="high" alt="Biblioteca Práctica de Psicología: 450 recursos en 8 colecciones"></div>
-<p class="pricehint"><s>US$ 19,90</s> <strong>US$ 9,90</strong> · pago único</p>
-<a class="btn" href="#oferta" data-go="hero">Sí, la quiero por US$ 9,90</a>
+<h1>Lo entendemos. Por eso te dejamos <em>todo por US$ 9,90</em>.</h1>
+<p class="sub">Los mismos <strong>450 recursos en 8 colecciones</strong> y los <strong>6 bonos exclusivos</strong>, sin quitar nada, por la mitad del precio. Esta oferta no vuelve a aparecer.</p>
+<div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1254" height="1254" fetchpriority="high" alt="Biblioteca Práctica de Psicología: 450 recursos en 8 colecciones"><span class="ribbon">−50%</span></div>
+<p class="pricehint"><s>US$ 19,90</s> · Ahora <strong>US$ 9,90</strong></p>
+<a class="btn" href="#oferta" data-go="hero">Sí, lo quiero por US$ 9,90</a>
+<p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
 </div></section>
-
-""" + offer_card("Última oportunidad", "La Biblioteca Práctica completa", "19,90", "9,90", "50% de descuento · solo en esta página",
-                 "Se añade a tu pedido en segundos. Si sales de esta página, la oferta desaparece.") + """
+""" + offer_card("Última oportunidad", "Todo por menos de lo que cuesta un café", "72,90", "9,90", "50% menos que la oferta anterior",
+                 "Se añade a tu pedido en segundos. Si sales de esta página, la oferta desaparece para siempre.", "Este precio termina en") + """
 <section class="samples" id="muestras"><div class="wrap">
 <div class="head"><p class="eyebrow">Mira por dentro</p><h2>Lo que vas a tener en tus manos</h2></div>
 <p class="hint">Desliza para ver más · Toca una página para ampliarla</p>
-""" + rail(0, RAILS[0][0], RAILS[0][1]) + rail(1, RAILS[1][0], RAILS[1][1]) + """
+""" + rail(0, RAILS[0][0], RAILS[0][1]) + rail(2, RAILS[2][0], RAILS[2][1]) + """
 </div></section>
-
-<section class="receive" id="recibes"><div class="wrap">
-<div class="head"><p class="eyebrow">Nada fue quitado</p><h2>Las 8 colecciones completas</h2></div>
-""" + grid() + """
-<div style="text-align:center;margin-top:28px"><a class="btn" href="#oferta" data-go="recibes">Quiero todo por US$ 9,90</a></div>
+<section class="bonus" id="bonos"><div class="wrap">
+<div class="head"><p class="eyebrow">También incluidos</p><h2>Los 6 bonos siguen en la oferta</h2></div>
+""" + bonus_grid("incluido") + """
+<div style="text-align:center;margin-top:28px"><a class="btn" href="#oferta" data-go="bonos">Quiero todo por US$ 9,90</a></div>
 </div></section>
 """ + GUARANTEE + """
 </main>
