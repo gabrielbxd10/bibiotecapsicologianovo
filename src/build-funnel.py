@@ -349,7 +349,7 @@ def head(title, desc, page, value, timer_min, timer_done):
 <body>
 """
 
-CLOCK = '<span class="clock" data-clock aria-label="Tiempo restante"><span class="m">15</span><i>:</i><span class="s">00</span></span>'
+CLOCK = '<span class="clock" data-clock aria-label="Tiempo restante"><span class="m">20</span><i>:</i><span class="s">00</span></span>'
 
 def topbar(text):
     return f'<div class="topbar" role="status"><div class="in"><span class="msg" data-timer-msg>{text}</span>{CLOCK}</div></div>'
@@ -409,7 +409,7 @@ def offer_card(badge, h2, old, now, save, note, clock_label):
 
 # ======================================================================= UPSELL
 up = head("Biblioteca Práctica de Psicología · Oferta complementaria", "Añade a tu pedido más de 900 recursos prácticos de psicología por US$ 19,90. Solo hoy, solo en esta página.",
-          "upsell", 19.90, 15, "<strong>Tiempo agotado.</strong> La oferta sigue disponible solo mientras no cierres esta página.")
+          "upsell", 19.90, 20, "<strong>Tiempo agotado.</strong> La oferta sigue disponible solo mientras no cierres esta página.")
 up += topbar("<strong>Oferta complementaria · solo hoy.</strong> Tu precio especial se reserva durante:")
 up += """<div class="confirm"><strong>✓ ¡Tu compra fue confirmada!</strong> El acceso llegará a tu email. Antes de irte, mira esto: es la única vez que verás esta oferta.</div>
 <div class="steps" aria-label="Progreso del pedido"><span class="done"><i>✓</i>Compra</span><b></b><span class="now"><i>2</i>Oferta única</span><b></b><span><i>3</i>Acceso</span></div>
