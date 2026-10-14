@@ -1,0 +1,176 @@
+#!/usr/bin/env python3
+"""Genera upsell2/index.html · Psicología Aplicada a la Vida (US$19,90). Uso: python3 src/build-upsell2.py ."""
+import os, sys, runpy, tempfile
+from html import escape as esc
+
+OUT = sys.argv[1] if len(sys.argv) > 1 else "."
+# Reutiliza estilos, scripts y bloques del primer upsell sin tocar sus archivos
+_argv = sys.argv; sys.argv = ["x", tempfile.mkdtemp()]
+L = runpy.run_path(os.path.join(os.path.dirname(__file__), "build-funnel.py"), run_name="lib")
+sys.argv = _argv
+CSS, JS, WIDGET, VIEWER, CLOCK = L["CSS"], L["JS"], L["WIDGET"], L["VIEWER"], L["CLOCK"]
+
+A = "/upsell2/assets/"
+GUIDES = [
+    ("c01", "Psicología de la Persuasión e Influencia", "Los 7 principios que te hacen decir «sí» y cómo protegerte de la manipulación."),
+    ("c02", "Lenguaje Corporal", "Mirada, gestos, postura y voz: lo que la ciencia confirma y lo que es mito."),
+    ("c03", "Sesgos Cognitivos y Decisiones", "50 errores mentales del día a día y un método para decidir mejor."),
+    ("c04", "Psicología del Dinero", "Por qué gastas como gastas y cómo ahorrar sin fuerza de voluntad."),
+    ("c05", "Psicología del Consumidor y el Marketing", "Precios, tiendas, marcas e influencers: lo que hay detrás de cada compra."),
+    ("c06", "Psicología Criminal", "Psicopatía, perfiles, testigos y confesiones falsas, más allá de las series."),
+    ("c07", "Psicología de las Redes Sociales", "Comparación, FOMO, dopamina y un plan de 14 días para recuperar tu atención."),
+    ("c08", "Psicología del Sueño y los Sueños", "Fases del sueño, por qué soñamos y cómo descansar mejor."),
+    ("c09", "Psicología del Liderazgo y el Trabajo", "Motivación, equipos, jefes difíciles y prevención del burnout."),
+    ("c10", "Psicología de la Crianza", "Vínculo, límites, rabietas, pantallas y adolescencia."),
+    ("c11", "Psicología del Deporte y la Motivación", "Nervios, foco, visualización, estado de flujo y hábito de moverte."),
+    ("c12", "Psicología de la Felicidad", "Lo que la ciencia del bienestar sabe sobre relaciones, gratitud y sentido."),
+]
+BONOS = [
+    ("c13", "Psicología del Color", "Qué transmiten los colores en marcas, diseño y espacios."),
+    ("c14", "Psicología de la Atracción", "Los experimentos clásicos sobre amistad, amor y cercanía."),
+    ("c15", "Retos de 21 Días", "Seis retos prácticos para aplicar todo lo aprendido."),
+]
+SAMPLES = [
+    ("s01", "Sesgos de información", "Sesgos Cognitivos"), ("s02", "Reciprocidad", "Persuasión e Influencia"),
+    ("s03", "La psicopatía, más allá de las películas", "Psicología Criminal"), ("s04", "El rostro y las emociones", "Lenguaje Corporal"),
+    ("s05", "La psicología de los precios", "Consumidor y Marketing"), ("s06", "Qué ocurre cuando dormimos", "Sueño y Sueños"),
+    ("s07", "¿Qué es la felicidad?", "Psicología de la Felicidad"), ("s08", "Las 36 preguntas", "Bono · Atracción"),
+    ("s09", "Rabietas y emociones intensas", "Psicología de la Crianza"), ("s10", "Por qué cuesta dejar de deslizar", "Redes Sociales"),
+]
+
+EXTRA_CSS = r"""
+.fan{position:relative;height:clamp(250px,62vw,380px);max-width:560px;margin:26px auto 0}
+.fan img{position:absolute;bottom:0;width:clamp(120px,30vw,190px);border-radius:6px;box-shadow:0 14px 30px rgba(14,36,43,.35);transform-origin:bottom center}
+.fan img:nth-child(1){left:2%;transform:rotate(-14deg)}
+.fan img:nth-child(2){left:17%;transform:rotate(-7deg)}
+.fan img:nth-child(3){left:50%;margin-left:calc(clamp(120px,30vw,190px)/-2);z-index:3;transform:translateY(-14px)}
+.fan img:nth-child(4){right:17%;transform:rotate(7deg)}
+.fan img:nth-child(5){right:2%;transform:rotate(14deg)}
+.fan .count{position:absolute;z-index:4;left:50%;bottom:-14px;transform:translateX(-50%);background:var(--clay);color:#fff;font:800 13px/1 var(--body);padding:9px 14px;border-radius:999px;white-space:nowrap;box-shadow:0 6px 16px rgba(0,0,0,.2)}
+.lib{padding:56px 0;background:var(--paper-2)}
+.cgrid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.cgrid li{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.cgrid img{width:100%;aspect-ratio:520/735;object-fit:cover}
+.cgrid .t{padding:10px 12px 12px}
+.cgrid h3{font:700 15px/1.3 var(--body);color:var(--ink)}
+.cgrid p{font-size:13px;color:var(--muted);margin-top:4px;line-height:1.45}
+.cgrid .bono{position:relative}
+.cgrid .bono::after{content:"BONO";position:absolute;top:8px;left:8px;background:var(--amber);color:var(--ink-deep);font:800 10.5px/1 var(--body);letter-spacing:.1em;padding:5px 8px;border-radius:999px}
+.sub-h{font:700 13px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--clay);text-align:center;margin:30px 0 14px}
+.card{width:min(64vw,240px)}
+.card img{aspect-ratio:1000/1414}
+.why2{padding:46px 0 10px}
+.why2 ul{list-style:none;padding:0;margin:0 auto;max-width:720px;display:grid;gap:10px}
+.why2 li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px 14px 48px;position:relative;font-size:16px}
+.why2 li::before{content:"✓";position:absolute;left:16px;top:13px;width:22px;height:22px;border-radius:50%;background:var(--ok);color:#fff;font-size:13px;font-weight:900;display:grid;place-items:center}
+@media (max-width:860px){.cgrid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.cgrid{grid-template-columns:repeat(3,1fr);gap:8px}.cgrid p{display:none}.cgrid .t{padding:7px 7px 9px}.cgrid h3{font-size:11.5px;line-height:1.25}.cgrid .bono::after{font-size:9px;padding:4px 6px;top:5px;left:5px}}
+.hero{overflow:hidden}
+"""
+
+def card(f, t, c):
+    return (f'<figure class="card"><button type="button" data-full="{A}{f}.webp" data-title="{esc(t)}" data-col="{esc(c)}" aria-label="Ampliar: {esc(t)}">'
+            f'<img src="{A}{f}-t.webp" width="440" height="622" loading="lazy" decoding="async" draggable="false" alt="Página interior: {esc(t)}"></button>'
+            f'<figcaption>{esc(t)}<small>{esc(c)}</small></figcaption></figure>')
+
+def cgrid(items, bono=False):
+    return "".join(f'<li{" class=\"bono\"" if bono else ""}><img src="{A}{img}.webp" width="520" height="735" loading="lazy" decoding="async" alt="Portada: {esc(t)}"><div class="t"><h3>{esc(t)}</h3><p>{esc(d)}</p></div></li>' for img, t, d in items)
+
+PIXEL = """<script>
+window.PAGE='upsell2';
+(function(){
+if(window.__NO_TRACK||location.protocol==='file:')return;
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','973045345819425');
+fbq('track','PageView');
+fbq('trackCustom','VerUpsell2',{value:19.90,currency:'USD',content_name:'Psicología Aplicada a la Vida'});
+})();
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=973045345819425&ev=PageView&noscript=1" alt=""></noscript>"""
+
+stack = ('<ul class="stack"><li class="sep">12 guías · Psicología Aplicada a la Vida</li>'
+         + "".join(f'<li><span class="ck">✓</span><span>{esc(t)}</span></li>' for _, t, _ in GUIDES)
+         + '<li class="sep">+ 3 bonos</li>'
+         + "".join(f'<li><span class="ck">✓</span><span>{esc(t)}</span><span class="b">BONO</span></li>' for _, t, _ in BONOS) + "</ul>")
+
+html = f"""<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0E242B">
+<title>Psicología Aplicada a la Vida · Oferta final</title>
+<meta name="description" content="12 guías + 3 bonos de psicología aplicada al día a día por US$ 19,90. Pago único.">
+<link rel="icon" href="https://biblipsicologia1.vercel.app/favicon.svg">
+<link rel="preload" as="image" href="{A}c01.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Figtree:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Figtree:wght@400;500;600;700;800&display=swap"></noscript>
+<link rel="dns-prefetch" href="https://checkout.hotmart.com">
+<script>window.TIMER_MIN=10;window.TIMER_DONE='<strong>Tiempo agotado.</strong> La oferta desaparece al cerrar esta página.';</script>
+{PIXEL}
+<style>{CSS}{EXTRA_CSS}</style>
+</head>
+<body>
+<div class="topbar" role="status"><div class="in"><span class="msg" data-timer-msg><strong>Oferta final · solo hoy.</strong> Este precio se mantiene durante:</span>{CLOCK}</div></div>
+<div class="steps" aria-label="Progreso del pedido"><span class="done"><i>✓</i>Compra</span><b></b><span class="now"><i>2</i>Oferta final</span><b></b><span><i>3</i>Acceso</span></div>
+<main>
+<section class="hero" id="inicio"><div class="wrap">
+<p class="eyebrow">Una última cosa antes de tu acceso</p>
+<h1>La psicología que usas <em>todos los días</em>, explicada en 12 guías.</h1>
+<p class="sub">Persuasión, lenguaje corporal, dinero, sesgos, redes sociales, sueño, psicología criminal y más. <strong>12 guías + 3 bonos</strong> para entender a las personas y decidir mejor, por <strong>US$ 19,90</strong>.</p>
+<div class="fan" aria-hidden="true"><img src="{A}c03.webp" alt=""><img src="{A}c06.webp" alt=""><img src="{A}c01.webp" alt="" fetchpriority="high"><img src="{A}c04.webp" alt=""><img src="{A}c07.webp" alt=""><span class="count">12 guías + 3 bonos</span></div>
+<p class="pricehint" style="margin-top:30px">Valor <s>US$ 99</s> · Hoy <strong>US$ 19,90</strong></p>
+<a class="btn" href="#oferta" data-go="hero">Sí, quiero las 12 guías</a>
+<p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
+</div></section>
+
+<section class="why2" id="porque"><div class="wrap">
+<div class="head"><h2>Con estas guías vas a…</h2></div>
+<ul>
+<li>Reconocer cuándo intentan <strong>persuadirte o manipularte</strong>, y comunicar tus ideas con más fuerza.</li>
+<li>Entender por qué <strong>gastas, decides y procrastinas</strong> como lo haces, y cómo cambiarlo.</li>
+<li>Leer mejor a las personas: <strong>lenguaje corporal, atracción y primeras impresiones</strong>.</li>
+<li>Dormir mejor, usar menos el móvil y cuidar tu <strong>bienestar</strong> con prácticas basadas en evidencia.</li>
+</ul>
+</div></section>
+
+<section class="lib" id="guias"><div class="wrap">
+<div class="head"><p class="eyebrow">Todo lo que recibes</p><h2>12 guías completas</h2><p class="lead">Más de 200 páginas, en español, con tablas, ejemplos, ejercicios y plantillas.</p></div>
+<ul class="cgrid">{cgrid(GUIDES)}</ul>
+<p class="sub-h">+ 3 bonos incluidos</p>
+<ul class="cgrid">{cgrid(BONOS, True)}</ul>
+</div></section>
+
+<section class="samples" id="muestras" style="background:#fff"><div class="wrap">
+<div class="head"><p class="eyebrow">Mira por dentro</p><h2>Algunas páginas reales</h2></div>
+<p class="hint">Desliza para ver más · Toca una página para ampliarla</p>
+<div class="rail"><div class="track" id="rail0" tabindex="0">{"".join(card(*s) for s in SAMPLES)}</div></div>
+</div></section>
+
+<section class="offer" id="oferta" style="padding-top:20px"><div class="wrap"><div class="offer-card">
+<span class="badge">Oferta final · solo hoy</span>
+<h2>Psicología Aplicada a la Vida</h2>
+{stack}
+<div class="price"><div class="old">Valor total: <s>US$ 99</s></div><div class="now"><small>US$</small>19,90</div><div class="save">80% de descuento · solo en esta página</div><div class="terms">Pago único · Acceso inmediato · Sin mensualidades</div></div>
+<div class="offer-timer">Este precio termina en {CLOCK}</div>
+<div class="widget">
+{WIDGET}
+</div>
+<p class="oneclick">Se añade a tu pedido en segundos. Si sales de esta página, la oferta desaparece.</p>
+</div></div></section>
+
+<section class="guarantee" id="garantia"><div class="wrap"><div class="g-box"><div class="seal"><span><b>7</b>DÍAS</span></div><div><h3>Garantía de 7 días</h3><p>Si las guías no te convencen, pides el reembolso en Hotmart dentro de 7 días. Sin preguntas y sin perder nada de lo que ya compraste.</p></div></div></div></section>
+</main>
+<footer><div class="wrap">Psicología Aplicada a la Vida · Material educativo y de divulgación. No sustituye la atención de profesionales de la salud, la psicología, las finanzas ni el derecho.</div></footer>
+{VIEWER}
+<script>{JS}</script>
+</body>
+</html>
+"""
+os.makedirs(os.path.join(OUT, "upsell2"), exist_ok=True)
+with open(os.path.join(OUT, "upsell2", "index.html"), "w", encoding="utf-8") as f:
+    f.write(html)
+print("upsell2", len(html))
