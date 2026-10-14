@@ -377,7 +377,7 @@ def grid():
 def bonus_grid(tag):
     return '<div class="bgrid">' + "".join(
         f'<article class="bcard"><div class="cov"><img src="{A}{img}.webp" width="1024" height="1024" loading="lazy" decoding="async" alt="Portada: {esc(t)}"></div>'
-        f'<div class="tx"><span class="no">Bono {i:02d}</span><h3>{esc(t)}</h3><p>{esc(d)}</p><div class="val">Valor: <s>{v}</s> · <b>{tag}</b></div></div></article>'
+        f'<div class="tx"><span class="no">Bono {i:02d}</span><h3>{esc(t)}</h3><p>{esc(d)}</p><div class="val"><b>{tag}</b></div></div></article>'
         for i, (img, t, d, v) in enumerate(BONOS, 1)) + "</div>"
 
 def stack():
@@ -399,7 +399,7 @@ def offer_card(badge, h2, old, now, save, note, clock_label):
 <h2>{h2}</h2>
 <img class="mock" src="{MOCKUP}" width="1024" height="1024" loading="lazy" decoding="async" alt="Biblioteca Práctica de Psicología">
 {stack()}
-<div class="price"><div class="old">Valor total: <s>US$ {old}</s></div><div class="now"><small>US$</small>{now}</div><div class="save">{save}</div><div class="terms">Pago único · Acceso inmediato · Sin mensualidades</div></div>
+<div class="price"><div class="old">{old}</div><div class="now">{now}</div><div class="save">{save}</div><div class="terms">Pago único · Acceso inmediato · Sin mensualidades</div></div>
 <div class="offer-timer">{clock_label} {CLOCK}</div>
 <div class="widget">
 {WIDGET}
@@ -408,7 +408,7 @@ def offer_card(badge, h2, old, now, save, note, clock_label):
 </div></div></section>"""
 
 # ======================================================================= UPSELL
-up = head("Biblioteca Práctica de Psicología · Oferta complementaria", "Añade a tu pedido más de 900 recursos prácticos de psicología por US$ 19,90. Solo hoy, solo en esta página.",
+up = head("Biblioteca Práctica de Psicología · Oferta complementaria", "Añade a tu pedido más de 900 recursos prácticos de psicología con precio especial. Solo hoy, solo en esta página.",
           "upsell", 19.90, 20, "<strong>Tiempo agotado.</strong> La oferta sigue disponible solo mientras no cierres esta página.")
 up += topbar("<strong>Oferta complementaria · solo hoy.</strong> Tu precio especial se reserva durante:")
 up += """<div class="confirm"><strong>✓ ¡Tu compra fue confirmada!</strong> El acceso llegará a tu email. Antes de irte, mira esto: es la única vez que verás esta oferta.</div>
@@ -419,7 +419,7 @@ up += """<div class="confirm"><strong>✓ ¡Tu compra fue confirmada!</strong> E
 <h1>Ya tienes la teoría. Ahora aprende a <em>reconocerla en personas reales</em>.</h1>
 <p class="sub">La <strong>Biblioteca Práctica</strong> suma <strong>más de 900 recursos</strong> —fichas de patrones, casos, ejercicios, estructuras de sesión, plantillas y mucho más— con <strong>6 bonos exclusivos</strong> incluidos para que pases de memorizar conceptos a analizarlos, explicarlos y aplicarlos.</p>
 <div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1024" height="1024" fetchpriority="high" alt="Biblioteca Práctica de Psicología: más de 900 recursos"><span class="ribbon">+ 6 bonos hoy</span></div>
-<p class="pricehint">Precio normal <s>US$ 24,90</s> · Hoy <strong>US$ 19,90</strong></p>
+<p class="pricehint">Precio especial para clientes · <strong>73% de descuento</strong></p>
 <a class="btn" href="#oferta" data-go="hero">Sí, quiero añadirla a mi pedido</a>
 <p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
 </div></section>
@@ -466,7 +466,7 @@ up += """<div class="confirm"><strong>✓ ¡Tu compra fue confirmada!</strong> E
 </div>
 </div></section>
 
-""" + offer_card("Oferta complementaria · solo hoy", "Añade todo a tu pedido", "72,90", "19,90", "Ahorras US$ 53 · 73% de descuento",
+""" + offer_card("Oferta complementaria · solo hoy", "Añade todo a tu pedido", "Precio especial para clientes", "−73%", "Tu precio final aparece abajo, en tu moneda",
                  "Se añade a tu pedido en segundos. Si sales de esta página, la oferta y los bonos desaparecen.", "Tu precio especial termina en") + GUARANTEE + """
 <section class="faq" id="preguntas"><div class="wrap narrow">
 <div class="head"><h2>Preguntas frecuentes</h2></div>
@@ -479,28 +479,28 @@ up += """<div class="confirm"><strong>✓ ¡Tu compra fue confirmada!</strong> E
 
 <section class="closing" id="cierre"><div class="wrap narrow">
 <h2>Tu biblioteca te ayuda a <em>comprender</em>. Esta te ayuda a <em>aplicar</em>.</h2>
-<p>Más de 900 recursos, con 6 bonos exclusivos, por US$ 19,90, pago único. Cuando cierres esta página, la oferta desaparece.</p>
+<p>Más de 900 recursos, con 6 bonos exclusivos, con 73% de descuento y pago único. Cuando cierres esta página, la oferta desaparece.</p>
 <a class="btn" href="#oferta" data-go="cierre">Sí, quiero la Biblioteca Práctica</a>
 </div></section>
 </main>
 """ + FOOTER + VIEWER + "<script>" + JS + "</script>\n</body>\n</html>\n"
 
 # ======================================================================= DOWNSELL
-down = head("Biblioteca Práctica de Psicología · Última oportunidad", "Última oportunidad: los más de 900 recursos de la Biblioteca Práctica por US$ 9,90. Pago único.",
+down = head("Biblioteca Práctica de Psicología · Última oportunidad", "Última oportunidad: los más de 900 recursos de la Biblioteca Práctica a mitad de precio. Pago único.",
             "downsell", 9.90, 10, "<strong>Tiempo agotado.</strong> Esta es tu última oportunidad: la oferta desaparece al cerrar la página.")
 down += topbar("<strong>Espera · última oportunidad.</strong> Este precio solo se mantiene durante:")
 down += """<div class="steps" aria-label="Progreso del pedido"><span class="done"><i>✓</i>Compra</span><b></b><span class="now"><i>2</i>Última oferta</span><b></b><span><i>3</i>Acceso</span></div>
 <main>
 <section class="hero" id="inicio"><div class="wrap">
 <p class="eyebrow">Precio especial · solo una vez</p>
-<h1>Lo entendemos. Por eso te dejamos <em>todo por US$ 9,90</em>.</h1>
+<h1>Lo entendemos. Por eso te dejamos <em>todo a mitad de precio</em>.</h1>
 <p class="sub">Los mismos <strong>más de 900 recursos</strong>, con los <strong>6 bonos exclusivos</strong>, sin quitar nada, por la mitad del precio. Esta oferta no vuelve a aparecer.</p>
 <div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1024" height="1024" fetchpriority="high" alt="Biblioteca Práctica de Psicología: más de 900 recursos"><span class="ribbon">−50%</span></div>
-<p class="pricehint"><s>US$ 19,90</s> · Ahora <strong>US$ 9,90</strong></p>
-<a class="btn" href="#oferta" data-go="hero">Sí, lo quiero por US$ 9,90</a>
+<p class="pricehint">Última oportunidad · <strong>50% menos</strong> que la oferta anterior</p>
+<a class="btn" href="#oferta" data-go="hero">Sí, lo quiero a mitad de precio</a>
 <p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
 </div></section>
-""" + offer_card("Última oportunidad", "Todo por menos de lo que cuesta un café", "72,90", "9,90", "50% menos que la oferta anterior",
+""" + offer_card("Última oportunidad", "Todo por menos de lo que cuesta un café", "Mitad de precio · solo aquí", "−50%", "Tu precio final aparece abajo, en tu moneda",
                  "Se añade a tu pedido en segundos. Si sales de esta página, la oferta desaparece para siempre.", "Este precio termina en") + """
 <section class="samples" id="muestras"><div class="wrap">
 <div class="head"><p class="eyebrow">Mira por dentro</p><h2>Lo que vas a tener en tus manos</h2></div>
@@ -510,7 +510,7 @@ down += """<div class="steps" aria-label="Progreso del pedido"><span class="done
 <section class="bonus" id="bonos"><div class="wrap">
 <div class="head"><p class="eyebrow">También incluidos</p><h2>Los 6 bonos siguen en la oferta</h2></div>
 """ + bonus_grid("incluido") + """
-<div style="text-align:center;margin-top:28px"><a class="btn" href="#oferta" data-go="bonos">Quiero todo por US$ 9,90</a></div>
+<div style="text-align:center;margin-top:28px"><a class="btn" href="#oferta" data-go="bonos">Quiero todo a mitad de precio</a></div>
 </div></section>
 """ + GUARANTEE + """
 </main>

@@ -122,7 +122,7 @@ html = f"""<!DOCTYPE html>
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#0E242B">
 <title>Psicología Aplicada a la Vida · Oferta final</title>
-<meta name="description" content="12 guías + 3 bonos de psicología aplicada al día a día por US$ 19,90. Pago único.">
+<meta name="description" content="12 guías + 3 bonos de psicología aplicada al día a día con precio especial. Pago único.">
 <link rel="icon" href="https://biblipsicologia1.vercel.app/favicon.svg">
 <link rel="preload" as="image" href="{A}mockup.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -141,9 +141,9 @@ html = f"""<!DOCTYPE html>
 <section class="hero" id="inicio"><div class="wrap">
 <p class="eyebrow">Una última cosa antes de tu acceso</p>
 <h1>La psicología que usas <em>todos los días</em>, explicada en 12 guías.</h1>
-<p class="sub">Persuasión, lenguaje corporal, dinero, sesgos, redes sociales, sueño, psicología criminal y más. <strong>12 guías + 3 bonos</strong> para entender a las personas y decidir mejor, por <strong>US$ 19,90</strong>.</p>
+<p class="sub">Persuasión, lenguaje corporal, dinero, sesgos, redes sociales, sueño, psicología criminal y más. <strong>12 guías + 3 bonos</strong> para entender a las personas y decidir mejor, con <strong>80% de descuento</strong>.</p>
 <div class="hero-media"><img src="{A}mockup.webp" width="1254" height="1254" fetchpriority="high" alt="Psicología Aplicada a la Vida: 12 guías + 3 bonos"></div>
-<p class="pricehint">Valor <s>US$ 99</s> · Hoy <strong>US$ 19,90</strong></p>
+<p class="pricehint">Precio especial para clientes · <strong>80% de descuento</strong></p>
 <a class="btn" href="#oferta" data-go="hero">Sí, quiero las 12 guías</a>
 <p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
 </div></section>
@@ -171,7 +171,7 @@ html = f"""<!DOCTYPE html>
 <h2>Psicología Aplicada a la Vida</h2>
 <img class="mock" src="{A}mockup.webp" width="1254" height="1254" loading="lazy" decoding="async" alt="Psicología Aplicada a la Vida">
 {stack}
-<div class="price"><div class="old">Valor total: <s>US$ 99</s></div><div class="now"><small>US$</small>19,90</div><div class="save">80% de descuento · solo en esta página</div><div class="terms">Pago único · Acceso inmediato · Sin mensualidades</div></div>
+<div class="price"><div class="old">Precio especial para clientes</div><div class="now">−80%</div><div class="save">Tu precio final aparece abajo, en tu moneda</div><div class="terms">Pago único · Acceso inmediato · Sin mensualidades</div></div>
 <div class="offer-timer">Este precio termina en {CLOCK}</div>
 <div class="widget">
 {WIDGET}
@@ -198,16 +198,16 @@ REPL = [
     ("window.PAGE='upsell2';", "window.PAGE='downsell2';"),
     ("fbq('trackCustom','VerUpsell2',{value:19.90,", "fbq('trackCustom','VerDownsell2',{value:9.90,"),
     ("<title>Psicología Aplicada a la Vida · Oferta final</title>", "<title>Psicología Aplicada a la Vida · Última oportunidad</title>"),
-    ("12 guías + 3 bonos de psicología aplicada al día a día por US$ 19,90. Pago único.", "Última oportunidad: 12 guías + 3 bonos de psicología aplicada por US$ 9,90. Pago único."),
+    ("12 guías + 3 bonos de psicología aplicada al día a día con precio especial. Pago único.", "Última oportunidad: 12 guías + 3 bonos de psicología aplicada a mitad de precio. Pago único."),
     ("<strong>Oferta final · solo hoy.</strong> Este precio se mantiene durante:", "<strong>Espera · última oportunidad.</strong> Este precio solo se mantiene durante:"),
     ("<i>2</i>Oferta final</span>", "<i>2</i>Última oferta</span>"),
     ('<p class="eyebrow">Una última cosa antes de tu acceso</p>', '<p class="eyebrow">Precio especial · solo una vez</p>'),
-    ("<h1>La psicología que usas <em>todos los días</em>, explicada en 12 guías.</h1>", "<h1>Lo entendemos. Por eso te dejamos las 12 guías <em>por US$ 9,90</em>.</h1>"),
+    ("<h1>La psicología que usas <em>todos los días</em>, explicada en 12 guías.</h1>", "<h1>Lo entendemos. Por eso te dejamos las 12 guías <em>a mitad de precio</em>.</h1>"),
     ('alt="Psicología Aplicada a la Vida: 12 guías + 3 bonos"></div>', 'alt="Psicología Aplicada a la Vida: 12 guías + 3 bonos"><span class="ribbon">−50%</span></div>'),
-    ('Valor <s>US$ 99</s> · Hoy <strong>US$ 19,90</strong>', '<s>US$ 19,90</s> · Ahora <strong>US$ 9,90</strong>'),
-    ('data-go="hero">Sí, quiero las 12 guías</a>', 'data-go="hero">Sí, las quiero por US$ 9,90</a>'),
+    ('Precio especial para clientes · <strong>80% de descuento</strong>', 'Última oportunidad · <strong>50% menos</strong> que la oferta anterior'),
+    ('data-go="hero">Sí, quiero las 12 guías</a>', 'data-go="hero">Sí, las quiero a mitad de precio</a>'),
     ('<span class="badge">Oferta final · solo hoy</span>', '<span class="badge">Última oportunidad</span>'),
-    ('<small>US$</small>19,90</div><div class="save">80% de descuento · solo en esta página</div>', '<small>US$</small>9,90</div><div class="save">Mitad de precio · solo en esta página</div>'),
+    ('<div class="old">Precio especial para clientes</div><div class="now">−80%</div>', '<div class="old">Mitad de precio · solo aquí</div><div class="now">−50%</div>'),
     ("La oferta desaparece al cerrar esta página.';", "Esta es tu última oportunidad.';"),
 ]
 for a, b in REPL:
