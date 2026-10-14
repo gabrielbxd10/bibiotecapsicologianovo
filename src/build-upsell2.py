@@ -12,23 +12,23 @@ CSS, JS, WIDGET, VIEWER, CLOCK = L["CSS"], L["JS"], L["WIDGET"], L["VIEWER"], L[
 
 A = "/upsell2/assets/"
 GUIDES = [
-    ("c01", "Psicología de la Persuasión e Influencia", "Los 7 principios que te hacen decir «sí» y cómo protegerte de la manipulación."),
-    ("c02", "Lenguaje Corporal", "Mirada, gestos, postura y voz: lo que la ciencia confirma y lo que es mito."),
-    ("c03", "Sesgos Cognitivos y Decisiones", "50 errores mentales del día a día y un método para decidir mejor."),
-    ("c04", "Psicología del Dinero", "Por qué gastas como gastas y cómo ahorrar sin fuerza de voluntad."),
-    ("c05", "Psicología del Consumidor y el Marketing", "Precios, tiendas, marcas e influencers: lo que hay detrás de cada compra."),
-    ("c06", "Psicología Criminal", "Psicopatía, perfiles, testigos y confesiones falsas, más allá de las series."),
-    ("c07", "Psicología de las Redes Sociales", "Comparación, FOMO, dopamina y un plan de 14 días para recuperar tu atención."),
-    ("c08", "Psicología del Sueño y los Sueños", "Fases del sueño, por qué soñamos y cómo descansar mejor."),
-    ("c09", "Psicología del Liderazgo y el Trabajo", "Motivación, equipos, jefes difíciles y prevención del burnout."),
-    ("c10", "Psicología de la Crianza", "Vínculo, límites, rabietas, pantallas y adolescencia."),
-    ("c11", "Psicología del Deporte y la Motivación", "Nervios, foco, visualización, estado de flujo y hábito de moverte."),
-    ("c12", "Psicología de la Felicidad", "Lo que la ciencia del bienestar sabe sobre relaciones, gratitud y sentido."),
+    ("g01", "Psicología de la Persuasión e Influencia", "Los 7 principios que te hacen decir «sí» y cómo protegerte de la manipulación."),
+    ("g02", "Lenguaje Corporal", "Mirada, gestos, postura y voz: lo que la ciencia confirma y lo que es mito."),
+    ("g03", "Sesgos Cognitivos y Decisiones", "50 errores mentales del día a día y un método para decidir mejor."),
+    ("g04", "Psicología del Dinero", "Por qué gastas como gastas y cómo ahorrar sin fuerza de voluntad."),
+    ("g05", "Psicología del Consumidor y el Marketing", "Precios, tiendas, marcas e influencers: lo que hay detrás de cada compra."),
+    ("g06", "Psicología Criminal", "Psicopatía, perfiles, testigos y confesiones falsas, más allá de las series."),
+    ("g07", "Psicología de las Redes Sociales", "Comparación, FOMO, dopamina y un plan de 14 días para recuperar tu atención."),
+    ("g08", "Psicología del Sueño y los Sueños", "Fases del sueño, por qué soñamos y cómo descansar mejor."),
+    ("g09", "Psicología del Liderazgo y el Trabajo", "Motivación, equipos, jefes difíciles y prevención del burnout."),
+    ("g10", "Psicología de la Crianza", "Vínculo, límites, rabietas, pantallas y adolescencia."),
+    ("g11", "Psicología del Deporte y la Motivación", "Nervios, foco, visualización, estado de flujo y hábito de moverte."),
+    ("g12", "Psicología de la Felicidad", "Lo que la ciencia del bienestar sabe sobre relaciones, gratitud y sentido."),
 ]
 BONOS = [
-    ("c13", "Psicología del Color", "Qué transmiten los colores en marcas, diseño y espacios."),
-    ("c14", "Psicología de la Atracción", "Los experimentos clásicos sobre amistad, amor y cercanía."),
-    ("c15", "Retos de 21 Días", "Seis retos prácticos para aplicar todo lo aprendido."),
+    ("gb1", "Psicología del Color", "Qué transmiten los colores en marcas, diseño y espacios."),
+    ("gb2", "Psicología de la Atracción", "Los experimentos clásicos sobre amistad, amor y cercanía."),
+    ("gb3", "Retos de 21 Días", "Seis retos prácticos para aplicar todo lo aprendido."),
 ]
 SAMPLES = [
     ("s01", "Sesgos de información", "Sesgos Cognitivos"), ("s02", "Reciprocidad", "Persuasión e Influencia"),
@@ -71,14 +71,15 @@ EXTRA_CSS = r"""
 .turn2{text-align:center;margin:18px auto 0;max-width:640px;font:600 21px/1.35 var(--display);color:var(--ink)}
 .turn2 em{color:var(--clay)}
 .get{padding:42px 0 20px}
-.glist{list-style:none;padding:0;margin:0 auto;max-width:760px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.glist li{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px 8px 8px;min-width:0}
-.glist img{width:46px;flex:0 0 46px;border-radius:4px;box-shadow:0 3px 8px rgba(14,36,43,.25)}
-.glist div{min-width:0}
+.glist{list-style:none;padding:0;margin:0 auto;max-width:960px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.glist li{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.glist img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.glist div{min-width:0;padding:12px 14px 14px}
 .glist h3{font:700 15px/1.3 var(--body);color:var(--ink)}
 .glist p{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.4}
 .bt{display:inline-block;background:var(--amber);color:var(--ink-deep);font:800 10px/1 var(--body);letter-spacing:.08em;padding:4px 6px;border-radius:999px;vertical-align:middle;margin-left:4px}
-@media (max-width:640px){.glist{grid-template-columns:1fr}}
+.hero-media .ribbon{top:auto;bottom:16px}
+@media (max-width:640px){.glist{grid-template-columns:repeat(2,1fr);gap:10px}.glist li:last-child:nth-child(odd){grid-column:span 2;flex-direction:row}.glist li:last-child:nth-child(odd) img{width:46%;flex:0 0 46%}.glist li:last-child:nth-child(odd) div{align-self:center}.glist div{padding:9px 10px 11px}.glist h3{font-size:13.5px}.glist p{font-size:12px}}
 @media (max-width:860px){.cgrid{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:560px){.cgrid{grid-template-columns:repeat(3,1fr);gap:8px}.cgrid p{display:none}.cgrid .t{padding:7px 7px 9px}.cgrid h3{font-size:11.5px;line-height:1.25}.cgrid .bono::after{font-size:9px;padding:4px 6px;top:5px;left:5px}}
 .hero{overflow:hidden}
@@ -90,7 +91,7 @@ def card(f, t, c):
             f'<figcaption>{esc(t)}<small>{esc(c)}</small></figcaption></figure>')
 
 def glist(items, bono=False):
-    return "".join(f'<li><img src="{A}{img}.webp" width="520" height="735" loading="lazy" decoding="async" alt=""><div><h3>{esc(t)}{" <span class=\'bt\'>BONO</span>" if bono else ""}</h3><p>{esc(d)}</p></div></li>' for img, t, d in items)
+    return "".join(f'<li><img src="{A}{img}.webp" width="640" height="640" loading="lazy" decoding="async" alt="Portada: {esc(t)}"><div><h3>{esc(t)}{" <span class=\'bt\'>BONO</span>" if bono else ""}</h3><p>{esc(d)}</p></div></li>' for img, t, d in items)
 
 def cgrid(items, bono=False):
     return "".join(f'<li{" class=\"bono\"" if bono else ""}><img src="{A}{img}.webp" width="520" height="735" loading="lazy" decoding="async" alt="Portada: {esc(t)}"><div class="t"><h3>{esc(t)}</h3><p>{esc(d)}</p></div></li>' for img, t, d in items)
@@ -123,7 +124,7 @@ html = f"""<!DOCTYPE html>
 <title>Psicología Aplicada a la Vida · Oferta final</title>
 <meta name="description" content="12 guías + 3 bonos de psicología aplicada al día a día por US$ 19,90. Pago único.">
 <link rel="icon" href="https://biblipsicologia1.vercel.app/favicon.svg">
-<link rel="preload" as="image" href="{A}c01.webp">
+<link rel="preload" as="image" href="{A}mockup.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Figtree:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
@@ -141,8 +142,8 @@ html = f"""<!DOCTYPE html>
 <p class="eyebrow">Una última cosa antes de tu acceso</p>
 <h1>La psicología que usas <em>todos los días</em>, explicada en 12 guías.</h1>
 <p class="sub">Persuasión, lenguaje corporal, dinero, sesgos, redes sociales, sueño, psicología criminal y más. <strong>12 guías + 3 bonos</strong> para entender a las personas y decidir mejor, por <strong>US$ 19,90</strong>.</p>
-<div class="fan" aria-hidden="true"><img src="{A}c03.webp" alt=""><img src="{A}c06.webp" alt=""><img src="{A}c01.webp" alt="" fetchpriority="high"><img src="{A}c04.webp" alt=""><img src="{A}c07.webp" alt=""><span class="count">12 guías + 3 bonos</span></div>
-<p class="pricehint" style="margin-top:30px">Valor <s>US$ 99</s> · Hoy <strong>US$ 19,90</strong></p>
+<div class="hero-media"><img src="{A}mockup.webp" width="1254" height="1254" fetchpriority="high" alt="Psicología Aplicada a la Vida: 12 guías + 3 bonos"></div>
+<p class="pricehint">Valor <s>US$ 99</s> · Hoy <strong>US$ 19,90</strong></p>
 <a class="btn" href="#oferta" data-go="hero">Sí, quiero las 12 guías</a>
 <p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
 </div></section>
@@ -168,6 +169,7 @@ html = f"""<!DOCTYPE html>
 <section class="offer" id="oferta" style="padding-top:10px"><div class="wrap"><div class="offer-card">
 <span class="badge">Oferta final · solo hoy</span>
 <h2>Psicología Aplicada a la Vida</h2>
+<img class="mock" src="{A}mockup.webp" width="1254" height="1254" loading="lazy" decoding="async" alt="Psicología Aplicada a la Vida">
 {stack}
 <div class="price"><div class="old">Valor total: <s>US$ 99</s></div><div class="now"><small>US$</small>19,90</div><div class="save">80% de descuento · solo en esta página</div><div class="terms">Pago único · Acceso inmediato · Sin mensualidades</div></div>
 <div class="offer-timer">Este precio termina en {CLOCK}</div>
@@ -201,7 +203,7 @@ REPL = [
     ("<i>2</i>Oferta final</span>", "<i>2</i>Última oferta</span>"),
     ('<p class="eyebrow">Una última cosa antes de tu acceso</p>', '<p class="eyebrow">Precio especial · solo una vez</p>'),
     ("<h1>La psicología que usas <em>todos los días</em>, explicada en 12 guías.</h1>", "<h1>Lo entendemos. Por eso te dejamos las 12 guías <em>por US$ 9,90</em>.</h1>"),
-    ('<span class="count">12 guías + 3 bonos</span>', '<span class="count">12 guías + 3 bonos · −50%</span>'),
+    ('alt="Psicología Aplicada a la Vida: 12 guías + 3 bonos"></div>', 'alt="Psicología Aplicada a la Vida: 12 guías + 3 bonos"><span class="ribbon">−50%</span></div>'),
     ('Valor <s>US$ 99</s> · Hoy <strong>US$ 19,90</strong>', '<s>US$ 19,90</s> · Ahora <strong>US$ 9,90</strong>'),
     ('data-go="hero">Sí, quiero las 12 guías</a>', 'data-go="hero">Sí, las quiero por US$ 9,90</a>'),
     ('<span class="badge">Oferta final · solo hoy</span>', '<span class="badge">Última oportunidad</span>'),
