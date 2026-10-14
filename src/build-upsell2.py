@@ -188,3 +188,32 @@ os.makedirs(os.path.join(OUT, "upsell2"), exist_ok=True)
 with open(os.path.join(OUT, "upsell2", "index.html"), "w", encoding="utf-8") as f:
     f.write(html)
 print("upsell2", len(html))
+
+# ======================================================================= DOWNSELL 2 (US$ 9,90)
+import re as _re
+d = html
+REPL = [
+    ("window.PAGE='upsell2';", "window.PAGE='downsell2';"),
+    ("fbq('trackCustom','VerUpsell2',{value:19.90,", "fbq('trackCustom','VerDownsell2',{value:9.90,"),
+    ("<title>Psicología Aplicada a la Vida · Oferta final</title>", "<title>Psicología Aplicada a la Vida · Última oportunidad</title>"),
+    ("12 guías + 3 bonos de psicología aplicada al día a día por US$ 19,90. Pago único.", "Última oportunidad: 12 guías + 3 bonos de psicología aplicada por US$ 9,90. Pago único."),
+    ("<strong>Oferta final · solo hoy.</strong> Este precio se mantiene durante:", "<strong>Espera · última oportunidad.</strong> Este precio solo se mantiene durante:"),
+    ("<i>2</i>Oferta final</span>", "<i>2</i>Última oferta</span>"),
+    ('<p class="eyebrow">Una última cosa antes de tu acceso</p>', '<p class="eyebrow">Precio especial · solo una vez</p>'),
+    ("<h1>La psicología que usas <em>todos los días</em>, explicada en 12 guías.</h1>", "<h1>Lo entendemos. Por eso te dejamos las 12 guías <em>por US$ 9,90</em>.</h1>"),
+    ('<span class="count">12 guías + 3 bonos</span>', '<span class="count">12 guías + 3 bonos · −50%</span>'),
+    ('Valor <s>US$ 99</s> · Hoy <strong>US$ 19,90</strong>', '<s>US$ 19,90</s> · Ahora <strong>US$ 9,90</strong>'),
+    ('data-go="hero">Sí, quiero las 12 guías</a>', 'data-go="hero">Sí, las quiero por US$ 9,90</a>'),
+    ('<span class="badge">Oferta final · solo hoy</span>', '<span class="badge">Última oportunidad</span>'),
+    ('<small>US$</small>19,90</div><div class="save">80% de descuento · solo en esta página</div>', '<small>US$</small>9,90</div><div class="save">Mitad de precio · solo en esta página</div>'),
+    ("La oferta desaparece al cerrar esta página.';", "Esta es tu última oportunidad.';"),
+]
+for a, b in REPL:
+    assert a in d, a
+    d = d.replace(a, b)
+d = _re.sub(r'<p class="sub">.*?</p>', '<p class="sub">Las mismas <strong>12 guías + 3 bonos</strong>, sin quitar nada, por la mitad del precio. Esta oferta no vuelve a aparecer.</p>', d, count=1, flags=_re.S)
+d = _re.sub(r'<section class="pain2".*?</section>\s*', '', d, count=1, flags=_re.S)
+os.makedirs(os.path.join(OUT, "downsell2"), exist_ok=True)
+with open(os.path.join(OUT, "downsell2", "index.html"), "w", encoding="utf-8") as f:
+    f.write(d)
+print("downsell2", len(d))
