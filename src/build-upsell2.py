@@ -63,6 +63,22 @@ EXTRA_CSS = r"""
 .why2 ul{list-style:none;padding:0;margin:0 auto;max-width:720px;display:grid;gap:10px}
 .why2 li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px 14px 48px;position:relative;font-size:16px}
 .why2 li::before{content:"✓";position:absolute;left:16px;top:13px;width:22px;height:22px;border-radius:50%;background:var(--ok);color:#fff;font-size:13px;font-weight:900;display:grid;place-items:center}
+.pain2{background:var(--paper-2);padding:40px 0}
+.pain2 h2{text-align:center}
+.pain2 ul{list-style:none;padding:0;margin:20px auto 0;max-width:680px;display:grid;gap:10px}
+.pain2 li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 16px 13px 44px;position:relative;font-size:16px}
+.pain2 li::before{content:"✕";position:absolute;left:16px;top:12px;color:var(--clay);font-weight:900}
+.turn2{text-align:center;margin:18px auto 0;max-width:640px;font:600 21px/1.35 var(--display);color:var(--ink)}
+.turn2 em{color:var(--clay)}
+.get{padding:42px 0 20px}
+.glist{list-style:none;padding:0;margin:0 auto;max-width:760px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.glist li{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px 8px 8px;min-width:0}
+.glist img{width:46px;flex:0 0 46px;border-radius:4px;box-shadow:0 3px 8px rgba(14,36,43,.25)}
+.glist div{min-width:0}
+.glist h3{font:700 15px/1.3 var(--body);color:var(--ink)}
+.glist p{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.4}
+.bt{display:inline-block;background:var(--amber);color:var(--ink-deep);font:800 10px/1 var(--body);letter-spacing:.08em;padding:4px 6px;border-radius:999px;vertical-align:middle;margin-left:4px}
+@media (max-width:640px){.glist{grid-template-columns:1fr}}
 @media (max-width:860px){.cgrid{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:560px){.cgrid{grid-template-columns:repeat(3,1fr);gap:8px}.cgrid p{display:none}.cgrid .t{padding:7px 7px 9px}.cgrid h3{font-size:11.5px;line-height:1.25}.cgrid .bono::after{font-size:9px;padding:4px 6px;top:5px;left:5px}}
 .hero{overflow:hidden}
@@ -72,6 +88,9 @@ def card(f, t, c):
     return (f'<figure class="card"><button type="button" data-full="{A}{f}.webp" data-title="{esc(t)}" data-col="{esc(c)}" aria-label="Ampliar: {esc(t)}">'
             f'<img src="{A}{f}-t.webp" width="440" height="622" loading="lazy" decoding="async" draggable="false" alt="Página interior: {esc(t)}"></button>'
             f'<figcaption>{esc(t)}<small>{esc(c)}</small></figcaption></figure>')
+
+def glist(items, bono=False):
+    return "".join(f'<li><img src="{A}{img}.webp" width="520" height="735" loading="lazy" decoding="async" alt=""><div><h3>{esc(t)}{" <span class=\'bt\'>BONO</span>" if bono else ""}</h3><p>{esc(d)}</p></div></li>' for img, t, d in items)
 
 def cgrid(items, bono=False):
     return "".join(f'<li{" class=\"bono\"" if bono else ""}><img src="{A}{img}.webp" width="520" height="735" loading="lazy" decoding="async" alt="Portada: {esc(t)}"><div class="t"><h3>{esc(t)}</h3><p>{esc(d)}</p></div></li>' for img, t, d in items)
@@ -88,10 +107,11 @@ fbq('trackCustom','VerUpsell2',{value:19.90,currency:'USD',content_name:'Psicolo
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=973045345819425&ev=PageView&noscript=1" alt=""></noscript>"""
 
-stack = ('<ul class="stack"><li class="sep">12 guías · Psicología Aplicada a la Vida</li>'
-         + "".join(f'<li><span class="ck">✓</span><span>{esc(t)}</span></li>' for _, t, _ in GUIDES)
-         + '<li class="sep">+ 3 bonos</li>'
-         + "".join(f'<li><span class="ck">✓</span><span>{esc(t)}</span><span class="b">BONO</span></li>' for _, t, _ in BONOS) + "</ul>")
+stack = ('<ul class="stack">'
+         '<li><span class="ck">✓</span><span><strong>12 guías completas</strong> de psicología aplicada (más de 200 páginas)</span></li>'
+         '<li><span class="ck">✓</span><span><strong>3 bonos:</strong> Color, Atracción y Retos de 21 Días</span><span class="b">BONO</span></li>'
+         '<li><span class="ck">✓</span><span>Acceso inmediato en el email de tu compra</span></li>'
+         '<li><span class="ck">✓</span><span>Para leer en el celular o imprimir</span></li></ul>')
 
 html = f"""<!DOCTYPE html>
 <html lang="es">
@@ -127,30 +147,25 @@ html = f"""<!DOCTYPE html>
 <p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
 </div></section>
 
-<section class="why2" id="porque"><div class="wrap">
-<div class="head"><h2>Con estas guías vas a…</h2></div>
+<section class="pain2" id="dolor"><div class="wrap">
+<h2>¿Te ha pasado esto?</h2>
 <ul>
-<li>Reconocer cuándo intentan <strong>persuadirte o manipularte</strong>, y comunicar tus ideas con más fuerza.</li>
-<li>Entender por qué <strong>gastas, decides y procrastinas</strong> como lo haces, y cómo cambiarlo.</li>
-<li>Leer mejor a las personas: <strong>lenguaje corporal, atracción y primeras impresiones</strong>.</li>
-<li>Dormir mejor, usar menos el móvil y cuidar tu <strong>bienestar</strong> con prácticas basadas en evidencia.</li>
+<li>Compras algo por impulso y a los dos días te arrepientes.</li>
+<li>Alguien te convence de algo y después sientes que te manipularon.</li>
+<li>Pasas horas en el móvil y terminas peor que antes.</li>
+<li>No entiendes por qué decides, gastas o reaccionas como lo haces.</li>
 </ul>
+<p class="turn2">No es falta de voluntad: es psicología. <em>Y se puede entender.</em></p>
 </div></section>
 
-<section class="lib" id="guias"><div class="wrap">
-<div class="head"><p class="eyebrow">Todo lo que recibes</p><h2>12 guías completas</h2><p class="lead">Más de 200 páginas, en español, con tablas, ejemplos, ejercicios y plantillas.</p></div>
-<ul class="cgrid">{cgrid(GUIDES)}</ul>
+<section class="get" id="recibes"><div class="wrap">
+<div class="head"><p class="eyebrow">Lo que vas a recibir</p><h2>12 guías + 3 bonos</h2></div>
+<ul class="glist">{glist(GUIDES)}</ul>
 <p class="sub-h">+ 3 bonos incluidos</p>
-<ul class="cgrid">{cgrid(BONOS, True)}</ul>
+<ul class="glist">{glist(BONOS, True)}</ul>
 </div></section>
 
-<section class="samples" id="muestras" style="background:#fff"><div class="wrap">
-<div class="head"><p class="eyebrow">Mira por dentro</p><h2>Algunas páginas reales</h2></div>
-<p class="hint">Desliza para ver más · Toca una página para ampliarla</p>
-<div class="rail"><div class="track" id="rail0" tabindex="0">{"".join(card(*s) for s in SAMPLES)}</div></div>
-</div></section>
-
-<section class="offer" id="oferta" style="padding-top:20px"><div class="wrap"><div class="offer-card">
+<section class="offer" id="oferta" style="padding-top:10px"><div class="wrap"><div class="offer-card">
 <span class="badge">Oferta final · solo hoy</span>
 <h2>Psicología Aplicada a la Vida</h2>
 {stack}
@@ -159,10 +174,9 @@ html = f"""<!DOCTYPE html>
 <div class="widget">
 {WIDGET}
 </div>
-<p class="oneclick">Se añade a tu pedido en segundos. Si sales de esta página, la oferta desaparece.</p>
+<p class="oneclick">Se añade a tu pedido en segundos · Garantía de 7 días en Hotmart. Si sales de esta página, la oferta desaparece.</p>
 </div></div></section>
 
-<section class="guarantee" id="garantia"><div class="wrap"><div class="g-box"><div class="seal"><span><b>7</b>DÍAS</span></div><div><h3>Garantía de 7 días</h3><p>Si las guías no te convencen, pides el reembolso en Hotmart dentro de 7 días. Sin preguntas y sin perder nada de lo que ya compraste.</p></div></div></div></section>
 </main>
 <footer><div class="wrap">Psicología Aplicada a la Vida · Material educativo y de divulgación. No sustituye la atención de profesionales de la salud, la psicología, las finanzas ni el derecho.</div></footer>
 {VIEWER}

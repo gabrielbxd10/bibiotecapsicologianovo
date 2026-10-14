@@ -95,6 +95,20 @@ section{scroll-margin-top:70px}
 .receive{padding:56px 0}
 .head{text-align:center;max-width:740px;margin:0 auto 28px}
 .head p.lead{color:var(--muted);margin-top:10px}
+ .rgroup{margin-top:26px}
+.rghead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:2px solid var(--amber);padding-bottom:8px;margin-bottom:14px}
+.rghead h3{font-size:26px}
+.rghead span{font:800 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--clay);white-space:nowrap}
+.kgrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px}
+@media (max-width:860px){.kgrid{grid-template-columns:repeat(3,1fr)}}
+.kgrid li{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.kimg{position:relative}
+.kimg img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#ece8df}
+.kn{position:absolute;left:10px;bottom:10px;background:var(--ink);color:#fff;font:700 22px/1 var(--display);padding:6px 10px;border-radius:8px}
+.kt{padding:12px 14px 14px}
+.kt h4{font:700 15.5px/1.3 var(--body);color:var(--ink);margin:0}
+.kt p{font-size:13.5px;color:var(--muted);margin-top:4px;line-height:1.45}
+@media (max-width:520px){.kgrid{grid-template-columns:repeat(2,1fr);gap:10px}.kgrid li:last-child:nth-child(odd){grid-column:span 2;flex-direction:row}.kgrid li:last-child:nth-child(odd) .kimg{width:46%;flex:0 0 46%}.kgrid li:last-child:nth-child(odd) .kt{align-self:center}.kt{padding:9px 10px 11px}.kt h4{font-size:13.5px}.kt p{font-size:12px}.kn{font-size:18px}.rghead h3{font-size:21px}}
 .grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .grid li{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);border-radius:var(--r);padding:18px;background:var(--card)}
 .grid .n{flex:0 0 auto;min-width:62px;font:700 34px/1 var(--display);color:var(--clay)}
@@ -215,8 +229,8 @@ body.modal{overflow:hidden}
 <section class="hero" id="inicio"><div class="wrap">
 <p class="eyebrow">Precio especial · solo una vez</p>
 <h1>Lo entendemos. Por eso te dejamos <em>todo por US$ 9,90</em>.</h1>
-<p class="sub">Los mismos <strong>450 recursos en 8 colecciones</strong> y los <strong>6 bonos exclusivos</strong>, sin quitar nada, por la mitad del precio. Esta oferta no vuelve a aparecer.</p>
-<div class="hero-media"><img src="/upsell/assets/mockup.webp" width="1254" height="1254" fetchpriority="high" alt="Biblioteca Práctica de Psicología: 450 recursos en 8 colecciones"><span class="ribbon">−50%</span></div>
+<p class="sub">Los mismos <strong>450 recursos en 12 materiales</strong> y los <strong>6 bonos exclusivos</strong>, sin quitar nada, por la mitad del precio. Esta oferta no vuelve a aparecer.</p>
+<div class="hero-media"><img src="/upsell/assets/mockup.webp" width="1254" height="1254" fetchpriority="high" alt="Biblioteca Práctica de Psicología: 450 recursos en 12 materiales"><span class="ribbon">−50%</span></div>
 <p class="pricehint"><s>US$ 19,90</s> · Ahora <strong>US$ 9,90</strong></p>
 <a class="btn" href="#oferta" data-go="hero">Sí, lo quiero por US$ 9,90</a>
 <p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
@@ -225,7 +239,7 @@ body.modal{overflow:hidden}
 <span class="badge">Última oportunidad</span>
 <h2>Todo por menos de lo que cuesta un café</h2>
 <img class="mock" src="/upsell/assets/mockup.webp" width="1254" height="1254" loading="lazy" decoding="async" alt="Biblioteca Práctica de Psicología">
-<ul class="stack"><li class="sep">Biblioteca Práctica · 450 recursos</li><li><span class="ck">✓</span><span><strong>50</strong> Estructuras de Sesión</span></li><li><span class="ck">✓</span><span><strong>50</strong> Casos Prácticos para Análisis</span></li><li><span class="ck">✓</span><span><strong>100</strong> Fichas Visuales de Patrones</span></li><li><span class="ck">✓</span><span><strong>100</strong> Ejercicios y Herramientas</span></li><li><span class="ck">✓</span><span><strong>50</strong> Metáforas Terapéuticas</span></li><li><span class="ck">✓</span><span><strong>50</strong> Preguntas para Explorar Emociones</span></li><li><span class="ck">✓</span><span><strong>20</strong> Diferencias Psicológicas</span></li><li><span class="ck">✓</span><span><strong>30</strong> Atlas Visual de Emociones y Necesidades</span></li><li class="sep">+ 6 bonos exclusivos de hoy</li><li><span class="ck">✓</span><span>Plantillas de Análisis de Caso</span><span class="b">BONO</span></li><li><span class="ck">✓</span><span>Glosario de Psicología</span><span class="b">BONO</span></li><li><span class="ck">✓</span><span>Mapa de Autores y Teorías</span><span class="b">BONO</span></li><li><span class="ck">✓</span><span>Guía Educativa de Tests Psicológicos</span><span class="b">BONO</span></li><li><span class="ck">✓</span><span>60 Dinámicas para Clases y Seminarios</span><span class="b">BONO</span></li><li><span class="ck">✓</span><span>Diario de Autoconocimiento en 30 Días</span><span class="b">BONO</span></li></ul>
+<ul class="stack"><li class="sep">5 módulos de fichas visuales · 100 fichas</li><li><span class="ck">✓</span><span><strong>20</strong> Mecanismos de Defensa Clásicos</span></li><li><span class="ck">✓</span><span><strong>20</strong> Evitación y Protección Emocional</span></li><li><span class="ck">✓</span><span><strong>20</strong> Patrones de Vínculo y Relaciones</span></li><li><span class="ck">✓</span><span><strong>20</strong> Patrones de Pensamiento y Autoimagen</span></li><li><span class="ck">✓</span><span><strong>20</strong> Autosabotaje y Resistencia al Cambio</span></li><li class="sep">4 colecciones prácticas · 250 recursos</li><li><span class="ck">✓</span><span><strong>50</strong> Estructuras de Sesión</span></li><li><span class="ck">✓</span><span><strong>50</strong> Casos Prácticos para Análisis</span></li><li><span class="ck">✓</span><span><strong>100</strong> Ejercicios y Herramientas</span></li><li><span class="ck">✓</span><span><strong>50</strong> Metáforas Terapéuticas</span></li><li class="sep">3 libros complementarios · 100 recursos</li><li><span class="ck">✓</span><span><strong>50</strong> Preguntas para Explorar Emociones y Patrones</span></li><li><span class="ck">✓</span><span><strong>20</strong> Diferencias Psicológicas que Suelen Confundirse</span></li><li><span class="ck">✓</span><span><strong>30</strong> Atlas Visual de Emociones y Necesidades</span></li><li class="sep">+ 6 bonos exclusivos de hoy</li><li><span class="ck">✓</span><span>Plantillas de Análisis de Caso</span><span class="b">BONO</span></li><li><span class="ck">✓</span><span>Glosario de Psicología</span><span class="b">BONO</span></li><li><span class="ck">✓</span><span>Mapa de Autores y Teorías</span><span class="b">BONO</span></li><li><span class="ck">✓</span><span>Guía Educativa de Tests Psicológicos</span><span class="b">BONO</span></li><li><span class="ck">✓</span><span>60 Dinámicas para Clases y Seminarios</span><span class="b">BONO</span></li><li><span class="ck">✓</span><span>Diario de Autoconocimiento en 30 Días</span><span class="b">BONO</span></li></ul>
 <div class="price"><div class="old">Valor total: <s>US$ 72,90</s></div><div class="now"><small>US$</small>9,90</div><div class="save">50% menos que la oferta anterior</div><div class="terms">Pago único · Acceso inmediato · Sin mensualidades</div></div>
 <div class="offer-timer">Este precio termina en <span class="clock" data-clock aria-label="Tiempo restante"><span class="m">15</span><i>:</i><span class="s">00</span></span></div>
 <div class="widget">

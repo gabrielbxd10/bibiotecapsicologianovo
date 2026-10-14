@@ -8,15 +8,25 @@ OUT = sys.argv[1] if len(sys.argv) > 1 else "."
 A = "/upsell/assets/"
 MOCKUP = A + "mockup.webp"
 
-COLLECTIONS = [
-    (50, "Estructuras de Sesión", "Guías paso a paso sobre ansiedad, autoestima, emociones y relaciones: objetivo, preguntas, ejercicio e idea clave en cada una."),
-    (50, "Casos Prácticos para Análisis", "Situaciones reales del día a día con pensamientos, emociones, conductas, patrón observable y preguntas de análisis."),
-    (100, "Fichas Visuales de Patrones", "Mecanismos de defensa, evitación, vínculos, pensamiento y autosabotaje: qué son, cómo aparecen y ejemplos cotidianos."),
-    (100, "Ejercicios y Herramientas", "Registros, mapas, escalas y hojas de trabajo listas para completar e imprimir."),
-    (50, "Metáforas Terapéuticas", "Historias breves que explican ansiedad, emociones, límites y cambio de una forma que no se olvida."),
-    (50, "Preguntas para Explorar Emociones", "Preguntas organizadas en 10 áreas para reflexionar sobre miedo, culpa, límites, autocrítica y más."),
-    (20, "Diferencias Psicológicas", "Conceptos que se confunden, comparados lado a lado: culpa y vergüenza, negación y supresión, y muchos más."),
-    (30, "Atlas Visual de Emociones y Necesidades", "30 emociones con lo que pueden señalar, las necesidades asociadas y preguntas para explorarlas."),
+RECEIVE = [
+    ("5 módulos de fichas visuales", "100 fichas", [
+        ("k-mod1", 20, "Mecanismos de Defensa Clásicos", "Negación, proyección, racionalización, sublimación y 16 más, con ejemplos cotidianos."),
+        ("k-mod2", 20, "Evitación y Protección Emocional", "Las formas en que evitamos sentir: desconexión, distracción, control rígido y más."),
+        ("k-mod3", 20, "Patrones de Vínculo y Relaciones", "Miedo al abandono, celos, complacencia, límites difusos y otros patrones."),
+        ("k-mod4", 20, "Patrones de Pensamiento y Autoimagen", "Catastrofización, lectura de mente, síndrome del impostor, autocrítica…"),
+        ("k-mod5", 20, "Autosabotaje y Resistencia al Cambio", "Miedo al fracaso, procrastinación por perfeccionismo, impulsividad y más."),
+    ]),
+    ("4 colecciones prácticas", "250 recursos", [
+        ("k-estructuras", 50, "Estructuras de Sesión", "Guías paso a paso sobre ansiedad, autoestima, emociones y relaciones."),
+        ("k-casos", 50, "Casos Prácticos para Análisis", "Situaciones reales con pensamientos, emociones, conductas y preguntas de análisis."),
+        ("k-ejercicios", 100, "Ejercicios y Herramientas", "Registros, mapas, escalas y hojas de trabajo para completar e imprimir."),
+        ("k-metaforas", 50, "Metáforas Terapéuticas", "Historias breves que explican emociones, límites y cambio."),
+    ]),
+    ("3 libros complementarios", "100 recursos", [
+        ("k-preguntas", 50, "Preguntas para Explorar Emociones y Patrones", "50 preguntas en 10 áreas: miedo, culpa, límites, autocrítica y más."),
+        ("k-diferencias", 20, "Diferencias Psicológicas que Suelen Confundirse", "Culpa y vergüenza, negación y supresión, y 18 comparaciones más."),
+        ("k-atlas", 30, "Atlas Visual de Emociones y Necesidades", "30 emociones con lo que señalan y las necesidades asociadas."),
+    ]),
 ]
 
 BONOS = [
@@ -129,6 +139,20 @@ section{scroll-margin-top:70px}
 .receive{padding:56px 0}
 .head{text-align:center;max-width:740px;margin:0 auto 28px}
 .head p.lead{color:var(--muted);margin-top:10px}
+ .rgroup{margin-top:26px}
+.rghead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:2px solid var(--amber);padding-bottom:8px;margin-bottom:14px}
+.rghead h3{font-size:26px}
+.rghead span{font:800 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--clay);white-space:nowrap}
+.kgrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px}
+@media (max-width:860px){.kgrid{grid-template-columns:repeat(3,1fr)}}
+.kgrid li{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.kimg{position:relative}
+.kimg img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#ece8df}
+.kn{position:absolute;left:10px;bottom:10px;background:var(--ink);color:#fff;font:700 22px/1 var(--display);padding:6px 10px;border-radius:8px}
+.kt{padding:12px 14px 14px}
+.kt h4{font:700 15.5px/1.3 var(--body);color:var(--ink);margin:0}
+.kt p{font-size:13.5px;color:var(--muted);margin-top:4px;line-height:1.45}
+@media (max-width:520px){.kgrid{grid-template-columns:repeat(2,1fr);gap:10px}.kgrid li:last-child:nth-child(odd){grid-column:span 2;flex-direction:row}.kgrid li:last-child:nth-child(odd) .kimg{width:46%;flex:0 0 46%}.kgrid li:last-child:nth-child(odd) .kt{align-self:center}.kt{padding:9px 10px 11px}.kt h4{font-size:13.5px}.kt p{font-size:12px}.kn{font-size:18px}.rghead h3{font-size:21px}}
 .grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .grid li{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);border-radius:var(--r);padding:18px;background:var(--card)}
 .grid .n{flex:0 0 auto;min-width:62px;font:700 34px/1 var(--display);color:var(--clay)}
@@ -343,7 +367,12 @@ def rail(i, title, items):
             f'<div class="track" id="{tid}" tabindex="0">{cards}</div></div>')
 
 def grid():
-    return '<ul class="grid">' + "".join(f'<li><span class="n">{n}</span><div><h3>{esc(t)}</h3><p>{esc(d)}</p></div></li>' for n, t, d in COLLECTIONS) + "</ul>"
+    h = ""
+    for gt, gc, items in RECEIVE:
+        h += f'<div class="rgroup"><div class="rghead"><h3>{esc(gt)}</h3><span>{esc(gc)}</span></div><ul class="kgrid" style="--n:{len(items)}">'
+        h += "".join(f'<li><div class="kimg"><img src="{A}{img}.webp" width="480" height="640" loading="lazy" decoding="async" alt="Portada: {esc(t)}"><span class="kn">{n}</span></div><div class="kt"><h4>{esc(t)}</h4><p>{esc(d)}</p></div></li>' for img, n, t, d in items)
+        h += "</ul></div>"
+    return h
 
 def bonus_grid(tag):
     return '<div class="bgrid">' + "".join(
@@ -352,8 +381,10 @@ def bonus_grid(tag):
         for i, (img, t, d, v) in enumerate(BONOS, 1)) + "</div>"
 
 def stack():
-    h = '<ul class="stack"><li class="sep">Biblioteca Práctica · 450 recursos</li>'
-    h += "".join(f'<li><span class="ck">✓</span><span><strong>{n}</strong> {esc(t)}</span></li>' for n, t, _ in COLLECTIONS)
+    h = '<ul class="stack">'
+    for gt, gc, items in RECEIVE:
+        h += f'<li class="sep">{esc(gt)} · {esc(gc)}</li>'
+        h += "".join(f'<li><span class="ck">✓</span><span><strong>{n}</strong> {esc(t)}</span></li>' for _, n, t, _ in items)
     h += '<li class="sep">+ 6 bonos exclusivos de hoy</li>'
     h += "".join(f'<li><span class="ck">✓</span><span>{esc(t)}</span><span class="b">BONO</span></li>' for _, t, _, _ in BONOS)
     return h + "</ul>"
@@ -387,7 +418,7 @@ up += """<div class="confirm"><strong>✓ ¡Tu compra fue confirmada!</strong> E
 <p class="eyebrow">Solo para quien acaba de comprar la biblioteca</p>
 <h1>Ya tienes la teoría. Ahora aprende a <em>reconocerla en personas reales</em>.</h1>
 <p class="sub">La <strong>Biblioteca Práctica</strong> suma <strong>450 recursos visuales</strong> —casos, fichas de patrones, ejercicios y estructuras de sesión— y <strong>6 bonos exclusivos</strong> para que pases de memorizar conceptos a analizarlos, explicarlos y aplicarlos.</p>
-<div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1254" height="1254" fetchpriority="high" alt="Biblioteca Práctica de Psicología: 450 recursos en 8 colecciones"><span class="ribbon">+ 6 bonos hoy</span></div>
+<div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1254" height="1254" fetchpriority="high" alt="Biblioteca Práctica de Psicología: 450 recursos en 12 materiales"><span class="ribbon">+ 6 bonos hoy</span></div>
 <p class="pricehint">Precio normal <s>US$ 24,90</s> · Hoy <strong>US$ 19,90</strong></p>
 <a class="btn" href="#oferta" data-go="hero">Sí, quiero añadirla a mi pedido</a>
 <p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
@@ -410,7 +441,7 @@ up += """<div class="confirm"><strong>✓ ¡Tu compra fue confirmada!</strong> E
 </div></section>
 
 <section class="receive" id="recibes"><div class="wrap">
-<div class="head"><p class="eyebrow">450 recursos · 8 colecciones</p><h2>Todo lo que vas a recibir</h2><p class="lead">Organizado por temas, en guías visuales para leer en el celular o imprimir.</p></div>
+<div class="head"><p class="eyebrow">450 recursos · 12 materiales + 6 bonos</p><h2>Todo lo que vas a recibir</h2><p class="lead">Fichas, colecciones y libros visuales, organizados por temas, para leer en el celular o imprimir.</p></div>
 """ + grid() + """
 </div></section>
 
@@ -463,8 +494,8 @@ down += """<div class="steps" aria-label="Progreso del pedido"><span class="done
 <section class="hero" id="inicio"><div class="wrap">
 <p class="eyebrow">Precio especial · solo una vez</p>
 <h1>Lo entendemos. Por eso te dejamos <em>todo por US$ 9,90</em>.</h1>
-<p class="sub">Los mismos <strong>450 recursos en 8 colecciones</strong> y los <strong>6 bonos exclusivos</strong>, sin quitar nada, por la mitad del precio. Esta oferta no vuelve a aparecer.</p>
-<div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1254" height="1254" fetchpriority="high" alt="Biblioteca Práctica de Psicología: 450 recursos en 8 colecciones"><span class="ribbon">−50%</span></div>
+<p class="sub">Los mismos <strong>450 recursos en 12 materiales</strong> y los <strong>6 bonos exclusivos</strong>, sin quitar nada, por la mitad del precio. Esta oferta no vuelve a aparecer.</p>
+<div class="hero-media"><img src=\"""" + MOCKUP + """\" width="1254" height="1254" fetchpriority="high" alt="Biblioteca Práctica de Psicología: 450 recursos en 12 materiales"><span class="ribbon">−50%</span></div>
 <p class="pricehint"><s>US$ 19,90</s> · Ahora <strong>US$ 9,90</strong></p>
 <a class="btn" href="#oferta" data-go="hero">Sí, lo quiero por US$ 9,90</a>
 <p class="micro">Pago único · Se añade a tu pedido en segundos · Garantía de 7 días</p>
