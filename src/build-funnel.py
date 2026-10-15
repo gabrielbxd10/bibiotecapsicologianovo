@@ -340,7 +340,6 @@ def head(title, desc, page, value, timer_min, timer_done):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Figtree:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Figtree:wght@400;500;600;700;800&display=swap"></noscript>
-<link rel="dns-prefetch" href="https://checkout.hotmart.com">
 <link rel="dns-prefetch" href="https://connect.facebook.net">
 <script>window.TIMER_MIN={timer_min};window.TIMER_DONE={timer_done!r};</script>
 {pixel(page, value)}
@@ -401,9 +400,6 @@ def offer_card(badge, h2, old, now, save, note, clock_label):
 {stack()}
 <div class="price"><div class="old">{old}</div><div class="now">{now}</div><div class="save">{save}</div><div class="terms">Pago único · Acceso inmediato · Sin mensualidades</div></div>
 <div class="offer-timer">{clock_label} {CLOCK}</div>
-<div class="widget">
-{WIDGET}
-</div>
 <p class="oneclick">{note}</p>
 </div></div></section>"""
 
