@@ -150,12 +150,12 @@ footer{border-top:1px solid var(--line);padding-block:28px 40px;color:var(--mute
       <span class="kicker">Tu biblioteca</span>
       <h1>Bienvenido/a a tu <em>Biblioteca de Psicología</em></h1>
       <p>Todo el contenido de la carrera organizado en guías visuales. Empieza por el Módulo 01 o elige el tema que necesitas hoy.</p>
-      <div class="meta"><span>11 módulos</span><span>353 páginas</span><span>5 bonos</span></div>
+      <div class="meta"><span>20 módulos</span><span>577 páginas</span><span>5 bonos</span></div>
     </div>
   </section>
 
   <section class="row pad">
-    <div class="row-head"><h2>Los 11 módulos</h2><small>353 páginas visuales</small></div>
+    <div class="row-head"><h2>Los 20 módulos</h2><small>577 páginas visuales</small></div>
     <div class="grid mods" id="grid-modules"></div>
   </section>
 </main>
@@ -213,7 +213,16 @@ var MODULES=[
  {n:8, t:"Psicopatología: Guía visual", p:33, d:"Modelo biopsicosocial y conceptos introductorios sobre ansiedad, TOC, autismo y trastornos de personalidad.", url:"https://drive.google.com/file/d/1bqB4QI6IDLmo1O_vvAatkm4fhXhBysLf/view?usp=sharing"},
  {n:9, t:"Evaluación psicológica y Psicometría", p:28, d:"Entrevista psicológica, modelo ABC, fiabilidad, validez y percentiles.", url:"https://drive.google.com/file/d/1OjfMDCKphajSGPWkrw6ljBWVNeA2qL3G/view?usp=sharing"},
  {n:10,t:"Recursos psicoeducativos y reflexión", p:38, d:"Rueda de emociones, círculo de control, ciclo del hábito, valores y herramientas de reflexión.", url:"https://drive.google.com/file/d/1LLPE2tV7ic8xpq5uoS-o83Cf9GQYkPnt/view?usp=sharing"},
- {n:11,t:"Investigación, evidencia y metodología", p:28, d:"Hipótesis, variables, correlación vs. causalidad, estadística básica y pensamiento crítico.", url:"https://drive.google.com/file/d/1cevi2ncZrg1E662vO1KjgV-BtgeQgFNe/view?usp=sharing"}
+ {n:11,t:"Investigación, evidencia y metodología", p:28, d:"Hipótesis, variables, correlación vs. causalidad, estadística básica y pensamiento crítico.", url:"https://drive.google.com/file/d/1cevi2ncZrg1E662vO1KjgV-BtgeQgFNe/view?usp=sharing"},
+ {n:12,t:"Enfoques psicoterapéuticos", d:"Psicoanálisis, terapia cognitivo-conductual, humanismo, Gestalt, terapia sistémica y terapias de tercera generación, comparados.", url:""},
+ {n:13,t:"Psicología clínica y de la salud", d:"El rol del psicólogo clínico, estrés y enfermedad, dolor crónico, adherencia al tratamiento y promoción de hábitos saludables.", url:""},
+ {n:14,t:"Psicología educativa", d:"Aprendizaje en el aula, motivación escolar, dificultades de aprendizaje, orientación e inclusión educativa.", url:""},
+ {n:15,t:"Psicología organizacional y del trabajo", d:"Selección de personal, clima laboral, liderazgo, motivación en el trabajo, burnout y equipos.", url:""},
+ {n:16,t:"Psicología forense y jurídica", d:"Peritaje psicológico, testimonio y credibilidad, victimología y evaluación en el ámbito legal.", url:""},
+ {n:17,t:"Neuropsicología clínica y fundamentos de psicofarmacología", d:"Evaluación neuropsicológica, daño cerebral, demencias, rehabilitación cognitiva y principales grupos de psicofármacos.", url:""},
+ {n:18,t:"Ética y deontología profesional", d:"Código deontológico, confidencialidad, consentimiento informado, límites profesionales y dilemas éticos.", url:""},
+ {n:19,t:"Psicología comunitaria y transcultural", d:"Intervención comunitaria, empoderamiento, redes de apoyo y la influencia de la cultura en la conducta.", url:""},
+ {n:20,t:"Psicología evolucionista y comparada", d:"Darwin y la selección natural, etología, conducta animal, cooperación y altruismo.", url:""}
 ];
 var BONUSES=[
  {n:1, t:"Diccionario Esencial de Psicología", d:"Aclara al instante términos y definiciones mientras estudias.", img:"https://i.ibb.co/VK056rB/af0b199d-c289-4391-ae32-38bcc5ace266.png", url:"https://drive.google.com/file/d/10TSUP6X8zqRYabYTNUfIiF9plEUomrhN/view?usp=sharing"},
@@ -232,7 +241,7 @@ var cover=function(m){return 'assets/m'+pad(m.n)+'.webp'};
 function modCard(m){
   return '<button class="card" data-mod="'+m.n+'" aria-label="Módulo '+pad(m.n)+': '+esc(m.t)+'">'+
     '<div class="cover"><img src="'+cover(m)+'" width="780" height="1040" loading="lazy" decoding="async" alt=""><span class="num">MÓDULO '+pad(m.n)+'</span></div>'+
-    '<span class="t">'+esc(m.t)+'</span><span class="s">'+m.p+' páginas</span></button>';
+    '<span class="t">'+esc(m.t)+'</span><span class="s">'+(m.p?m.p+' páginas':'Nuevo')+'</span></button>';
 }
 function bonusCard(b){
   return '<button class="card wide" data-bonus="'+b.n+'" aria-label="Bono '+pad(b.n)+': '+esc(b.t)+'">'+
@@ -251,10 +260,10 @@ function openDetail(kind,n){
   var x=kind==='mod'?MODULES[n-1]:BONUSES[n-1];
   $('#d-img').src=kind==='mod'?cover(x):x.img;
   $('#d-img').alt=x.t;
-  $('#d-kicker').textContent=kind==='mod'?('Módulo '+pad(x.n)+' de 11'):('Bono '+pad(x.n)+' de 5');
+  $('#d-kicker').textContent=kind==='mod'?('Módulo '+pad(x.n)+' de '+MODULES.length):('Bono '+pad(x.n)+' de 5');
   $('#d-title').textContent=x.t;
   $('#d-desc').textContent=x.d;
-  $('#d-chips').innerHTML=kind==='mod'?('<span class="chip">'+x.p+' páginas</span><span class="chip">Guía visual</span><span class="chip">Lectura en celular y PC</span>'):'<span class="chip">Bono incluido</span><span class="chip">Guía digital</span>';
+  $('#d-chips').innerHTML=kind==='mod'?((x.p?'<span class="chip">'+x.p+' páginas</span>':'<span class="chip">Nuevo</span>')+'<span class="chip">Guía visual</span><span class="chip">Lectura en celular y PC</span>'):'<span class="chip">Bono incluido</span><span class="chip">Guía digital</span>';
   var a=$('#d-open');
   $('#d-open-label').textContent=kind==='mod'?'Abrir módulo':'Abrir bono';
   if(x.url){a.href=x.url;a.removeAttribute('aria-disabled');$('#d-pending').hidden=true}
