@@ -129,6 +129,7 @@ html = f"""<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Figtree:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Figtree:wght@400;500;600;700;800&display=swap"></noscript>
+<link rel="dns-prefetch" href="https://checkout.hotmart.com">
 <script>window.TIMER_MIN=10;window.TIMER_DONE='<strong>Tiempo agotado.</strong> La oferta desaparece al cerrar esta página.';</script>
 {PIXEL}
 <style>{CSS}{EXTRA_CSS}</style>
@@ -172,6 +173,9 @@ html = f"""<!DOCTYPE html>
 {stack}
 <div class="price"><div class="old">Precio especial para clientes</div><div class="now">−80%</div><div class="save">Tu precio final aparece abajo, en tu moneda</div><div class="terms">Pago único · Acceso inmediato · Sin mensualidades</div></div>
 <div class="offer-timer">Este precio termina en {CLOCK}</div>
+<div class="widget">
+{WIDGET}
+</div>
 <p class="oneclick">Se añade a tu pedido en segundos · Garantía de 7 días en Hotmart. Si sales de esta página, la oferta desaparece.</p>
 </div></div></section>
 
